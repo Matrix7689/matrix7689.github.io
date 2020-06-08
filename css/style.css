@@ -56,6 +56,11 @@ img {
   height: auto;
 }
 
+.works-img {
+  object-fit: cover;
+  height: 210px;
+}
+
 .text-center {
   text-align: center;
 }
