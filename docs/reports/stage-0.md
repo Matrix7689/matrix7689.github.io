@@ -13,7 +13,7 @@ Date: 2026-10-31 · Branch: `revamp` · Status: **all acceptance criteria pass; 
 | Specs | `SPEC.md`, `CLAUDE.md` and `docs/DesignSpec.md` copied in from `C:\Jay Data\portfolio revamp\`. |
 | `.gitattributes` | `* text=auto eol=lf` plus `binary` for jpg, jpeg, png, gif, webp, avif, pdf, woff2, mp4 and webm. No file is stored with CRLF in the index (`git ls-files --eol`: 38 `i/lf`, 104 `i/-text`, 5 `i/none`), so adding it causes no renormalisation churn. |
 | `.gitignore` | `node_modules/`, `dist/`, `.astro/`, `.lighthouseci/`. |
-| `package.json` | Scripts `inventory` and `repo:size`. Dev dependency `sharp` pinned to `0.35.5`. `engines.node >= 22.12.0`. `package-lock.json` added for `npm ci` later. |
+| `package.json` | Scripts `inventory` and `repo:size`. Dev dependency `sharp` pinned to `0.35.5`. `engines.node >= 24.11.0`. `package-lock.json` added for `npm ci` later. |
 | `scripts/inventory.mjs` | Reads the file tree of `legacy-2024` (`git ls-tree -r -l`), parses `index.html` and `works-2.html`, measures every image with sharp and HEAD-checks every external link. Writes `docs/content-manifest.json` and `docs/inventory.md`. `--offline` skips the link check. |
 | `scripts/repo-size.mjs` | Prints the `.git` pack size, loose-object size, working-tree size (excluding `.git`, `node_modules`, `dist`) and the `dist/` size if it exists. `--json` gives the same data as JSON. |
 | Old site | No old file was deleted or moved. |
@@ -103,16 +103,15 @@ Project image dimensions match SPEC §4.5: `react_news.png` 800 × 600, `android
 2. **62 map JPEGs, not 63.** The disk, `git ls-files` and the 66 image references in the old pages (all of which resolve) all give 62. The SPEC §4.7 table also sums to 62 (7+6+5+5+5+4+3+6+5+6+5+5). The "63" in assumption 5 and in the Stage 0 criterion looks like a miscount.
 3. **Extra files:** `.gitignore` (keeps `node_modules/` out of git) and `package-lock.json` (needed for `npm ci` in CI). Neither is in the Stage 0 file list.
 4. **Link check:** HEAD first, then one GET retry if HEAD returns 403, 404, 405 or 501, because some hosts reject HEAD. LinkedIn's 999 is recorded as "verify manually", not as a failure.
-5. **Node version:** this machine runs Node **v24.22.1** (npm 11.19.1), not Node 22. Stage 0 works on it. This affects `.nvmrc` in Stage 1 (see open questions).
+5. **Node version:** this machine runs Node **v24.22.1** (npm 11.19.1), not Node 22. At the checkpoint Jay chose to **switch to Node 24 LTS**. SPEC §1.4, the Stage 1 `.nvmrc` input (now `24`), CLAUDE.md and `package.json` `engines` (`>= 24.11.0`) are updated to match.
 6. **Git identity:** git had no author identity configured on this machine. On Jay's instruction it is now set for this repo only (`git config --local`) to `Jay Parekh <jay.parekh7689@gmail.com>`. Earlier history uses `jmparekh@usc.edu`.
 
 ## Open questions for the checkpoint
 
-- **Node version for Stage 1:** keep the spec (`.nvmrc` = `22`; install Node 22 locally, for example with nvm-windows) or switch to Node 24 LTS (what is installed)?
 - **Q1–Q6 (SPEC §2.2):** the defaults apply unless you override them.
 
 ## Human checkpoint
 
 1. Confirm `legacy-2024` exists on GitHub: https://github.com/Matrix7689/matrix7689.github.io/tree/legacy-2024
 2. Review `docs/inventory.md`, especially the external-link table and the keep / transform / drop columns.
-3. Answer any of Q1–Q6 you want to override, plus the Node question above.
+3. Answer any of Q1–Q6 you want to override.

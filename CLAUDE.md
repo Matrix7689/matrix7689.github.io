@@ -12,7 +12,7 @@ Audience: tech companies and recruiters. Style: "monochrome minimal terminal". T
 5. Never invent copy, metrics, links or posts. Unknown content stays as `NEEDS INPUT` (see SPEC §4.11).
 
 ## Stack
-- Astro (static output), TypeScript strict, hand-written CSS with tokens, npm, Node 22 LTS (`.nvmrc`).
+- Astro (static output), TypeScript strict, hand-written CSS with tokens, npm, Node 24 LTS (`.nvmrc`).
 - Content collections: `src/content/{blog,projects,levels,experience}`, schemas in `src/content.config.ts`.
 - Images: `astro:assets` `<Picture>` via `src/components/Img.astro`; originals live in `src/assets/` and never ship.
 - Deploy: GitHub Actions → GitHub Pages (`.github/workflows/deploy.yml`, on push to `master`).

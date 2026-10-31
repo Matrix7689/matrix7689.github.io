@@ -44,7 +44,8 @@ Replace the 2020 Bootstrap/jQuery portfolio at https://matrix7689.github.io/ wit
 | Raw originals in `dist/` | **0** (byte-hash check) |
 | CLS / TBT / LCP (Lighthouse mobile, home) | ≤ 0.02 / ≤ 50 ms / ≤ 2.0 s |
 
-### 1.4 Stack decision: **Astro** (static output), npm, Node 22 LTS (≥ 22.12)
+### 1.4 Stack decision: **Astro** (static output), npm, Node 24 LTS (≥ 24.11)
+(Changed from Node 22 at the Stage 0 checkpoint: Jay's machine runs Node 24, which is the current LTS line.)
 Astro ships zero client JS unless a component opts in. It also bundles in one tool what this site needs: typed content collections with schema validation, a sharp-based image pipeline (`astro:assets`: AVIF/WebP, `srcset`, intrinsic width/height) and build-time Shiki highlighting, so fewer hand-wired plugins than Eleventy.
 
 Supporting packages, all build-time only: `@astrojs/rss`, `@astrojs/sitemap`, `sharp`, `subset-font` (font subsetting), `ffmpeg-static` (one-off GIF→video), `cross-env` (env vars in npm scripts on Windows), `html-validate`, `linkinator`, `@lhci/cli`. Pin exact versions in `package.json`. Use the content-collection API of the installed Astro major version; the snippets in this spec are illustrative.
@@ -188,7 +189,7 @@ Conventions for every stage:
 
 **Depends on:** Stage 0.
 
-**Inputs:** `docs/DesignSpec.md` §1.1–1.5 and §4–5 (**not** §2.2/§3.2); `.nvmrc` = `22`; Geist Mono font files (from the `geist` npm package or the official release; record the source and OFL licence in `public/fonts/LICENSE.txt`).
+**Inputs:** `docs/DesignSpec.md` §1.1–1.5 and §4–5 (**not** §2.2/§3.2); `.nvmrc` = `24`; Geist Mono font files (from the `geist` npm package or the official release; record the source and OFL licence in `public/fonts/LICENSE.txt`).
 
 **Tasks:**
 1. Remove old-site runtime files from `revamp`: `index.html`, `works-2.html`, `css/`, `js/`, `fonts/`, `webfonts/`, `Matrix_Completed_Games.txt`, and the unused images (`ajax-loader.gif`, `dots-bg*.svg`, `map.svg`, `map-light.png`, `nike_jordan.png`, `noodles.png`, `blog/*.svg`, tech logos, `avatar_circle*.png`, old `favicon.png`). **Do not touch `images/works/`** (Stage 2) or `Jay_Parekh_Resume.pdf` (moved to `public/` now with `git mv`). They remain on `legacy-2024`.
