@@ -1,0 +1,56 @@
+---
+// Bordered tag; a link when href is set (SPEC §5, DesignSpec §1.4, §3.1 filter).
+interface Props {
+  label: string;
+  href?: string | undefined;
+  active?: boolean;
+}
+
+const { label, href, active = false } = Astro.props;
+---
+
+{
+  href ? (
+    <a class:list={['tag', { active }]} href={href} aria-current={active ? 'page' : undefined}>
+      {label}
+    </a>
+  ) : (
+    <span class:list={['tag', { active }]}>{label}</span>
+  )
+}
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
+    padding: 0 var(--space-2);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-micro);
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  @media (min-width: 48rem) {
+    .tag {
+      font-size: var(--fs-ui);
+    }
+  }
+
+  a.tag:hover,
+  .tag.active {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a.tag {
+      transition:
+        background-color var(--duration),
+        color var(--duration),
+        border-color var(--duration);
+    }
+  }
+</style>

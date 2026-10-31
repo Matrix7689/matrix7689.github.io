@@ -1,0 +1,28 @@
+---
+// Text page at prose width (SPEC Stage 1 task 7).
+import Base from './Base.astro';
+import type { NavId } from '../site.config';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: NavId | undefined;
+  noindex?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<Base {...props}>
+  <div class="container page">
+    <div class="prose">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    padding-block: var(--space-section);
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// Block-letter wordmark as real text (SPEC §5, DesignSpec §1.4 Footer). Decorative: aria-hidden,
+// with the name as visually hidden text next to it.
+interface Props {
+  text: string;
+  label: string;
+}
+
+// Six-row block letters. Add letters here if the wordmark text changes (SPEC Q3).
+const GLYPHS: Record<string, string[]> = {
+  J: ['     ██╗', '     ██║', '     ██║', '██   ██║', '╚█████╔╝', ' ╚════╝ '],
+  P: ['██████╗ ', '██╔══██╗', '██████╔╝', '██╔═══╝ ', '██║     ', '╚═╝     '],
+};
+
+const { text, label } = Astro.props;
+const letters = [...text.toUpperCase()].map((ch) => {
+  const glyph = GLYPHS[ch];
+  if (!glyph) throw new Error(`AsciiWordmark: no glyph for "${ch}"`);
+  return glyph;
+});
+const art = Array.from({ length: 6 }, (_, row) => letters.map((g) => g[row]).join('')).join('\n');
+---
+
+<div class="wordmark">
+  <pre aria-hidden="true">{art}</pre>
+  <span class="visually-hidden">{label}</span>
+</div>
+
+<style>
+  pre {
+    font-size: 0.6875rem;
+    line-height: 1.15;
+    opacity: var(--opacity-wordmark);
+    overflow: hidden;
+  }
+</style>

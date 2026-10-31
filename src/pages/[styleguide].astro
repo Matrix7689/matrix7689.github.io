@@ -1,0 +1,285 @@
+---
+// Hidden styleguide at /_styleguide/ (SPEC Stage 1 task 9): every component in both themes.
+// Astro ignores page files whose name starts with "_", so the route comes from a param.
+// noindex; excluded from the sitemap in Stage 9.
+import Base from '../layouts/Base.astro';
+import AsciiWordmark from '../components/AsciiWordmark.astro';
+import Badge from '../components/Badge.astro';
+import Button from '../components/Button.astro';
+import CommandBlock from '../components/CommandBlock.astro';
+import EmptyState from '../components/EmptyState.astro';
+import Figure from '../components/Figure.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SpecTable from '../components/SpecTable.astro';
+import Tag from '../components/Tag.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+import { SITE } from '../site.config';
+import { contrast, readTokens } from '../lib/contrast';
+import tokensCss from '../styles/tokens.css?raw';
+
+export function getStaticPaths() {
+  return [{ params: { styleguide: '_styleguide' } }];
+}
+
+const site = Astro.site?.origin ?? '';
+const command = `curl -sLO ${site}${SITE.resume}`;
+const outputLinks = [
+  { label: 'blog/', href: '/blog/' },
+  { label: 'projects/', href: '/projects/' },
+  { label: 'about.md', href: '/about/' },
+  { label: 'resume.pdf', href: SITE.resume },
+  { label: 'rss.xml', href: '/rss.xml' },
+];
+
+const themes = [
+  { id: 'light', name: 'Light theme (default)', tokens: readTokens(tokensCss, "[data-theme='light']") },
+  { id: 'dark', name: 'Dark theme', tokens: readTokens(tokensCss, "[data-theme='dark']") },
+];
+const pairs: [string, string, number][] = [
+  ['fg', 'bg', 4.5],
+  ['muted', 'bg', 4.5],
+  ['fg', 'card', 4.5],
+  ['muted', 'card', 4.5],
+  ['muted', 'panel', 4.5],
+  ['border', 'bg', 1],
+];
+---
+
+<Base title="Styleguide · Jay Parekh" description="Internal component styleguide." noindex>
+  <div class="container sg">
+    <h1>Styleguide</h1>
+    <p class="muted">Every component in both themes. Internal page: not linked, not indexed.</p>
+
+    {
+      themes.map((t) => (
+        <section data-theme={t.id} class="theme" aria-labelledby={`sg-${t.id}`}>
+          <h2 id={`sg-${t.id}`}>{t.name}</h2>
+
+          <h3>Colour tokens</h3>
+          <ul class="swatches" role="list">
+            {Object.entries(t.tokens).map(([name, value]) => (
+              <li>
+                <svg class="swatch" viewBox="0 0 1 1" aria-hidden="true">
+                  <rect width="1" height="1" fill={value} />
+                </svg>
+                <code>--{name}</code> <span class="muted">{value}</span>
+              </li>
+            ))}
+          </ul>
+          <table class="ratios">
+            <caption class="label">Contrast ratios (WCAG 2.x)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Text</th>
+                <th scope="col">On</th>
+                <th scope="col">Ratio</th>
+                <th scope="col">Needs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pairs.map(([a, b, need]) => {
+                const r = contrast(t.tokens[a]!, t.tokens[b]!);
+                return (
+                  <tr>
+                    <td>--{a}</td>
+                    <td>--{b}</td>
+                    <td>{r.toFixed(2)}:1</td>
+                    <td>{need > 1 ? `${need}:1 ${r >= need ? 'pass' : 'FAIL'}` : 'decorative'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          <h3>Type scale</h3>
+          <p class="label">Micro label 10px</p>
+          <p class="t-ui">UI text 12px</p>
+          <p>Body 14px mobile / 16px desktop. The quick brown fox jumps over the lazy dog. → ← ↑ ↓ — – • · −15 ms</p>
+          <p class="t-title">Section title 20px</p>
+          <p class="t-hero">
+            <span>{SITE.name}</span>
+            <span class="muted">{SITE.role}</span>
+          </p>
+
+          <h3>Badge</h3>
+          <Badge label="Software engineer · Seattle" />
+
+          <h3>Buttons</h3>
+          <div class="row">
+            <Button href={SITE.resume} download>Download resume (PDF, 217 KB)</Button>
+            <Button href="/projects/" variant="secondary">all projects</Button>
+          </div>
+
+          <h3>Tags</h3>
+          <div class="row">
+            <Tag label="all" href={`#sg-${t.id}`} active />
+            <Tag label="distributed-systems" href={`#sg-${t.id}`} />
+            <Tag label="java" />
+          </div>
+
+          <h3>Section header</h3>
+          <SectionHeader number="01" title="~/experience" id={`sg-section-${t.id}`} />
+
+          <h3>Terminal card</h3>
+          <div class="stack">
+            <TerminalCard title="jay@portfolio ~ terminal">
+              <p>$ cat status.txt</p>
+              <p class="muted">palette: monochrome</p>
+              <p>
+                $ <span class="cursor" aria-hidden="true">█</span>
+              </p>
+            </TerminalCard>
+            <TerminalCard title="bash 5.2" variant="inverted">
+              <p class="muted">Inverted title bar variant.</p>
+            </TerminalCard>
+          </div>
+
+          <h3>Command block</h3>
+          <CommandBlock command={command} title="jay@portfolio ~ terminal" outputLinks={outputLinks} id={`sg-cmd-${t.id}`} />
+
+          <h3>Spec table</h3>
+          <SpecTable
+            label="Education"
+            rows={[
+              { label: 'school', value: 'University of Southern California' },
+              { label: 'degree', value: 'MS Computer Science' },
+              { label: 'dates', value: 'Aug 2019 – May 2021' },
+              { label: 'resume', value: 'Jay_Parekh_Resume.pdf', href: SITE.resume },
+            ]}
+          />
+
+          <h3>Figures</h3>
+          <div class="figs">
+            <Figure n={1} value="$1.74M" caption="infrastructure cost saved" />
+            <Figure n={2} value="−15 ms" caption="global TM99 latency" />
+            <Figure n={3} value="3–4 months" caption="implementation effort saved" />
+          </div>
+
+          <h3>Empty state</h3>
+          <EmptyState
+            command="ls blog/"
+            message="0 posts — first one is on the way. Subscribe:"
+            link={{ label: 'rss.xml', href: '/rss.xml' }}
+          />
+
+          <h3>ASCII wordmark</h3>
+          <AsciiWordmark text={SITE.wordmark} label={SITE.name} />
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .sg {
+    padding-block: var(--space-12);
+  }
+
+  .sg > p {
+    margin-top: var(--space-2);
+  }
+
+  .theme {
+    margin-top: var(--space-12);
+    padding: var(--space-8) var(--gutter);
+    margin-inline: calc(var(--gutter) * -1);
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  .theme h2 {
+    font-size: var(--fs-title);
+  }
+
+  .theme h3 {
+    margin: var(--space-12) 0 var(--space-4);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: var(--space-2);
+    font-size: var(--fs-ui);
+  }
+
+  .swatches li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .swatch {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: var(--hairline) solid var(--border);
+  }
+
+  .ratios {
+    margin-top: var(--space-4);
+    border-collapse: collapse;
+    font-size: var(--fs-ui);
+  }
+
+  .ratios caption {
+    text-align: left;
+    padding-bottom: var(--space-2);
+  }
+
+  .ratios th,
+  .ratios td {
+    padding: var(--space-1) var(--space-4) var(--space-1) 0;
+    text-align: left;
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  .t-ui {
+    font-size: var(--fs-ui);
+  }
+
+  .t-title {
+    font-size: var(--fs-title);
+    font-weight: 700;
+  }
+
+  .t-hero {
+    display: grid;
+    margin-top: var(--space-4);
+    font-weight: 700;
+  }
+
+  .t-hero span:first-child {
+    font-size: var(--fs-hero);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.03em;
+  }
+
+  .t-hero span:last-child {
+    font-size: var(--fs-title);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .figs {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .figs {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

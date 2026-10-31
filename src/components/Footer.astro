@@ -1,0 +1,137 @@
+---
+// Site footer (SPEC §4.9, DesignSpec §1.4 Footer).
+import AsciiWordmark from './AsciiWordmark.astro';
+import { SITE } from '../site.config';
+
+const { links } = SITE;
+const connect = [
+  { label: 'GitHub', href: links.github },
+  { label: 'LinkedIn', href: links.linkedin },
+  { label: 'X', href: links.x },
+  { label: 'Medium', href: links.medium },
+  { label: 'Email', href: `mailto:${SITE.email}` },
+  { label: 'RSS', href: '/rss.xml' },
+  { label: 'Monkeytype', href: links.monkeytype },
+  { label: 'Steam Workshop', href: links.steamWorkshop },
+].filter((l): l is { label: string; href: string } => l.href !== null);
+
+const site = [
+  { label: 'blog', href: '/blog/' },
+  { label: 'projects', href: '/projects/' },
+  { label: 'level design archive', href: '/projects/level-design/' },
+  { label: 'about', href: '/about/' },
+  { label: 'resume.pdf', href: SITE.resume },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container cols">
+    <div>
+      <AsciiWordmark text={SITE.wordmark} label={SITE.name} />
+      <p class="muted tagline">{SITE.tagline}</p>
+    </div>
+    <div>
+      <h2 class="label">Connect</h2>
+      <ul role="list">
+        {
+          connect.map((l) => (
+            <li>
+              <a href={l.href}>
+                {l.label}
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h2 class="label">Site</h2>
+      <ul role="list">
+        {
+          site.map((l) => (
+            <li>
+              <a href={l.href}>
+                {l.label}
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+        <li><a href="#top">back to top <span aria-hidden="true">↑</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container bottom">
+    <span>// jay parekh — {year}</span>
+    <span>built with astro · 0 trackers</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: var(--hairline) solid var(--border);
+    padding-top: clamp(4rem, 3rem + 3vw, 6rem);
+  }
+
+  .cols {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  @media (min-width: 64rem) {
+    .cols {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .tagline {
+    margin-top: var(--space-4);
+    font-size: var(--fs-ui);
+  }
+
+  h2 {
+    margin-bottom: var(--space-4);
+    font-weight: 400;
+  }
+
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 1.75rem;
+    font-size: var(--fs-ui);
+  }
+
+  .arrow {
+    opacity: 0;
+  }
+
+  a:hover .arrow,
+  a:focus-visible .arrow {
+    opacity: 1;
+  }
+
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: clamp(4rem, 3rem + 3vw, 6rem);
+    padding-block: var(--space-6);
+    border-top: var(--hairline) solid var(--border);
+    font-size: var(--fs-micro);
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .arrow {
+      transition: opacity var(--duration);
+    }
+  }
+</style>

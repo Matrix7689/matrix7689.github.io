@@ -1,0 +1,35 @@
+---
+// Terminal-style empty state (SPEC §5, §4.1).
+import TerminalCard from './TerminalCard.astro';
+
+interface Props {
+  command: string;
+  message: string;
+  link?: { label: string; href: string } | undefined;
+  title?: string;
+}
+
+const { command, message, link, title = 'terminal' } = Astro.props;
+---
+
+<TerminalCard title={title}>
+  <p><span class="muted" aria-hidden="true">$ </span>{command}</p>
+  <p class="muted">
+    {message}
+    {
+      link && (
+        <>
+          {' '}
+          <a href={link.href}>{link.label}</a>
+        </>
+      )
+    }
+  </p>
+</TerminalCard>
+
+<style>
+  a {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+</style>

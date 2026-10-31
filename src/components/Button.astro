@@ -1,0 +1,65 @@
+---
+// Link styled as a button (SPEC §5, DesignSpec §1.4 Buttons).
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  download?: boolean | string;
+  arrow?: boolean;
+}
+
+const { href, variant = 'primary', download, arrow = true } = Astro.props;
+---
+
+<a class:list={['btn', `btn--${variant}`]} href={href} download={download === true ? '' : download || undefined}>
+  <slot />
+  {arrow && <span class="btn__arrow" aria-hidden="true">→</span>}
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap);
+    padding: var(--space-3) var(--space-6);
+    border: var(--hairline) solid;
+    font-size: var(--fs-body);
+    text-decoration: none;
+  }
+
+  .btn--primary {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn--primary:hover {
+    background: transparent;
+    color: var(--fg);
+  }
+
+  .btn--secondary {
+    border-color: var(--border);
+    color: var(--muted);
+  }
+
+  .btn--secondary:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+
+  .btn:hover .btn__arrow {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn,
+    .btn__arrow {
+      transition:
+        background-color var(--duration),
+        color var(--duration),
+        border-color var(--duration),
+        transform var(--duration);
+    }
+  }
+</style>

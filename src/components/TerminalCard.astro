@@ -1,0 +1,72 @@
+---
+// Bordered terminal window with three square dots (SPEC §5, DesignSpec §1.4 Terminal window card).
+interface Props {
+  title: string;
+  variant?: 'default' | 'inverted';
+}
+
+const { title, variant = 'default' } = Astro.props;
+---
+
+<div class:list={['term', `term--${variant}`]}>
+  <div class="term__bar">
+    <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span class="term__title">{title}</span>
+  </div>
+  <div class="term__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .term {
+    border: var(--hairline) solid var(--border);
+    background: var(--bg);
+  }
+
+  .term__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    border-bottom: var(--hairline) solid var(--border);
+    font-size: var(--fs-micro);
+    color: var(--muted);
+  }
+
+  .dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .dots span {
+    width: 8px;
+    height: 8px;
+    background: var(--fg);
+  }
+
+  .dots span:nth-child(2) {
+    opacity: 0.5;
+  }
+
+  .dots span:nth-child(3) {
+    opacity: 0.3;
+  }
+
+  .term__body {
+    padding: var(--space-4);
+    background: var(--card);
+    font-size: var(--fs-ui);
+    line-height: 1.7;
+  }
+
+  .term--inverted .term__bar {
+    background: var(--fg);
+    color: var(--bg);
+    border-bottom-color: var(--fg);
+  }
+
+  .term--inverted .dots span {
+    background: var(--bg);
+  }
+</style>

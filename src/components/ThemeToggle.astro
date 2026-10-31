@@ -1,0 +1,62 @@
+---
+// Light/dark toggle (SPEC §5, D9a). Needs JS; hidden by a <noscript> style in Base when JS is off.
+---
+
+<button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">
+  <span class="box" aria-hidden="true"></span><span class="text">dark</span>
+</button>
+<script is:inline>
+  (function () {
+    var b = document.getElementById('theme-toggle');
+    var d = document.documentElement;
+    function sync() {
+      b.setAttribute('aria-pressed', d.dataset.theme === 'dark' ? 'true' : 'false');
+    }
+    sync();
+    b.addEventListener('click', function () {
+      var t = d.dataset.theme === 'dark' ? 'light' : 'dark';
+      d.dataset.theme = t;
+      try {
+        localStorage.setItem('theme', t);
+      } catch (e) {}
+      sync();
+    });
+  })();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    min-width: var(--tap);
+    padding-inline: var(--space-3);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+
+  .box::before {
+    content: '[ ]';
+  }
+
+  .theme-toggle[aria-pressed='true'] .box::before {
+    content: '[x]';
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .theme-toggle {
+      transition:
+        color var(--duration),
+        border-color var(--duration);
+    }
+  }
+</style>

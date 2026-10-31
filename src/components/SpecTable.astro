@@ -1,0 +1,77 @@
+---
+// Label/value facts table (SPEC §5, DesignSpec §1.4 Spec table).
+interface Row {
+  label: string;
+  value: string;
+  href?: string | undefined;
+}
+
+interface Props {
+  label: string;
+  rows: Row[];
+}
+
+const { label, rows } = Astro.props;
+---
+
+<div class="spec">
+  <p class="spec__head label"><span class="sq" aria-hidden="true"></span>{label}</p>
+  <dl>
+    {
+      rows.map((row) => (
+        <div class="spec__row">
+          <dt>{row.label}</dt>
+          <dd>{row.href ? <a href={row.href}>{row.value}</a> : row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>
+
+<style>
+  .spec {
+    border: var(--hairline) solid var(--border);
+  }
+
+  .spec__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  .sq {
+    width: 6px;
+    height: 6px;
+    background: var(--fg);
+  }
+
+  .spec__row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: 0.625rem var(--space-4);
+    font-size: var(--fs-ui);
+  }
+
+  .spec__row + .spec__row {
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  .spec__row:hover {
+    background: var(--card);
+  }
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    text-align: right;
+  }
+
+  dd a {
+    text-decoration-line: underline;
+  }
+</style>

@@ -1,0 +1,184 @@
+---
+// Sticky top navigation (SPEC §5, DesignSpec §1.4). No JS: the mobile menu is <details> (D8).
+import ThemeToggle from './ThemeToggle.astro';
+import { NAV, SITE, type NavId } from '../site.config';
+
+interface Props {
+  current?: NavId | undefined;
+}
+
+const { current } = Astro.props;
+const items = NAV.map((item, i) => ({ ...item, n: String(i + 1).padStart(2, '0') }));
+---
+
+<header class="site-header" id="top">
+  <div class="container bar">
+    <a class="brand" href="/" aria-current={current === 'home' ? 'page' : undefined}>
+      <span class="prompt" aria-hidden="true">&gt;</span>
+      <span>{SITE.name}</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="links links--wide" role="list">
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current === item.id ? 'page' : undefined}>
+                <span class="n" aria-hidden="true">{item.n}</span>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <details class="menu">
+        <summary>menu</summary>
+        <ul class="links links--stacked" role="list">
+          {
+            items.map((item) => (
+              <li>
+                <a href={item.href} aria-current={current === item.id ? 'page' : undefined}>
+                  <span class="n" aria-hidden="true">{item.n}</span>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </nav>
+    <ThemeToggle />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 3.5rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    margin-right: auto;
+    font-size: var(--fs-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+  }
+
+  .prompt {
+    color: var(--muted);
+  }
+
+  nav {
+    position: relative;
+  }
+
+  .links {
+    list-style: none;
+    padding: 0;
+  }
+
+  .links a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    text-decoration: none;
+  }
+
+  .links a:hover,
+  .links a[aria-current='page'] {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .n {
+    opacity: 0.5;
+  }
+
+  .links--wide {
+    display: none;
+  }
+
+  .menu summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu summary::before {
+    content: '+';
+    margin-right: var(--space-2);
+    color: var(--muted);
+  }
+
+  .menu[open] summary::before {
+    content: '−';
+  }
+
+  .menu summary:hover {
+    border-color: var(--fg);
+  }
+
+  .links--stacked {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    min-width: 12rem;
+    background: var(--bg);
+    border: var(--hairline) solid var(--border);
+  }
+
+  .links--stacked li + li {
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  @media (min-width: 48rem) {
+    .links--wide {
+      display: flex;
+      gap: var(--space-1);
+    }
+
+    .menu {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .links a,
+    .menu summary {
+      transition:
+        background-color var(--duration),
+        color var(--duration),
+        border-color var(--duration);
+    }
+  }
+</style>

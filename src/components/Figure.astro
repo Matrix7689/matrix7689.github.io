@@ -1,0 +1,39 @@
+---
+// Highlight stat with a "Fig N." caption (SPEC §5, DesignSpec §2.1).
+interface Props {
+  n: number;
+  value: string;
+  caption: string;
+}
+
+const { n, value, caption } = Astro.props;
+---
+
+<figure class="stat">
+  <p class="stat__value">{value}</p>
+  <figcaption><span class="stat__n">Fig {n}.</span> {caption}</figcaption>
+</figure>
+
+<style>
+  .stat {
+    padding: var(--space-6) var(--space-4);
+    border: var(--hairline) solid var(--border);
+  }
+
+  .stat__value {
+    font-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+    font-weight: 700;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+  }
+
+  figcaption {
+    margin-top: var(--space-3);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .stat__n {
+    color: var(--fg);
+  }
+</style>

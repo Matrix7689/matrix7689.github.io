@@ -1,0 +1,41 @@
+---
+// Temporary home page (SPEC Stage 1 task 9). Replaced by the real home page in Stage 4.
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import { SITE } from '../site.config';
+---
+
+<Base title="Jay Parekh · Software Engineer" description="Portfolio and blog of Jay Parekh, software engineer." current="home">
+  <section class="container intro" aria-labelledby="intro-title">
+    <Badge label="Software engineer · Seattle" />
+    <h1 id="intro-title">
+      <span>{SITE.name}</span>
+      <span class="muted">{SITE.role}</span>
+    </h1>
+    <p class="muted">Rebuild in progress.</p>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+    padding-block: var(--space-section);
+  }
+
+  h1 {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  h1 span:first-child {
+    font-size: var(--fs-hero);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.03em;
+  }
+
+  h1 span:last-child {
+    font-size: var(--fs-title);
+  }
+</style>

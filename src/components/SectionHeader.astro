@@ -1,0 +1,45 @@
+---
+// Ghost number + prompt-style title + hairline (SPEC §5, DesignSpec §1.4 Section header).
+interface Props {
+  number: string;
+  title: string;
+  id: string;
+}
+
+const { number, title, id } = Astro.props;
+---
+
+<div class="section-header">
+  <span class="ghost" aria-hidden="true">{number}</span>
+  <h2 id={id}>{title}</h2>
+  <span class="rule" aria-hidden="true"></span>
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .ghost {
+    font-size: var(--fs-ghost);
+    font-weight: 700;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.04em;
+    opacity: var(--opacity-ghost);
+    user-select: none;
+  }
+
+  h2 {
+    font-size: var(--fs-title);
+    white-space: nowrap;
+  }
+
+  .rule {
+    flex: 1;
+    height: var(--hairline);
+    background: var(--border);
+  }
+</style>
