@@ -1,0 +1,2216 @@
+{
+  "summary": {
+    "legacyCommit": "5881795 Updated Work experience section and Resume",
+    "generatedAt": "2026-10-31T05:20:19.549Z",
+    "maps": 12,
+    "mapJpegs": 62,
+    "softwareProjects": 4,
+    "projectGifs": 2,
+    "projectPngs": 2,
+    "imagesMissingMetadata": [],
+    "mapImageCountMismatches": [],
+    "externalLinks": 17,
+    "externalLinksFailing": [],
+    "oldSiteFiles": 147,
+    "oldSiteBytes": 40920601
+  },
+  "pages": [
+    {
+      "file": "index.html",
+      "bytes": 37717,
+      "title": "Jay Parekh Portfolio",
+      "description": "Jay Parekh | Software Developer | Level Designer | Matrix7689",
+      "sections": [
+        {
+          "id": "header",
+          "heading": null,
+          "text": "Jay, JP, Matrix7689 Jay, JP, Matrix7689 Home About Experience Works Contact Last Updated on April 2024",
+          "disposition": "drop",
+          "note": "rotating \"Jay, JP, Matrix7689\" text and vertical menu dropped; new Nav (§5)"
+        },
+        {
+          "id": "home",
+          "heading": "Jay \"Matrix7689\" Parekh",
+          "text": "Jay \"Matrix7689\" Parekh I'm a Software Development Engineer, 3D Level Designer, Full Stack Developer Get In Touch Scroll Down",
+          "disposition": "transform",
+          "note": "name/links reused in Intro (§4.1); rotating text, avatar, parallax, scroll mouse dropped"
+        },
+        {
+          "id": "about",
+          "heading": "About Me",
+          "text": "About Me I'm a software engineer, shaping the digital landscape with code during the day. Post work, I dive into the world of video games. Beyond my coding endeavors, I find creative fulfillment in designing 3D levels and managing gaming servers. Download CV Coding 💻 Level Design 🎨 Gaming 🎮 55 3D Level Designs 1,052,075 Map Downloads 12,340,926 Map Views 32 eSports Events 64,214 Lines of Code 123 WPM Typing Speed 8 Github Repos 622 Cups of Coffee 25 Sneakers 74,156 Minutes on Spotify 340 Bowls of Ramen 72 Video Games",
+          "disposition": "transform",
+          "note": "bio rewritten (§4.6, N4); map stats → archive (§4.7); fun stats dropped"
+        },
+        {
+          "id": "experience",
+          "heading": "Education and Experience",
+          "text": "Education and Experience August 2019 - May 2021 University of Southern California Master's in Computer Science Location: Los Angeles, California, USA Relevant Coursework: Web Technologies, 3-D Graphics and Rendering, Analysis of Algorithms, Foundations of Artificial Intelligence, Advanced Mobile Devices and Game Consoles August 2015 - May 2019 University of Mumbai Bachelor of Engineering in Information Technology Location: Mumbai, Maharashtra, India Relevant Coursework: Data Structure and Algorithm Analysis, Computer Graphics and Virtual Reality, Object Oriented Programming Methodology, Image Processing, Web Programming August 2013 - May 2015 High School Computer Science Specialization Location: Mumbai, Maharashtra, India Relevant Coursework: C++, Operating System, Data Structures, HTML, CSS, 8085 Microprocessors, 8085 Instruction Set, Newtorking Technology, Microcontrollers, Assembly Language December 2023 - Present | Amazon Software Development Engineer II Location: Seattle, Washington, USA Enhanced and optimized the existing shopping cart throttling mechanism, providing robust protection against bot attacks and ensuring uninterrupted service availability. Proactively updated the service documentation and dashboards. July 2021 - December 2023 | Amazon Software Development Engineer I Location: Seattle, Washington, USA Devised translation and invocation strategies for a novel service. Collaborated with partner teams and engineers, exploring multiple approaches. Held two design discussions and facilitated a backlog grooming session with task breakdown. The chosen approach leveraged existing components, resulting in a 3-4 month reduction in overall implementation effort. Collaborated with various partner teams on a service migration initiative. Successfully implemented an optimized solution that significantly improved the shopping cart performance, resulting in a global latency reduction of tm99 10ms and substantial savings in infrastructure costs. Achieved $1,740,000 in infrastructure cost savings by refactoring the shopping cart caching storage solution. Simultaneously, this optimization led to a global latency reduction of tm99 15ms. Assisted the client team in migrating to a newer version of the Shopping Cart. Conducted design discussions and implemented solutions that ensured backward compatibility and included metrics for tracking. Operational work – Restored 3 pipelines with 16 regions, ran 5 peak traffic simulations, setup a testing framework that fires mock requests, restructured the primary pipeline, resolved security risks, and ran stress tests. Teamwork – Mentored two Software Engineers, conducted Knowledge Transfer sessions on valuable internal debugging and log querying tools. Actively participated in team design discussions and proactively maintained service documentation. May 2020 - August 2020 | Amazon Software Development Engineer Intern Location: Los Angeles, California, USA Developed a Full-Stack end to end service tool, consumed by the Ordering Shopping Cart team. Brought down operation time from 4 hours to 5 minutes by automating the existing manual and error-prone process. Designed a UI in ReactJS with filtering, sorting, pagination, selection and form validation features. Implemented and devised new APIs in Java which act as the middleware between the Front-end and other Back-end components. July 2017 - February 2019 Bigshine Media & Entertainment Chief Technical Officer Location: Mumbai, Maharashtra, India Led operations of 4 subsidiaries: Mammoth Media, Mammoth Gears, Ironhead Productions and Mammoth Gaming. Headed a group of 3 in developing 3 websites (both front-end and back-end). Communicated, co-ordinated and contacted large companies such as Cooler Master, Zowie by BenQ, Circle Gaming, USports and Entity Gaming. Supervised technical operations of video games in “U CYPHER SEASON 1” TV show telecasted on MTV India.",
+          "disposition": "transform",
+          "note": "reused in §4.2 / §4.6; high school dropped"
+        },
+        {
+          "id": "works",
+          "heading": "Works",
+          "text": "Works All Level Designs Web Dev AI ML All Level Designs Web Dev AI ML Web Dev, Android NewsApp - Android Application NewsApp - Android Application The app shows latest news using Guardian API, and latest weather information using OpenWeatherMap API - based on user's live location. Users can bookmark any article that they like and it is saved locally using SharedPreferences. Used Google Trends API and MP Android Chart to graph keyword trends searched by users. Implemented Bing Autosuggest API in the search bar to help users look for news related to a specific keyword. View on Github AI BFS UCS A* BFS UCS A* A C++11 program that will take an input file that describes the terrain map, landing site, target sites, and characteristics of a Mars rover robot and for each target site, it will find the optimal (shortest) safe path from the landing site to that target. A path is composed of a sequence of elementary moves. Each elementary move consists of moving the rover to one of its 8 neighbors. View on Github Level Design Awp Lego Asia Level Design Lcz Ctf Galaxy Level Design Awp Lego X Level Design Awp Taj Heaven AI Halma Game Playing Agent Halma Game Playing Agent A C++11 programmed AI will play the game of Halma, an adversarial game with some similarities to checkers. The game uses a 16x16 checkered gameboard. Each player starts with 19 game pieces clustered in diagonally opposite corners of the board. To win the game, a player needs to transfer all of their pieces from their starting corner to the opposite corner, into the positions that were initially occupied by the opponent. Read this article for further details on Halma and its rules. Essentially, our agent will evaluate the gameboard and output the best / optimal move by using Alpha Beta Pruning Minimax algorithm upto 3-ply. View on Github Web Dev NewsApp - React Website NewsApp - React Website A responsive website made using ReactJS and NodeJS which displays latest news from different categories from New York Times API and Guardian API. Users can share any article through Facebook, Twitter or Email. Users can also bookmark any article that they like and it is saved locally using HTML5 LocalStorage. Implemented asynchronous select option to allow users to search for news based on a particular search keyword. Live Website View on Github Level Design Awp Lego Fort Load more 1 2",
+          "disposition": "transform",
+          "note": "replaced by /projects/ + level-design archive"
+        },
+        {
+          "id": "testimonials",
+          "heading": "Tech Stack",
+          "text": "Tech Stack",
+          "disposition": "transform",
+          "note": "tech-stack logos → text skills line (§4.1)"
+        },
+        {
+          "id": "contact",
+          "heading": "Get In Touch",
+          "text": "Get In Touch Email me",
+          "disposition": "transform",
+          "note": "email link in intro and footer"
+        }
+      ]
+    },
+    {
+      "file": "works-2.html",
+      "bytes": 5628,
+      "title": null,
+      "description": null,
+      "sections": [
+        {
+          "id": "works-2",
+          "heading": "Works (page 2, loaded by infinite scroll)",
+          "text": "Level Design Aim Devbeach Level Design Aim Lego AK Level Design Ar Industry Level Design Awp Lego 2016 Level Design Awp Lego 2015 Level Design Awp Lego Z Level Design Awp Tridust",
+          "disposition": "transform",
+          "note": "maps 6–12 → level-design archive"
+        }
+      ]
+    }
+  ],
+  "content": {
+    "socialLinks": [
+      {
+        "url": "https://github.com/Matrix7689",
+        "icon": "fab fa-github",
+        "disposition": "keep",
+        "note": "GitHub profile (Q4)"
+      },
+      {
+        "url": "https://steamcommunity.com/id/MatrixIN",
+        "icon": "fab fa-steam",
+        "disposition": "keep",
+        "note": "level-design archive only (Q4)"
+      },
+      {
+        "url": "https://www.linkedin.com/in/jaymparekh",
+        "icon": "fab fa-linkedin",
+        "disposition": "keep",
+        "note": "Q4"
+      },
+      {
+        "url": "https://twitter.com/jayp_or_jp",
+        "icon": "fab fa-x-twitter",
+        "disposition": "keep",
+        "note": "X (Q4)"
+      },
+      {
+        "url": "https://www.instagram.com/jp_got_klicks/",
+        "icon": "fab fa-instagram",
+        "disposition": "drop",
+        "note": "Q4"
+      },
+      {
+        "url": "https://open.spotify.com/user/uevk9drojgyjsxc63fjcda83j?si=9a39a63d74f447c0",
+        "icon": "fab fa-spotify",
+        "disposition": "drop",
+        "note": "Q4"
+      },
+      {
+        "url": "https://matrix7689.github.io/Jay_Parekh_Resume.pdf",
+        "icon": "far fa-file-lines",
+        "disposition": "keep",
+        "note": "becomes relative /Jay_Parekh_Resume.pdf"
+      },
+      {
+        "url": "https://monkeytype.com/profile/matrix7689",
+        "icon": "far fa-keyboard",
+        "disposition": "drop",
+        "note": "Q4"
+      },
+      {
+        "url": "mailto:jay.parekh7689@gmail.com",
+        "icon": "fas fa-envelope",
+        "disposition": "keep",
+        "note": "email (N2)"
+      }
+    ],
+    "facts": [
+      {
+        "value": "55",
+        "label": "3D Level Designs",
+        "disposition": "move",
+        "note": "level-design archive stats (§4.7)"
+      },
+      {
+        "value": "1,052,075",
+        "label": "Map Downloads",
+        "disposition": "move",
+        "note": "level-design archive stats (§4.7)"
+      },
+      {
+        "value": "12,340,926",
+        "label": "Map Views",
+        "disposition": "move",
+        "note": "level-design archive stats (§4.7)"
+      },
+      {
+        "value": "32",
+        "label": "eSports Events",
+        "disposition": "review",
+        "note": "N11: old site 32 vs resume 20+"
+      },
+      {
+        "value": "64,214",
+        "label": "Lines of Code",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "123",
+        "label": "WPM Typing Speed",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "8",
+        "label": "Github Repos",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "622",
+        "label": "Cups of Coffee",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "25",
+        "label": "Sneakers",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "74,156",
+        "label": "Minutes on Spotify",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "340",
+        "label": "Bowls of Ramen",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      },
+      {
+        "value": "72",
+        "label": "Video Games",
+        "disposition": "drop",
+        "note": "fun stat (§1.2, §4.10)"
+      }
+    ],
+    "education": [
+      {
+        "dates": "August 2019 - May 2021",
+        "org": "University of Southern California",
+        "role": "Master's in Computer Science",
+        "location": "Los Angeles, California, USA",
+        "bullets": [
+          "Relevant Coursework: Web Technologies, 3-D Graphics and Rendering, Analysis of Algorithms, Foundations of Artificial Intelligence, Advanced Mobile Devices and Game Consoles"
+        ]
+      },
+      {
+        "dates": "August 2015 - May 2019",
+        "org": "University of Mumbai",
+        "role": "Bachelor of Engineering in Information Technology",
+        "location": "Mumbai, Maharashtra, India",
+        "bullets": [
+          "Relevant Coursework: Data Structure and Algorithm Analysis, Computer Graphics and Virtual Reality, Object Oriented Programming Methodology, Image Processing, Web Programming"
+        ]
+      },
+      {
+        "dates": "August 2013 - May 2015",
+        "org": "High School",
+        "role": "Computer Science Specialization",
+        "location": "Mumbai, Maharashtra, India",
+        "bullets": [
+          "Relevant Coursework: C++, Operating System, Data Structures, HTML, CSS, 8085 Microprocessors, 8085 Instruction Set, Newtorking Technology, Microcontrollers, Assembly Language"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "dates": "December 2023 - Present",
+        "org": "Amazon",
+        "role": "Software Development Engineer II",
+        "location": "Seattle, Washington, USA",
+        "bullets": [
+          "Enhanced and optimized the existing shopping cart throttling mechanism, providing robust protection against bot attacks and ensuring uninterrupted service availability.",
+          "Proactively updated the service documentation and dashboards."
+        ]
+      },
+      {
+        "dates": "July 2021 - December 2023",
+        "org": "Amazon",
+        "role": "Software Development Engineer I",
+        "location": "Seattle, Washington, USA",
+        "bullets": [
+          "Devised translation and invocation strategies for a novel service. Collaborated with partner teams and engineers, exploring multiple approaches. Held two design discussions and facilitated a backlog grooming session with task breakdown. The chosen approach leveraged existing components, resulting in a 3-4 month reduction in overall implementation effort.",
+          "Collaborated with various partner teams on a service migration initiative. Successfully implemented an optimized solution that significantly improved the shopping cart performance, resulting in a global latency reduction of tm99 10ms and substantial savings in infrastructure costs.",
+          "Achieved $1,740,000 in infrastructure cost savings by refactoring the shopping cart caching storage solution. Simultaneously, this optimization led to a global latency reduction of tm99 15ms.",
+          "Assisted the client team in migrating to a newer version of the Shopping Cart. Conducted design discussions and implemented solutions that ensured backward compatibility and included metrics for tracking.",
+          "Operational work – Restored 3 pipelines with 16 regions, ran 5 peak traffic simulations, setup a testing framework that fires mock requests, restructured the primary pipeline, resolved security risks, and ran stress tests.",
+          "Teamwork – Mentored two Software Engineers, conducted Knowledge Transfer sessions on valuable internal debugging and log querying tools. Actively participated in team design discussions and proactively maintained service documentation."
+        ]
+      },
+      {
+        "dates": "May 2020 - August 2020",
+        "org": "Amazon",
+        "role": "Software Development Engineer Intern",
+        "location": "Los Angeles, California, USA",
+        "bullets": [
+          "Developed a Full-Stack end to end service tool, consumed by the Ordering Shopping Cart team.",
+          "Brought down operation time from 4 hours to 5 minutes by automating the existing manual and error-prone process.",
+          "Designed a UI in ReactJS with filtering, sorting, pagination, selection and form validation features.",
+          "Implemented and devised new APIs in Java which act as the middleware between the Front-end and other Back-end components."
+        ]
+      },
+      {
+        "dates": "July 2017 - February 2019",
+        "org": "Bigshine Media & Entertainment",
+        "role": "Chief Technical Officer",
+        "location": "Mumbai, Maharashtra, India",
+        "bullets": [
+          "Led operations of 4 subsidiaries: Mammoth Media, Mammoth Gears, Ironhead Productions and Mammoth Gaming.",
+          "Headed a group of 3 in developing 3 websites (both front-end and back-end).",
+          "Communicated, co-ordinated and contacted large companies such as Cooler Master, Zowie by BenQ, Circle Gaming, USports and Entity Gaming.",
+          "Supervised technical operations of video games in “U CYPHER SEASON 1” TV show telecasted on MTV India."
+        ]
+      }
+    ],
+    "techStack": [
+      "C++",
+      "Java",
+      "React",
+      "AWS",
+      "NodeJS",
+      "Android",
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Python",
+      "MySQL",
+      "Hammer"
+    ]
+  },
+  "projects": [
+    {
+      "page": "index.html",
+      "oldTitle": "NewsApp - Android Application",
+      "oldCategory": "Web Dev, Android",
+      "title": "NewsApp: Android app",
+      "oldFolder": "images/works",
+      "proposedSlug": "newsapp-android",
+      "newPath": "src/assets/projects/newsapp-android/cover.png",
+      "description": [
+        "The app shows latest news using Guardian API, and latest weather information using OpenWeatherMap API - based on user's live location.",
+        "Users can bookmark any article that they like and it is saved locally using SharedPreferences.",
+        "Used Google Trends API and MP Android Chart to graph keyword trends searched by users.",
+        "Implemented Bing Autosuggest API in the search bar to help users look for news related to a specific keyword."
+      ],
+      "links": [
+        "https://www.youtube.com/embed/Pxl6860Nsec",
+        "https://github.com/Matrix7689/NewsApp-Android"
+      ],
+      "gallery": [
+        {
+          "file": "images/works/android_news.png",
+          "bytes": 699567,
+          "width": 800,
+          "height": 800,
+          "format": "png"
+        }
+      ]
+    },
+    {
+      "page": "index.html",
+      "oldTitle": "BFS UCS A*",
+      "oldCategory": "AI",
+      "title": "Mars rover path search (BFS / UCS / A*)",
+      "oldFolder": "images/works",
+      "proposedSlug": "mars-rover-search",
+      "newPath": "src/assets/projects/mars-rover-search/demo.gif",
+      "description": [
+        "A C++11 program that will take an input file that describes the terrain map, landing site, target sites, and characteristics of a Mars rover robot and for each target site, it will find the optimal (shortest) safe path from the landing site to that target. A path is composed of a sequence of elementary moves. Each elementary move consists of moving the rover to one of its 8 neighbors."
+      ],
+      "links": [
+        "https://github.com/Matrix7689/BFS-UCS-AStar"
+      ],
+      "gallery": [
+        {
+          "file": "images/works/bfs.gif",
+          "bytes": 799357,
+          "width": 567,
+          "height": 320,
+          "format": "gif",
+          "frames": 225
+        }
+      ]
+    },
+    {
+      "page": "index.html",
+      "oldTitle": "Halma Game Playing Agent",
+      "oldCategory": "AI",
+      "title": "Halma game-playing agent",
+      "oldFolder": "images/works",
+      "proposedSlug": "halma-ai",
+      "newPath": "src/assets/projects/halma-ai/demo.gif",
+      "description": [
+        "A C++11 programmed AI will play the game of Halma, an adversarial game with some similarities to checkers. The game uses a 16x16 checkered gameboard. Each player starts with 19 game pieces clustered in diagonally opposite corners of the board. To win the game, a player needs to transfer all of their pieces from their starting corner to the opposite corner, into the positions that were initially occupied by the opponent. Read this article for further details on Halma and its rules.",
+        "Essentially, our agent will evaluate the gameboard and output the best / optimal move by using Alpha Beta Pruning Minimax algorithm upto 3-ply."
+      ],
+      "links": [
+        "https://github.com/Matrix7689/Halma-AI"
+      ],
+      "gallery": [
+        {
+          "file": "images/works/halma.gif",
+          "bytes": 2905163,
+          "width": 480,
+          "height": 480,
+          "format": "gif",
+          "frames": 498
+        }
+      ]
+    },
+    {
+      "page": "index.html",
+      "oldTitle": "NewsApp - React Website",
+      "oldCategory": "Web Dev",
+      "title": "NewsApp: React website",
+      "oldFolder": "images/works",
+      "proposedSlug": "newsapp-react",
+      "newPath": "src/assets/projects/newsapp-react/cover.png",
+      "description": [
+        "A responsive website made using ReactJS and NodeJS which displays latest news from different categories from New York Times API and Guardian API.",
+        "Users can share any article through Facebook, Twitter or Email. Users can also bookmark any article that they like and it is saved locally using HTML5 LocalStorage.",
+        "Implemented asynchronous select option to allow users to search for news based on a particular search keyword."
+      ],
+      "links": [
+        "https://www.youtube.com/embed/LMVtO46jhlI",
+        "http://hw8react.appspot.com/",
+        "https://github.com/Matrix7689/NewsApp-React"
+      ],
+      "gallery": [
+        {
+          "file": "images/works/react_news.png",
+          "bytes": 322518,
+          "width": 800,
+          "height": 600,
+          "format": "png"
+        }
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "order": 1,
+      "page": "index.html",
+      "oldTitle": "Awp Lego Asia",
+      "title": "AWP Lego Asia",
+      "oldFolder": "images/works/awplegoasia",
+      "proposedSlug": "awp-lego-asia",
+      "newFolder": "src/assets/level-design/awp-lego-asia",
+      "expectedImages": 7,
+      "cover": "images/works/awplegoasia/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplegoasia/0_main.jpg",
+          "bytes": 553886,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/1.jpg",
+          "bytes": 447386,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/2.jpg",
+          "bytes": 383352,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/3.jpg",
+          "bytes": 481811,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/4.jpg",
+          "bytes": 643781,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/5.jpg",
+          "bytes": 446006,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoasia/6.jpg",
+          "bytes": 494638,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "page": "index.html",
+      "oldTitle": "Lcz Ctf Galaxy",
+      "title": "LCZ CTF Galaxy",
+      "oldFolder": "images/works/lczctfgalaxy",
+      "proposedSlug": "lcz-ctf-galaxy",
+      "newFolder": "src/assets/level-design/lcz-ctf-galaxy",
+      "expectedImages": 6,
+      "cover": "images/works/lczctfgalaxy/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/lczctfgalaxy/0_main.jpg",
+          "bytes": 621897,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/lczctfgalaxy/1.jpg",
+          "bytes": 628766,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/lczctfgalaxy/2.jpg",
+          "bytes": 497209,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/lczctfgalaxy/3.jpg",
+          "bytes": 581980,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/lczctfgalaxy/4.jpg",
+          "bytes": 486767,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/lczctfgalaxy/5.jpg",
+          "bytes": 150725,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "page": "index.html",
+      "oldTitle": "Awp Lego X",
+      "title": "AWP Lego X",
+      "oldFolder": "images/works/awplegox",
+      "proposedSlug": "awp-lego-x",
+      "newFolder": "src/assets/level-design/awp-lego-x",
+      "expectedImages": 5,
+      "cover": "images/works/awplegox/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplegox/0_main.jpg",
+          "bytes": 587038,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegox/1.jpg",
+          "bytes": 833729,
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegox/2.jpg",
+          "bytes": 423145,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegox/3.jpg",
+          "bytes": 490376,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegox/4.jpg",
+          "bytes": 691244,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "page": "index.html",
+      "oldTitle": "Awp Taj Heaven",
+      "title": "AWP Taj Heaven",
+      "oldFolder": "images/works/awptajheaven",
+      "proposedSlug": "awp-taj-heaven",
+      "newFolder": "src/assets/level-design/awp-taj-heaven",
+      "expectedImages": 5,
+      "cover": "images/works/awptajheaven/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awptajheaven/0_main.jpg",
+          "bytes": 330015,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptajheaven/1.jpg",
+          "bytes": 349183,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptajheaven/2.jpg",
+          "bytes": 329341,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptajheaven/3.jpg",
+          "bytes": 374646,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptajheaven/4.jpg",
+          "bytes": 495305,
+          "width": 1083,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "page": "index.html",
+      "oldTitle": "Awp Lego Fort",
+      "title": "AWP Lego Fort",
+      "oldFolder": "images/works/awplegofort",
+      "proposedSlug": "awp-lego-fort",
+      "newFolder": "src/assets/level-design/awp-lego-fort",
+      "expectedImages": 5,
+      "cover": "images/works/awplegofort/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplegofort/0_main.jpg",
+          "bytes": 575786,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegofort/1.jpg",
+          "bytes": 586310,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegofort/2.jpg",
+          "bytes": 494936,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegofort/3.jpg",
+          "bytes": 712237,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegofort/4.jpg",
+          "bytes": 459705,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "page": "works-2.html",
+      "oldTitle": "Aim Devbeach",
+      "title": "AIM Devbeach",
+      "oldFolder": "images/works/aimdevbeach",
+      "proposedSlug": "aim-devbeach",
+      "newFolder": "src/assets/level-design/aim-devbeach",
+      "expectedImages": 4,
+      "cover": "images/works/aimdevbeach/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/aimdevbeach/0_main.jpg",
+          "bytes": 339168,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/aimdevbeach/1.jpg",
+          "bytes": 327819,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/aimdevbeach/2.jpg",
+          "bytes": 315523,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/aimdevbeach/3.jpg",
+          "bytes": 400068,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "page": "works-2.html",
+      "oldTitle": "Aim Lego AK",
+      "title": "AIM Lego AK",
+      "oldFolder": "images/works/aimlegoak",
+      "proposedSlug": "aim-lego-ak",
+      "newFolder": "src/assets/level-design/aim-lego-ak",
+      "expectedImages": 3,
+      "cover": "images/works/aimlegoak/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/aimlegoak/0_main.jpg",
+          "bytes": 496570,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/aimlegoak/1.jpg",
+          "bytes": 644946,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/aimlegoak/2.jpg",
+          "bytes": 836573,
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "page": "works-2.html",
+      "oldTitle": "Ar Industry",
+      "title": "AR Industry",
+      "oldFolder": "images/works/arindustry",
+      "proposedSlug": "ar-industry",
+      "newFolder": "src/assets/level-design/ar-industry",
+      "expectedImages": 6,
+      "cover": "images/works/arindustry/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/arindustry/0_main.jpg",
+          "bytes": 443236,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/arindustry/1.jpg",
+          "bytes": 379529,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/arindustry/2.jpg",
+          "bytes": 361757,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/arindustry/3.jpg",
+          "bytes": 220596,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/arindustry/4.jpg",
+          "bytes": 331999,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/arindustry/5.jpg",
+          "bytes": 315188,
+          "width": 1600,
+          "height": 900,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "page": "works-2.html",
+      "oldTitle": "Awp Lego 2016",
+      "title": "AWP Lego 2016",
+      "oldFolder": "images/works/awplego2016",
+      "proposedSlug": "awp-lego-2016",
+      "newFolder": "src/assets/level-design/awp-lego-2016",
+      "expectedImages": 5,
+      "cover": "images/works/awplego2016/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplego2016/0_main.jpg",
+          "bytes": 576636,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2016/1.jpg",
+          "bytes": 348274,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2016/2.jpg",
+          "bytes": 510134,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2016/3.jpg",
+          "bytes": 507989,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2016/4.jpg",
+          "bytes": 933652,
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "page": "works-2.html",
+      "oldTitle": "Awp Lego 2015",
+      "title": "AWP Lego 2015",
+      "oldFolder": "images/works/awplego2015",
+      "proposedSlug": "awp-lego-2015",
+      "newFolder": "src/assets/level-design/awp-lego-2015",
+      "expectedImages": 6,
+      "cover": "images/works/awplego2015/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplego2015/0_main.jpg",
+          "bytes": 441605,
+          "width": 1280,
+          "height": 720,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2015/1.jpg",
+          "bytes": 522144,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2015/2.jpg",
+          "bytes": 603384,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2015/3.jpg",
+          "bytes": 454653,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2015/4.jpg",
+          "bytes": 552070,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplego2015/5.jpg",
+          "bytes": 414372,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "page": "works-2.html",
+      "oldTitle": "Awp Lego Z",
+      "title": "AWP Lego Z",
+      "oldFolder": "images/works/awplegoz",
+      "proposedSlug": "awp-lego-z",
+      "newFolder": "src/assets/level-design/awp-lego-z",
+      "expectedImages": 5,
+      "cover": "images/works/awplegoz/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awplegoz/0_main.jpg",
+          "bytes": 581903,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoz/1.jpg",
+          "bytes": 595989,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoz/2.jpg",
+          "bytes": 550736,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoz/3.jpg",
+          "bytes": 781029,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awplegoz/4.jpg",
+          "bytes": 444429,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "page": "works-2.html",
+      "oldTitle": "Awp Tridust",
+      "title": "AWP Tridust",
+      "oldFolder": "images/works/awptridust",
+      "proposedSlug": "awp-tridust",
+      "newFolder": "src/assets/level-design/awp-tridust",
+      "expectedImages": 5,
+      "cover": "images/works/awptridust/0_main.jpg",
+      "gallery": [
+        {
+          "file": "images/works/awptridust/0_main.jpg",
+          "bytes": 499010,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptridust/1.jpg",
+          "bytes": 442824,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptridust/2.jpg",
+          "bytes": 303762,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptridust/3.jpg",
+          "bytes": 395271,
+          "width": 1920,
+          "height": 1080,
+          "format": "jpeg"
+        },
+        {
+          "file": "images/works/awptridust/4.jpg",
+          "bytes": 349626,
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "url": "http://hw8react.appspot.com/",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "review",
+      "dispositionNote": "keep only if 2xx/3xx (§4.5)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://github.com/Matrix7689",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "GitHub profile (Q4)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://github.com/Matrix7689/BFS-UCS-AStar",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "project repo (§4.5)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://github.com/Matrix7689/Halma-AI",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "project repo (§4.5)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://github.com/Matrix7689/NewsApp-Android",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "project repo (§4.5)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://github.com/Matrix7689/NewsApp-React",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "project repo (§4.5)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://kit.fontawesome.com/011c4cad6c.js",
+      "foundIn": [
+        "index.html"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "no icon kits / third-party requests",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://matrix7689.github.io/Jay_Parekh_Resume.pdf",
+      "foundIn": [
+        "index.html",
+        "index.html#about",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "becomes relative /Jay_Parekh_Resume.pdf",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://monkeytype.com/profile/matrix7689",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "Q4",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://open.spotify.com/user/uevk9drojgyjsxc63fjcda83j?si=9a39a63d74f447c0",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "Q4",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://steamcommunity.com/id/MatrixIN",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "level-design archive only (Q4)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://twitter.com/jayp_or_jp",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "X (Q4)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://www.instagram.com/jp_got_klicks/",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "Q4",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://www.linkedin.com/in/jaymparekh",
+      "foundIn": [
+        "index.html",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "Q4",
+      "status": 999,
+      "ok": null,
+      "note": "bot block (LinkedIn); verify manually"
+    },
+    {
+      "url": "https://www.youtube.com/embed/LMVtO46jhlI",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "no third-party embeds (CLAUDE.md)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "https://www.youtube.com/embed/Pxl6860Nsec",
+      "foundIn": [
+        "index.html",
+        "index.html#works"
+      ],
+      "disposition": "drop",
+      "dispositionNote": "no third-party embeds (CLAUDE.md)",
+      "status": 200,
+      "ok": true,
+      "note": ""
+    },
+    {
+      "url": "mailto:jay.parekh7689@gmail.com",
+      "foundIn": [
+        "index.html",
+        "index.html#contact",
+        "index.html#home"
+      ],
+      "disposition": "keep",
+      "dispositionNote": "email (N2)",
+      "status": null,
+      "ok": null,
+      "note": "not HTTP; not checked"
+    }
+  ],
+  "rootFiles": [
+    {
+      "path": "Jay_Parekh_Resume.pdf",
+      "bytes": 222433,
+      "disposition": "keep",
+      "note": "same URL; `git mv` to public/ in Stage 1 (D11)"
+    },
+    {
+      "path": "Matrix_Completed_Games.txt",
+      "bytes": 1412,
+      "disposition": "drop",
+      "note": "§1.2 non-goal, §4.10"
+    },
+    {
+      "path": "index.html",
+      "bytes": 37717,
+      "disposition": "transform",
+      "note": "content reused in new pages (§4); file removed in Stage 1"
+    },
+    {
+      "path": "works-2.html",
+      "bytes": 5628,
+      "disposition": "transform",
+      "note": "becomes redirect stub → /projects/level-design/ (D11, Stage 8)"
+    }
+  ],
+  "files": [
+    {
+      "path": "Jay_Parekh_Resume.pdf",
+      "bytes": 222433,
+      "disposition": "keep",
+      "note": "same URL; `git mv` to public/ in Stage 1 (D11)"
+    },
+    {
+      "path": "Matrix_Completed_Games.txt",
+      "bytes": 1412,
+      "disposition": "drop",
+      "note": "§1.2 non-goal, §4.10"
+    },
+    {
+      "path": "css/all.min.css",
+      "bytes": 51227,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/animate.css",
+      "bytes": 77907,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/bootstrap.min.css",
+      "bytes": 153182,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/magnific-popup.css",
+      "bytes": 6951,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/simple-line-icons.css",
+      "bytes": 12982,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/slick.css",
+      "bytes": 4913,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "css/style.css",
+      "bytes": 49173,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/Simple-Line-Iconsb26c.eot",
+      "bytes": 54266,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/Simple-Line-Iconsb26c.svg",
+      "bytes": 239045,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/Simple-Line-Iconsb26c.ttf",
+      "bytes": 54056,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/Simple-Line-Iconsb26c.woff",
+      "bytes": 81332,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/Simple-Line-Iconsb26c.woff2",
+      "bytes": 30064,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/slick.eot",
+      "bytes": 2048,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/slick.svg",
+      "bytes": 2152,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/slick.ttf",
+      "bytes": 1892,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/slick.woff",
+      "bytes": 1380,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "fonts/slickd41d.eot",
+      "bytes": 2048,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "images/ajax-loader.gif",
+      "bytes": 4178,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/android_logo.svg",
+      "bytes": 1932,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/avatar_circle.png",
+      "bytes": 57624,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/avatar_circle_2.png",
+      "bytes": 46489,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/aws_logo.svg",
+      "bytes": 3436,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/blog/1.svg",
+      "bytes": 97454,
+      "disposition": "drop",
+      "note": "unused; removed in Stage 1"
+    },
+    {
+      "path": "images/blog/2.svg",
+      "bytes": 150584,
+      "disposition": "drop",
+      "note": "unused; removed in Stage 1"
+    },
+    {
+      "path": "images/blog/3.svg",
+      "bytes": 48397,
+      "disposition": "drop",
+      "note": "unused; removed in Stage 1"
+    },
+    {
+      "path": "images/cpp_logo.svg",
+      "bytes": 1894,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/css_logo.svg",
+      "bytes": 3468,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/dots-bg-light.svg",
+      "bytes": 2364,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/dots-bg.svg",
+      "bytes": 2365,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/favicon.png",
+      "bytes": 665,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/hammer_logo.png",
+      "bytes": 88796,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/html_logo.png",
+      "bytes": 2223,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/java_logo.png",
+      "bytes": 9134,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/js_logo.png",
+      "bytes": 14589,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/map-light.png",
+      "bytes": 24081,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/map.svg",
+      "bytes": 658232,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/nike_jordan.png",
+      "bytes": 5108,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/nodejs_logo.png",
+      "bytes": 28922,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/noodles.png",
+      "bytes": 5232,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/python_logo.png",
+      "bytes": 24502,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/react.png",
+      "bytes": 31207,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/sql_logo.svg",
+      "bytes": 5566,
+      "disposition": "drop",
+      "note": "logo / decoration / avatar; removed in Stage 1"
+    },
+    {
+      "path": "images/works/aimdevbeach/0_main.jpg",
+      "bytes": 339168,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-devbeach/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimdevbeach/1.jpg",
+      "bytes": 327819,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-devbeach/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimdevbeach/2.jpg",
+      "bytes": 315523,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-devbeach/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimdevbeach/3.jpg",
+      "bytes": 400068,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-devbeach/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimlegoak/0_main.jpg",
+      "bytes": 496570,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-lego-ak/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimlegoak/1.jpg",
+      "bytes": 644946,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-lego-ak/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/aimlegoak/2.jpg",
+      "bytes": 836573,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/aim-lego-ak/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/android_news.png",
+      "bytes": 699567,
+      "disposition": "transform",
+      "note": "→ src/assets/projects/newsapp-android/cover.png (Stage 2)"
+    },
+    {
+      "path": "images/works/arindustry/0_main.jpg",
+      "bytes": 443236,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/arindustry/1.jpg",
+      "bytes": 379529,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/arindustry/2.jpg",
+      "bytes": 361757,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/arindustry/3.jpg",
+      "bytes": 220596,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/arindustry/4.jpg",
+      "bytes": 331999,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/arindustry/5.jpg",
+      "bytes": 315188,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/ar-industry/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/0_main.jpg",
+      "bytes": 441605,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/1.jpg",
+      "bytes": 522144,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/2.jpg",
+      "bytes": 603384,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/3.jpg",
+      "bytes": 454653,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/4.jpg",
+      "bytes": 552070,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2015/5.jpg",
+      "bytes": 414372,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2015/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2016/0_main.jpg",
+      "bytes": 576636,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2016/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2016/1.jpg",
+      "bytes": 348274,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2016/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2016/2.jpg",
+      "bytes": 510134,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2016/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2016/3.jpg",
+      "bytes": 507989,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2016/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplego2016/4.jpg",
+      "bytes": 933652,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-2016/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/0_main.jpg",
+      "bytes": 553886,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/1.jpg",
+      "bytes": 447386,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/2.jpg",
+      "bytes": 383352,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/3.jpg",
+      "bytes": 481811,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/4.jpg",
+      "bytes": 643781,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/5.jpg",
+      "bytes": 446006,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoasia/6.jpg",
+      "bytes": 494638,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-asia/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegofort/0_main.jpg",
+      "bytes": 575786,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-fort/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegofort/1.jpg",
+      "bytes": 586310,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-fort/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegofort/2.jpg",
+      "bytes": 494936,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-fort/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegofort/3.jpg",
+      "bytes": 712237,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-fort/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegofort/4.jpg",
+      "bytes": 459705,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-fort/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegox/0_main.jpg",
+      "bytes": 587038,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-x/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegox/1.jpg",
+      "bytes": 833729,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-x/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegox/2.jpg",
+      "bytes": 423145,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-x/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegox/3.jpg",
+      "bytes": 490376,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-x/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegox/4.jpg",
+      "bytes": 691244,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-x/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoz/0_main.jpg",
+      "bytes": 581903,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-z/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoz/1.jpg",
+      "bytes": 595989,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-z/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoz/2.jpg",
+      "bytes": 550736,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-z/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoz/3.jpg",
+      "bytes": 781029,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-z/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awplegoz/4.jpg",
+      "bytes": 444429,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-lego-z/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptajheaven/0_main.jpg",
+      "bytes": 330015,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-taj-heaven/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptajheaven/1.jpg",
+      "bytes": 349183,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-taj-heaven/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptajheaven/2.jpg",
+      "bytes": 329341,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-taj-heaven/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptajheaven/3.jpg",
+      "bytes": 374646,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-taj-heaven/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptajheaven/4.jpg",
+      "bytes": 495305,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-taj-heaven/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptridust/0_main.jpg",
+      "bytes": 499010,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-tridust/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptridust/1.jpg",
+      "bytes": 442824,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-tridust/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptridust/2.jpg",
+      "bytes": 303762,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-tridust/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptridust/3.jpg",
+      "bytes": 395271,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-tridust/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/awptridust/4.jpg",
+      "bytes": 349626,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/awp-tridust/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/bfs.gif",
+      "bytes": 799357,
+      "disposition": "transform",
+      "note": "→ src/assets/projects/mars-rover-search/demo.gif, converted to MP4/WebM (D10)"
+    },
+    {
+      "path": "images/works/halma.gif",
+      "bytes": 2905163,
+      "disposition": "transform",
+      "note": "→ src/assets/projects/halma-ai/demo.gif, converted to MP4/WebM (D10)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/0_main.jpg",
+      "bytes": 621897,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/1.jpg",
+      "bytes": 628766,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/2.jpg",
+      "bytes": 497209,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/3.jpg",
+      "bytes": 581980,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/4.jpg",
+      "bytes": 486767,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/lczctfgalaxy/5.jpg",
+      "bytes": 150725,
+      "disposition": "transform",
+      "note": "→ src/assets/level-design/lcz-ctf-galaxy/ (Stage 2, processed)"
+    },
+    {
+      "path": "images/works/react_news.png",
+      "bytes": 322518,
+      "disposition": "transform",
+      "note": "→ src/assets/projects/newsapp-react/cover.png (Stage 2)"
+    },
+    {
+      "path": "index.html",
+      "bytes": 37717,
+      "disposition": "transform",
+      "note": "content reused in new pages (§4); file removed in Stage 1"
+    },
+    {
+      "path": "js/bootstrap.min.js",
+      "bytes": 55775,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/contact.js",
+      "bytes": 1747,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/custom.js",
+      "bytes": 13393,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/imagesloaded.pkgd.min.js",
+      "bytes": 5594,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/infinite-scroll.min.js",
+      "bytes": 21705,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/isotope.pkgd.min.js",
+      "bytes": 34695,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/jquery-1.12.3.min.js",
+      "bytes": 97180,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/jquery.counterup.min.js",
+      "bytes": 2181,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/jquery.easing.min.js",
+      "bytes": 3601,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/jquery.magnific-popup.min.js",
+      "bytes": 20216,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/jquery.waypoints.min.js",
+      "bytes": 9028,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/morphext.min.js",
+      "bytes": 1014,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/parallax.min.js",
+      "bytes": 17509,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/popper.min.js",
+      "bytes": 19149,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/slick.min.js",
+      "bytes": 41953,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/validator.js",
+      "bytes": 11729,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "js/wow.min.js",
+      "bytes": 8155,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400.eot",
+      "bytes": 126428,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400.svg",
+      "bytes": 713576,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400.ttf",
+      "bytes": 126192,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400.woff",
+      "bytes": 81612,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400.woff2",
+      "bytes": 69608,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-brands-400d41d.eot",
+      "bytes": 126428,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400.eot",
+      "bytes": 40460,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400.svg",
+      "bytes": 140249,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400.ttf",
+      "bytes": 40232,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400.woff",
+      "bytes": 18112,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400.woff2",
+      "bytes": 14844,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-regular-400d41d.eot",
+      "bytes": 40460,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900.eot",
+      "bytes": 197172,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900.svg",
+      "bytes": 746673,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900.ttf",
+      "bytes": 196952,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900.woff",
+      "bytes": 95436,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900.woff2",
+      "bytes": 73852,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "webfonts/fa-solid-900d41d.eot",
+      "bytes": 197172,
+      "disposition": "drop",
+      "note": "old runtime (Bootstrap/jQuery/icon fonts); removed in Stage 1"
+    },
+    {
+      "path": "works-2.html",
+      "bytes": 5628,
+      "disposition": "transform",
+      "note": "becomes redirect stub → /projects/level-design/ (D11, Stage 8)"
+    }
+  ],
+  "folderTotals": {
+    "(root)": {
+      "files": 4,
+      "bytes": 267190
+    },
+    "css/": {
+      "files": 7,
+      "bytes": 356335
+    },
+    "fonts/": {
+      "files": 10,
+      "bytes": 468283
+    },
+    "images/": {
+      "files": 91,
+      "bytes": 36418711
+    },
+    "images/blog/": {
+      "files": 3,
+      "bytes": 296435
+    },
+    "images/works/": {
+      "files": 66,
+      "bytes": 35100269
+    },
+    "images/works/aimdevbeach/": {
+      "files": 4,
+      "bytes": 1382578
+    },
+    "images/works/aimlegoak/": {
+      "files": 3,
+      "bytes": 1978089
+    },
+    "images/works/arindustry/": {
+      "files": 6,
+      "bytes": 2052305
+    },
+    "images/works/awplego2015/": {
+      "files": 6,
+      "bytes": 2988228
+    },
+    "images/works/awplego2016/": {
+      "files": 5,
+      "bytes": 2876685
+    },
+    "images/works/awplegoasia/": {
+      "files": 7,
+      "bytes": 3450860
+    },
+    "images/works/awplegofort/": {
+      "files": 5,
+      "bytes": 2828974
+    },
+    "images/works/awplegox/": {
+      "files": 5,
+      "bytes": 3025532
+    },
+    "images/works/awplegoz/": {
+      "files": 5,
+      "bytes": 2954086
+    },
+    "images/works/awptajheaven/": {
+      "files": 5,
+      "bytes": 1878490
+    },
+    "images/works/awptridust/": {
+      "files": 5,
+      "bytes": 1990493
+    },
+    "images/works/lczctfgalaxy/": {
+      "files": 6,
+      "bytes": 2967344
+    },
+    "js/": {
+      "files": 17,
+      "bytes": 364624
+    },
+    "webfonts/": {
+      "files": 18,
+      "bytes": 3045458
+    }
+  }
+}
