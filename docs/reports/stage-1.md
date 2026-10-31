@@ -142,3 +142,12 @@ then go to http://localhost:4321/_styleguide/ on desktop and phone, and:
 2. Press Tab from the top of the page: the skip link should appear first, and every link and button should show a 2 px ring.
 3. Toggle dark, reload, and confirm there's no flash of the light theme.
 4. With *reduce motion* turned on in your OS, the cursor in the terminal card should stop blinking.
+
+## Checkpoint review (Oct 31, 2026)
+
+Jay approved the look ("Smooth UI and quick launch") and asked for three changes, all done:
+1. Footer `CONNECT` is now GitHub, LinkedIn, Medium, Email. X, RSS, Monkeytype and Steam Workshop were removed. The URLs stay in `site.config.ts`, because X feeds `twitter:site` (Stage 9) and the home links row, and Steam Workshop feeds the archive.
+2. SPEC §4.7, §4.9, §4.10, §4.1 and Q4 now say that the Steam Workshop link lives only on the level-design archive (Stage 7). Monkeytype has no placement now and is marked `NEEDS INPUT` in §4.1.
+3. Footer bottom bar: `Last updated on Oct 31, 2026`, wrapped in `<time datetime>`. `src/lib/last-updated.ts` takes the latest git commit's date (`git log -1 --format=%cs`), so a rebuild of unchanged content keeps the same date. It falls back to the build date if git isn't available.
+
+`npm run verify` exits 0 after the change: `/` initial 4.2 KB, styleguide 7.9 KB, html-validate clean, internal links 10 ok and 0 broken.

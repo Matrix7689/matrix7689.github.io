@@ -128,7 +128,7 @@ matrix7689.github.io/
 | Q1 | Theme default: always dark, or follow the OS `prefers-color-scheme`? | **Answered (Stage 0): Light** unless the visitor has toggled. The OS setting is not followed. |
 | Q2 | Pixel display font (Silkscreen) for wordmark and hero name, and a single accent color? (DesignSpec §6) | **No** pixel font and **no** accent. Hierarchy comes from size, weight, case and opacity. |
 | Q3 | Footer ASCII block-letter wordmark text? | **`JP`** (fits a 360 px viewport; `JAY PAREKH` does not). |
-| Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. |
+| Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. **Stage 1 checkpoint:** the footer `CONNECT` column is GitHub, LinkedIn, Medium, Email only; Steam Workshop goes on the level-design archive (§4.7). |
 | Q5 | Add "Advanced Text Summarization" (on the resume, not on the old site) as a 5th software project? | **No.** |
 | Q6 | Show GPAs (3.67/4, 8.85/10, from the resume) on About? | **No.** |
 
@@ -562,7 +562,7 @@ Conventions for every stage:
 | Badge | `■ SOFTWARE ENGINEER · SEATTLE` (proposed; Seattle is from the old site) |
 | H1 (two-tone) | Line 1 `Jay Parekh` (fg); line 2 `Software Development Engineer II @ Amazon` (muted) |
 | One-liner | (proposed) "I build and scale Amazon's shopping cart service: throttling, caching, migrations and latency." → `NEEDS INPUT: approve or rewrite` |
-| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Monkeytype and Steam Workshop are in the footer `CONNECT` column, §4.9) |
+| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Steam Workshop is on the level-design archive only, §4.7; Monkeytype has no placement yet, `NEEDS INPUT`) |
 | CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf  rss.xml`, each a real link. Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
 | 01 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
 | Highlights | `Fig 1. $1.74M` — infrastructure cost saved (cart cache storage refactor). `Fig 2. −15 ms` — global TM99 latency, same change. `Fig 3. 3–4 months` — implementation effort saved by design choice. |
@@ -630,7 +630,7 @@ Per project `NEEDS INPUT`: year for Halma and Mars rover (likely a USC course; d
 ### 4.7 Level Design archive (`/projects/level-design/`)
 Intro (proposed): "Before software engineering, I designed custom multiplayer maps (2017–2019). This is the archive."
 Stats (from the old site, `NEEDS INPUT: confirm or refresh; numbers are as of 2024`): `Fig 1. 55 maps` · `Fig 2. 1,052,075 downloads` · `Fig 3. 12,340,926 views` (old site figures; the resume rounds them to 50+ / 1M+ / 10M+).
-Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4).
+Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4). This page is the only place the Steam Workshop link appears (Jay, Stage 1 checkpoint): a visible link near the intro/stats, e.g. `Button` "Steam Workshop →". Stage 7 builds it.
 
 | Order | slug | Title | Old folder | Images |
 |---|---|---|---|---|
@@ -654,9 +654,9 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 
 ### 4.9 Footer (all pages)
 - Col 1: `AsciiWordmark` (`JP`, `aria-hidden`, plus visually hidden "Jay Parekh") + one muted line: "Software engineer. Writes about building things." (proposed).
-- Col 2 `CONNECT`: GitHub, LinkedIn, X, Medium, Email, RSS, Monkeytype, Steam Workshop (Q4).
+- Col 2 `CONNECT`: GitHub, LinkedIn, Medium, Email (Jay, Stage 1 checkpoint: X, RSS, Monkeytype and Steam Workshop removed from the footer; Steam Workshop lives on the level-design archive, §4.7).
 - Col 3 `SITE`: blog, projects, level design archive, about, resume.pdf; "back to top" (anchor link, no JS).
-- Bottom bar: `// jay parekh — <year from build>` left; `built with astro · 0 trackers` right (proposed).
+- Bottom bar: `Last updated on <Mon D, YYYY>` left (date of the latest git commit, build date as fallback, in a `<time datetime>`; Jay, Stage 1 checkpoint); `built with astro · 0 trackers` right (proposed).
 
 ### 4.10 Old-site content disposition
 | Old item | Disposition |
@@ -668,7 +668,7 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 | Education & experience timeline | Reuse (§4.2, §4.6); drop high school |
 | Works filter (All / Level Designs / Web Dev / AI / ML) | Replaced by Projects + archive |
 | Tech-stack logos | Replaced by a text skills line |
-| Social: Steam, Instagram, Spotify, Monkeytype | Steam → Steam Workshop link and Monkeytype kept (footer; Steam Workshop also on the archive); Instagram and Spotify dropped (Q4) |
+| Social: Steam, Instagram, Spotify, Monkeytype | Steam → Steam Workshop link, on the level-design archive only; Monkeytype kept in `site.config.ts` but not shown (placement `NEEDS INPUT`); Instagram and Spotify dropped (Q4) |
 | "Get in touch" mailto button | Email link in intro and footer |
 | `Matrix_Completed_Games.txt` | Drop |
 | `Jay_Parekh_Resume.pdf` | Keep at the same URL |

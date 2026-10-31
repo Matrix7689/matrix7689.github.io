@@ -2,17 +2,14 @@
 // Site footer (SPEC §4.9, DesignSpec §1.4 Footer).
 import AsciiWordmark from './AsciiWordmark.astro';
 import { SITE } from '../site.config';
+import { LAST_UPDATED } from '../lib/last-updated';
 
 const { links } = SITE;
 const connect = [
   { label: 'GitHub', href: links.github },
   { label: 'LinkedIn', href: links.linkedin },
-  { label: 'X', href: links.x },
   { label: 'Medium', href: links.medium },
   { label: 'Email', href: `mailto:${SITE.email}` },
-  { label: 'RSS', href: '/rss.xml' },
-  { label: 'Monkeytype', href: links.monkeytype },
-  { label: 'Steam Workshop', href: links.steamWorkshop },
 ].filter((l): l is { label: string; href: string } => l.href !== null);
 
 const site = [
@@ -22,7 +19,6 @@ const site = [
   { label: 'about', href: '/about/' },
   { label: 'resume.pdf', href: SITE.resume },
 ];
-const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
@@ -68,7 +64,7 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="container bottom">
-    <span>// jay parekh — {year}</span>
+    <span>Last updated on <time datetime={LAST_UPDATED.iso}>{LAST_UPDATED.label}</time></span>
     <span>built with astro · 0 trackers</span>
   </div>
 </footer>
