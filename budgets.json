@@ -1,0 +1,27 @@
+{
+  "$comment": "SPEC §6.1. Sizes in KB (1024 B). 'initial' = gzip HTML + CSS + JS + eager images, excluding fonts. 'total' = initial + lazy images. Routes match top to bottom; '*' is one path segment. 'initialStrict' means '<' instead of '<='.",
+  "gzipLevel": 6,
+  "pages": [
+    { "route": "/", "initialKB": 50, "initialStrict": true, "totalKB": 120, "jsKB": 1 },
+    { "route": "/blog/", "initialKB": 40, "totalKB": 60 },
+    { "route": "/blog/tags/*/", "initialKB": 40, "totalKB": 60 },
+    { "route": "/blog/*/", "initialKB": 60, "totalKB": 400 },
+    { "route": "/projects/", "initialKB": 50, "totalKB": 200 },
+    { "route": "/projects/level-design/", "initialKB": 60, "totalKB": 450 },
+    { "route": "/projects/level-design/*/", "initialKB": 120, "totalKB": 1200 },
+    { "route": "/projects/*/", "initialKB": 80, "totalKB": 600 },
+    { "route": "/about/", "initialKB": 40, "totalKB": 100 },
+    { "route": "/404", "initialKB": 30, "totalKB": 30 },
+    { "route": "/_styleguide/", "initialKB": 80, "totalKB": 200, "$comment": "internal, noindex; not in SPEC §6.1" }
+  ],
+  "global": {
+    "cssKB": 12,
+    "jsKB": 2,
+    "fontsKB": 60,
+    "fontFiles": 2,
+    "fontFileKB": 30,
+    "fontPreloads": 1,
+    "maxFileKB": 500,
+    "maxFileAllowlist": ["Jay_Parekh_Resume.pdf"]
+  }
+}
