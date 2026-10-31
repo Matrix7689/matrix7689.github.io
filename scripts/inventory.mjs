@@ -1,11 +1,11 @@
 // Old-site inventory (SPEC Stage 0, task 7).
-// Reads the 2020 site as committed on `legacy-2024` (files must still be present in the
-// working tree for image metadata) and writes:
+// Reads the 2020 site straight from git (`legacy-2024`), so it keeps working after the old
+// files are removed or moved on `revamp`, and writes:
 //   docs/content-manifest.json  machine-readable
 //   docs/inventory.md           human-readable, with keep / transform / drop and link status
 // Usage: npm run inventory [-- --offline]   (--offline skips the external link check)
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import { join, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -132,6 +132,10 @@ function md(s) {
   return String(s ?? '').replace(/\|/g, '\\|');
 }
 
+function gitShow(path, encoding) {
+  return execFileSync('git', ['show', `${LEGACY_REF}:${path}`], { cwd: ROOT, encoding, maxBuffer: 64 * 1024 ** 2 });
+}
+
 // ---------- old file tree (from legacy-2024) ----------
 const lsTree = execFileSync('git', ['ls-tree', '-r', '-l', LEGACY_REF], { cwd: ROOT, encoding: 'utf8' });
 const legacyCommit = execFileSync('git', ['log', '-1', '--format=%h %s', LEGACY_REF], { cwd: ROOT, encoding: 'utf8' }).trim();
@@ -165,7 +169,7 @@ for (const f of files) {
 const imageCache = new Map();
 async function image(path) {
   if (imageCache.has(path)) return imageCache.get(path);
-  const meta = await sharp(join(ROOT, path), { animated: true }).metadata();
+  const meta = await sharp(gitShow(path, 'buffer'), { animated: true }).metadata();
   const info = {
     file: path,
     bytes: fileBytes.get(path) ?? null,
@@ -259,7 +263,7 @@ async function parseGridItems(html, pageName) {
 }
 
 for (const name of PAGES) {
-  const html = readFileSync(join(ROOT, name), 'utf8');
+  const html = gitShow(name, 'utf8');
   const page = {
     file: name,
     bytes: fileBytes.get(name),
