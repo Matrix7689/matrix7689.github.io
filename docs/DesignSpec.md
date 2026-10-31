@@ -223,7 +223,7 @@ Patterns worth borrowing: a named blog ("Thoughts"/similar), a featured latest p
 These combine the three references; where they conflict, Section 1 (ASCII Hub) wins on visual style and Sections 2-3 win on content structure.
 
 **Palette**
-- Dark default: `#000` background, `#fff` text, `#0a0a0a` card, `#1a1a1a` panel, `#a0a0a0` muted, `#262626` borders. Light mode = inverted. Optional single subtle accent (or none); never neon.
+- **Light is the default theme** (Jay's decision at the Stage 0 checkpoint, SPEC Q1): the inverted palette (`#fff` background, `#000` text, gray steps per SPEC Stage 1 task 4). Dark mode, chosen with the toggle: `#000` background, `#fff` text, `#0a0a0a` card, `#1a1a1a` panel, `#a0a0a0` muted, `#262626` borders. Optional single subtle accent (or none); never neon.
 - Square corners, 1px borders, no shadows, no gradients, no glassmorphism.
 
 **Typography**

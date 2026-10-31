@@ -92,13 +92,13 @@ Level Design Aim Devbeach Level Design Aim Lego AK Level Design Ar Industry Leve
 | URL | Disposition | Note |
 |---|---|---|
 | https://github.com/Matrix7689 | **keep** | GitHub profile (Q4) |
-| https://steamcommunity.com/id/MatrixIN | **keep** | level-design archive only (Q4) |
+| https://steamcommunity.com/id/MatrixIN | **transform** | replaced by the Steam Workshop link (Q4) |
 | https://www.linkedin.com/in/jaymparekh | **keep** | Q4 |
 | https://twitter.com/jayp_or_jp | **keep** | X (Q4) |
 | https://www.instagram.com/jp_got_klicks/ | **drop** | Q4 |
 | https://open.spotify.com/user/uevk9drojgyjsxc63fjcda83j?si=9a39a63d74f447c0 | **drop** | Q4 |
 | https://matrix7689.github.io/Jay_Parekh_Resume.pdf | **keep** | becomes relative /Jay_Parekh_Resume.pdf |
-| https://monkeytype.com/profile/matrix7689 | **drop** | Q4 |
+| https://monkeytype.com/profile/matrix7689 | **keep** | footer CONNECT (Q4) |
 | mailto:jay.parekh7689@gmail.com | **keep** | email (N2) |
 
 ## About-section stats
@@ -323,9 +323,9 @@ Tech-stack logos (→ text skills line, §4.1): C++, Java, React, AWS, NodeJS, A
 | https://github.com/Matrix7689/NewsApp-React | index.html, index.html#works | 200 | OK | **keep** project repo (§4.5) |
 | https://kit.fontawesome.com/011c4cad6c.js | index.html | 200 | OK | **drop** no icon kits / third-party requests |
 | https://matrix7689.github.io/Jay_Parekh_Resume.pdf | index.html, index.html#about, index.html#home | 200 | OK | **keep** becomes relative /Jay_Parekh_Resume.pdf |
-| https://monkeytype.com/profile/matrix7689 | index.html, index.html#home | 200 | OK | **drop** Q4 |
+| https://monkeytype.com/profile/matrix7689 | index.html, index.html#home | 200 | OK | **keep** footer CONNECT (Q4) |
 | https://open.spotify.com/user/uevk9drojgyjsxc63fjcda83j?si=9a39a63d74f447c0 | index.html, index.html#home | 200 | OK | **drop** Q4 |
-| https://steamcommunity.com/id/MatrixIN | index.html, index.html#home | 200 | OK | **keep** level-design archive only (Q4) |
+| https://steamcommunity.com/id/MatrixIN | index.html, index.html#home | 200 | OK | **transform** replaced by the Steam Workshop link (Q4) |
 | https://twitter.com/jayp_or_jp | index.html, index.html#home | 200 | OK | **keep** X (Q4) |
 | https://www.instagram.com/jp_got_klicks/ | index.html, index.html#home | 200 | OK | **drop** Q4 |
 | https://www.linkedin.com/in/jaymparekh | index.html, index.html#home | 999 bot block (LinkedIn); verify manually | — | **keep** Q4 |

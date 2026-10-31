@@ -110,6 +110,23 @@ Project image dimensions match SPEC §4.5: `react_news.png` 800 × 600, `android
 
 - **Q1–Q6 (SPEC §2.2):** the defaults apply unless you override them.
 
+## Checkpoint decisions (Jay, 2026-10-31)
+
+1. `legacy-2024` confirmed on GitHub.
+2. **"Level Designer" is removed as a role** everywhere (SPEC §4.2, Stage 3 task 3, Stage 8 task 1). The 12 level designs stay as projects (`/projects/level-design/`).
+3. **Blog launches with Jay's 3 Medium posts** as full cross-posts, imported in Stage 3 (SPEC D5, assumption 2, Stage 3 task 1a, Stages 4/5 criteria, Lighthouse URL list). Medium profile `https://medium.com/@jay.parekh7689` fills N1.
+4. **Q1: light theme by default** (SPEC Q1, Stage 1 task 4, DesignSpec §4 palette).
+5. **Q4: keep Monkeytype and Steam**, with Steam pointing at `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (SPEC Q4, Stage 1 task 3, §4.1, §4.7, §4.9, §4.10). The inventory dispositions are updated to match.
+6. Q2, Q3, Q5, Q6: defaults kept.
+
+Link checks on the new URLs (HEAD, no browser spoofing):
+- Steam Workshop URL: **404**. Steam may simply reject HEAD requests, but it may also mean the workshop page is private or the path is different. Please open it in a browser to confirm.
+- Medium profile and all 3 posts: **403** (Medium blocks automated requests). Stage 3 will likely need Jay's Medium export (*Settings → Security and apps → Download your information*) to import the posts.
+
+Points left for Jay to confirm later (not blocking):
+- The proposed About bio (§4.6, N4) still says "spent years designing 3D game levels". That describes the hobby, not a role, so it was kept. Jay can remove it when approving the bio.
+- Monkeytype and Steam Workshop go in the footer `CONNECT` column, not in the home intro links row, which stays recruiter-focused.
+
 ## Human checkpoint
 
 1. Confirm `legacy-2024` exists on GitHub: https://github.com/Matrix7689/matrix7689.github.io/tree/legacy-2024

@@ -1,7 +1,7 @@
 {
   "summary": {
     "legacyCommit": "5881795 Updated Work experience section and Resume",
-    "generatedAt": "2026-10-31T05:20:19.549Z",
+    "generatedAt": "2026-10-31T05:34:57.629Z",
     "maps": 12,
     "mapJpegs": 62,
     "softwareProjects": 4,
@@ -99,8 +99,8 @@
       {
         "url": "https://steamcommunity.com/id/MatrixIN",
         "icon": "fab fa-steam",
-        "disposition": "keep",
-        "note": "level-design archive only (Q4)"
+        "disposition": "transform",
+        "note": "replaced by the Steam Workshop link (Q4)"
       },
       {
         "url": "https://www.linkedin.com/in/jaymparekh",
@@ -135,8 +135,8 @@
       {
         "url": "https://monkeytype.com/profile/matrix7689",
         "icon": "far fa-keyboard",
-        "disposition": "drop",
-        "note": "Q4"
+        "disposition": "keep",
+        "note": "footer CONNECT (Q4)"
       },
       {
         "url": "mailto:jay.parekh7689@gmail.com",
@@ -1117,8 +1117,8 @@
         "index.html",
         "index.html#home"
       ],
-      "disposition": "drop",
-      "dispositionNote": "Q4",
+      "disposition": "keep",
+      "dispositionNote": "footer CONNECT (Q4)",
       "status": 200,
       "ok": true,
       "note": ""
@@ -1141,8 +1141,8 @@
         "index.html",
         "index.html#home"
       ],
-      "disposition": "keep",
-      "dispositionNote": "level-design archive only (Q4)",
+      "disposition": "transform",
+      "dispositionNote": "replaced by the Steam Workshop link (Q4)",
       "status": 200,
       "ok": true,
       "note": ""

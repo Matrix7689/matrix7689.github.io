@@ -11,7 +11,7 @@ Owner: Jay Parekh · Implementer: Claude Code, one stage per session · Visual s
 ## 0. Assumptions (made while drafting; correct any that are wrong)
 
 1. **Claude Code runs on Jay's Windows machine** in `C:\Jay Data\portfolio revamp\matrix7689.github.io`. That path contains a space, so always quote it. Every project script is a Node ESM script run through `npm run …`, with no bash-only scripts, so the same commands work in PowerShell, Git Bash and GitHub Actions (Ubuntu).
-2. **The blog launches with zero published posts.** Home and `/blog/` show an empty state. The RSS feed is valid with zero items. Templates are developed against a `draft: true` test fixture that never ships.
+2. **The blog launches with Jay's 3 existing Medium posts** as cross-posts (D5, decided at the Stage 0 checkpoint). The empty state stays as a component for a 0-post build. Templates are also developed against `draft: true` test fixtures that never ship.
 3. **The "view original" link on level-design maps points to a large copy made at build time** (1920 px WebP, ≤ 450 KB), not the raw JPEG. Raw originals stay in the repo under `src/assets/` and never appear in `dist/`.
 4. **Local working tree noise:** the clone has 19 "modified" files on `master`. Running `git diff --ignore-all-space --ignore-cr-at-eol` on them returns nothing, so they are CRLF line-ending churn only. Stage 0 discards them and adds `.gitattributes`.
 5. **Repo size baseline:** `.git` is 53 MB packed (333 objects). `images/works/` is 34 MB: 63 JPEGs (300–930 KB, mostly 1920×1080), `halma.gif` at 2.9 MB, `bfs.gif` at 0.8 MB, and 2 PNG screenshots. These blobs are already in history, so `git mv` into `src/assets/` adds ~0 bytes. **No Git LFS is needed**, and migrating existing history to LFS would require a history rewrite (not recommended).
@@ -107,7 +107,7 @@ matrix7689.github.io/
 | D2 | **Branches:** preserve old site on `legacy-2024` (from current `origin/master`). Build on `revamp`. `master` is replaced only after Jay's review (Stage 11). |
 | D3 | **Deploy:** GitHub Actions → GitHub Pages. One-time setting: *Settings → Pages → Build and deployment → Source: **GitHub Actions***. |
 | D4 | **Map originals:** link to a build-made 1920 px WebP (≤ 450 KB). Raw JPEGs stay in `src/assets/level-design/` and never ship. |
-| D5 | **Blog at launch:** zero posts, with an empty state on home and `/blog/`. Medium import is **documented** (`docs/PUBLISHING.md`) plus a `new:post` scaffold script. No automated importer in v1. |
+| D5 | **Blog at launch:** Jay's 3 Medium posts, imported in Stage 3 as full cross-posts with `mediumUrl` set (canonical → Medium per D6). URLs are stored without the `?sharedUserId=…` query:<br>1. `https://medium.com/@jay.parekh7689/how-to-work-better-with-ai-95b32713664f`<br>2. `https://medium.com/@jay.parekh7689/how-i-avoid-and-handle-burnout-c8caedd9fdf1`<br>3. `https://medium.com/@jay.parekh7689/critical-thinking-is-fading-heres-how-you-can-reclaim-it-d30881b52ccb`<br>Body text is Jay's own and is imported verbatim (no rewriting). An empty state still renders for a 0-post build. Future Medium imports are **documented** (`docs/PUBLISHING.md`) plus a `new:post` scaffold script. No automated importer in v1. |
 | D6 | **Canonical rule:** `canonical = post.canonicalUrl ?? (SITE.preferMediumCanonical && post.mediumUrl) ?? selfUrl`. `preferMediumCanonical` defaults to `true` in `site.config.ts`. Flip it site-wide there, or per post with `canonicalUrl`. |
 | D7 | **Blog filtering without JS:** the filter row links to static tag pages `/blog/tags/<tag>/`. |
 | D8 | **Mobile nav without JS:** `<details><summary>` disclosure. |
@@ -125,10 +125,10 @@ matrix7689.github.io/
 ### 2.2 Open questions (each has a default; Claude Code proceeds with the default if unanswered)
 | # | Question | Default if no answer |
 |---|---|---|
-| Q1 | Theme default: always dark, or follow the OS `prefers-color-scheme`? | **Dark** unless the visitor has toggled (DesignSpec §4 "Dark default"). |
+| Q1 | Theme default: always dark, or follow the OS `prefers-color-scheme`? | **Answered (Stage 0): Light** unless the visitor has toggled. The OS setting is not followed. |
 | Q2 | Pixel display font (Silkscreen) for wordmark and hero name, and a single accent color? (DesignSpec §6) | **No** pixel font and **no** accent. Hierarchy comes from size, weight, case and opacity. |
 | Q3 | Footer ASCII block-letter wordmark text? | **`JP`** (fits a 360 px viewport; `JAY PAREKH` does not). |
-| Q4 | Which social links to keep? | **GitHub, LinkedIn, X, Email, RSS**, plus **Medium** once the URL is given. Drop Instagram, Spotify and Monkeytype. The Steam profile appears **only** on the level-design archive page. |
+| Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. |
 | Q5 | Add "Advanced Text Summarization" (on the resume, not on the old site) as a 5th software project? | **No.** |
 | Q6 | Show GPAs (3.67/4, 8.85/10, from the resume) on About? | **No.** |
 
@@ -194,8 +194,8 @@ Conventions for every stage:
 **Tasks:**
 1. Remove old-site runtime files from `revamp`: `index.html`, `works-2.html`, `css/`, `js/`, `fonts/`, `webfonts/`, `Matrix_Completed_Games.txt`, and the unused images (`ajax-loader.gif`, `dots-bg*.svg`, `map.svg`, `map-light.png`, `nike_jordan.png`, `noodles.png`, `blog/*.svg`, tech logos, `avatar_circle*.png`, old `favicon.png`). **Do not touch `images/works/`** (Stage 2) or `Jay_Parekh_Resume.pdf` (moved to `public/` now with `git mv`). They remain on `legacy-2024`.
 2. Scaffold Astro (minimal template, TypeScript strict) in the repo root. `output: 'static'`, `site` from `SITE_URL` env (default `https://matrix7689.github.io`), `trailingSlash: 'ignore'`, `build.format: 'directory'`. Canonicals always use a trailing slash.
-3. `src/site.config.ts`: name, role, tagline, email, links (github, linkedin, x, medium, steam), `preferMediumCanonical: true`, `wordmark: 'JP'`. Any unknown value is the literal string `'NEEDS INPUT'` or `null`, and components hide `null` links.
-4. `src/styles/tokens.css`: DesignSpec §1.1 dark tokens on `:root, [data-theme="dark"]`, and inverted light tokens on `[data-theme="light"]` (bg `#fff`, fg `#000`, card `#f5f5f5`, panel `#e5e5e5`, muted `#5f5f5f`, border `#d9d9d9`, ring `#000`). Radius 0. Spacing and type scale per §1.2–1.3 (10/12/14/16 px UI scale; hero `clamp()` from ~48 px to ~128 px). Container max 80rem, gutter 16 px mobile / 32 px desktop, prose max 72ch.
+3. `src/site.config.ts`: name, role, tagline, email, links (github, linkedin, x, medium, monkeytype, steamWorkshop; values per Q4), `preferMediumCanonical: true`, `wordmark: 'JP'`. Any unknown value is the literal string `'NEEDS INPUT'` or `null`, and components hide `null` links.
+4. `src/styles/tokens.css`: **light is the default** (Q1): inverted light tokens on `:root, [data-theme="light"]` (bg `#fff`, fg `#000`, card `#f5f5f5`, panel `#e5e5e5`, muted `#5f5f5f`, border `#d9d9d9`, ring `#000`), and DesignSpec §1.1 dark tokens on `[data-theme="dark"]`. The inline theme script applies `dark` only when the visitor has chosen it; with no stored choice, or with JS off, the page is light. Radius 0. Spacing and type scale per §1.2–1.3 (10/12/14/16 px UI scale; hero `clamp()` from ~48 px to ~128 px). Container max 80rem, gutter 16 px mobile / 32 px desktop, prose max 72ch.
 5. `src/styles/base.css`: reset, mono body, `::selection` inversion, 4 px scrollbar, `:focus-visible` 2 px ring, `.visually-hidden`, skip link, blinking-cursor keyframes inside `@media (prefers-reduced-motion: no-preference)` only.
 6. `scripts/subset-fonts.mjs` (`subset-font`): produce `public/fonts/geist-mono-400.woff2` and `-700.woff2` with the D14 range. `@font-face` with `font-display: swap`, `<link rel="preload" as="font" type="font/woff2" crossorigin>` for 400 only. Metric-compatible fallback stack: `ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace`.
 7. Layouts: `Base.astro` (head meta stub, theme init script, skip link, `<header>`, `<main id="main">`, `<footer>`), `Page.astro` (prose width).
@@ -276,9 +276,10 @@ Conventions for every stage:
 **Inputs:** Section 4 (content spec), Appendix A (schemas), `docs/content-manifest.json`.
 
 **Tasks:**
-1. `src/content.config.ts` with the four collections (Appendix A). The blog collection is **empty** in `src/content/blog/` (keep a `.gitkeep`). Its loader also includes `tests/fixtures/blog/**` **only when** `INCLUDE_FIXTURES=1`.
+1. `src/content.config.ts` with the four collections (Appendix A). The blog loader also includes `tests/fixtures/blog/**` **only when** `INCLUDE_FIXTURES=1`.
+1a. **Import Jay's 3 Medium posts** (D5) into `src/content/blog/<yyyy>-<slug>.md`, following the import procedure that Stage 5 documents in `docs/PUBLISHING.md` (c): body converted to Markdown verbatim; `title`, `date` and tags taken from the post; `summary` = the Medium subtitle (or `NEEDS INPUT` if the post has none); `mediumUrl` = the clean URL from D5; `canonicalUrl` unset; images downloaded to `src/assets/blog/<slug>/`; `draft: false`. If Medium blocks automated fetching, stop and ask Jay for the HTML from Medium *Settings → Security and apps → Download your information*.
 2. `tests/fixtures/blog/`: 3 draft fixtures (`draft: true`) exercising every feature: long post with h2/h3 (TOC), code blocks in 3 languages, a Medium cross-post (`mediumUrl` set), tags, images. Fixture text must be obviously placeholder (`Fixture: …`), never published, and excluded from feeds and sitemap.
-3. `src/content/experience/*.yaml`: Amazon SDE II, Amazon SDE I, Amazon SDE Intern, Bigshine CTO, Level design (2017–2019). Copy per §4.2 and §4.6.
+3. `src/content/experience/*.yaml`: Amazon SDE II, Amazon SDE I, Amazon SDE Intern, Bigshine CTO. Copy per §4.2 and §4.6. **No "Level Designer" role** anywhere (Stage 0 checkpoint); level designs appear only as projects.
 4. `src/content/projects/*.md`: 4 software projects per §4.5.
 5. `src/content/levels/*.md`: 12 maps per §4.7, with gallery images referenced via the `image()` schema helper so missing files fail the build.
 6. `src/lib/`: `readingTime.ts` (words / 230, ceil, min 1), `canonical.ts` (D6), `dates.ts` (ISO `YYYY-MM-DD` for blog, `Mon YYYY` for roles), `posts.ts` (published = `!draft` in production; sorted by date desc; prev/next helpers).
@@ -287,6 +288,7 @@ Conventions for every stage:
 **Files to create or change:** `src/content.config.ts`, `src/content/**`, `tests/fixtures/blog/*.md`, `src/lib/*.ts`, `astro.config.mjs` (remark plugin).
 
 **Acceptance criteria:**
+- The 3 imported Medium posts build with `draft: false`, each with `mediumUrl` equal to its clean D5 URL, and their body text matches the Medium originals (no rewording).
 - `npm run build` passes with schema validation. Deliberately breaking one field (e.g. `date: "x"`) fails the build; revert after testing.
 - `npm run build:fixtures` passes, and production `npm run build` emits **no** fixture slugs (grep `dist/` for `Fixture:` = 0 hits).
 - `npm run check:inputs` lists every gap from §4.11, and nothing invented (spot-check against Section 4).
@@ -321,7 +323,7 @@ Conventions for every stage:
 - `/` initial transfer **< 50 KB** gzip excluding fonts (check-budgets output), with total including lazy thumbs ≤ 120 KB.
 - Lighthouse mobile ≥ 95 in all 4 categories on `/` (`npm run lhci -- --url=/`).
 - Exactly one `<h1>`; heading order h1 → h2 → h3 with no skips.
-- With 0 posts, the blog section shows the empty state and an RSS link. With `npm run build:fixtures`, it lists the fixtures (template proof).
+- The blog section lists the 3 imported posts, each with the `[medium]` marker. The `EmptyState` path is proven in `/_styleguide/`. With `npm run build:fixtures`, it also lists the fixtures (template proof).
 - Copy button copies the exact command (manual test). Without JS the command is still selectable text.
 - Renders at 360 px width with no horizontal scroll.
 
@@ -346,14 +348,14 @@ Conventions for every stage:
 2. `/blog/tags/[tag]/`: same list filtered; `getStaticPaths` from published posts only.
 3. `/blog/[slug]/` (layout `Post.astro`): title, date, updated, reading time, tags, Medium notice ("Also published on Medium →" when `mediumUrl`), TOC (render when ≥ 3 h2/h3 **and** reading time ≥ 5 min; `<details open>` on wide screens, closed on mobile; no JS), prose at ≤ 72ch, terminal-styled code blocks (`TerminalCard` chrome with the language as title, copy button), prev/next by date, canonical per D6.
 4. Shiki dual monochrome themes (D15). Line highlighting via `// [!code highlight]` if supported by the installed Shiki transformers; otherwise skip.
-5. `/rss.xml` (published posts only; full summary, link, pubDate, categories). It is valid with 0 items.
+5. `/rss.xml` (published posts only; full summary, link, pubDate, categories). It stays valid with 0 items.
 6. `scripts/new-post.mjs`: `npm run new:post -- "Title" [--tags a,b] [--medium <url>]` creates `src/content/blog/<yyyy>-<slug>.md` with frontmatter, `draft: true` and today's date.
 7. `docs/PUBLISHING.md`: (a) write a post: `npm run new:post`, edit, set `draft: false`, `npm run verify`, commit, push to `master`, and it is live in ~2 min; (b) images: put files in `src/assets/blog/<slug>/` and reference them relatively; (c) **import a Medium post**: open the post → copy the body (or use Medium *Settings → Security and apps → Download your information*, which gives HTML per post), convert headings/code/images to Markdown, download images into `src/assets/blog/<slug>/`, set `mediumUrl`, and leave `canonicalUrl` unset so the canonical points to Medium (D6); (d) **flip canonical**: per post set `canonicalUrl` to the site URL, or site-wide set `preferMediumCanonical: false`; (e) drafts and tags conventions.
 
 **Files to create or change:** `src/pages/blog/index.astro`, `src/pages/blog/tags/[tag].astro`, `src/pages/blog/[slug].astro`, `src/pages/rss.xml.ts`, `src/layouts/Post.astro`, `src/components/{FeaturedPost,TagFilter,Toc,PrevNext,CodeBlock}.astro`, `src/styles/shiki/*.json`, `scripts/new-post.mjs`, `docs/PUBLISHING.md`.
 
 **Acceptance criteria:**
-- Production build: `/blog/` shows the empty state; `/rss.xml` validates (W3C feed validator or `npx rss-parser` parse) with 0 items; no `/blog/tags/*` pages are emitted for draft-only tags.
+- Production build: `/blog/` shows the featured post plus the other 2 imported posts; `/rss.xml` validates (W3C feed validator or `npx rss-parser` parse) with 3 items; each imported post's `<link rel="canonical">` equals its `mediumUrl`; no `/blog/tags/*` pages are emitted for draft-only tags.
 - Fixture build (`npm run build:fixtures`): featured post, filter row, 3 entries, TOC on the long fixture only, prev/next correct, the Medium fixture's `<link rel="canonical">` equals its `mediumUrl`, and setting `preferMediumCanonical:false` flips it to the self URL.
 - Post page initial transfer ≤ 60 KB (excluding fonts, lazy images); JS ≤ 2 KB gzip.
 - Code blocks are readable in both themes (contrast ≥ 4.5:1 for default token color) and scroll horizontally inside their box with no page overflow at 360 px.
@@ -404,7 +406,7 @@ Conventions for every stage:
 **Inputs:** §4.7; `src/content/levels/`; `src/assets/level-design/**`.
 
 **Tasks:**
-1. Index: short intro (secondary-history framing), aggregate stats as `Figure`s (§4.7), Steam profile link, `ThumbGrid` of 12 maps in the old-site order. Thumbnails are grayscale by default and show color on `:hover` and `:focus-visible` of the card link (CSS `filter`; transition disabled under reduced motion). Each card shows map name + year (or `NEEDS INPUT`).
+1. Index: short intro (secondary-history framing), aggregate stats as `Figure`s (§4.7), Steam Workshop link, `ThumbGrid` of 12 maps in the old-site order. Thumbnails are grayscale by default and show color on `:hover` and `:focus-visible` of the card link (CSS `filter`; transition disabled under reduced motion). Each card shows map name + year (or `NEEDS INPUT`).
 2. Map page `/projects/level-design/[slug]/`: title, `SpecTable` (game, year, type, images count, workshop link if any), description, gallery of `detail` images (first eager, rest lazy). Each image is wrapped in a link "view full size" → `large` WebP (opens in the same tab, no lightbox JS). Prev/next map; back to archive.
 3. Alt text pattern: `"<Map name> — screenshot <i> of <n>"` unless Jay provides captions.
 4. Link the archive from `/projects/` and the footer. **Not** from the home page.
@@ -435,7 +437,7 @@ Conventions for every stage:
 **Inputs:** §4.6, §4.8, §4.9; `public/Jay_Parekh_Resume.pdf` (or an updated PDF from Jay).
 
 **Tasks:**
-1. `/about/`: bio, `~/education` (USC, Mumbai) as `SpecTable`s, `~/experience` (full timeline incl. intern + CTO + level design 2017–2019), `~/elsewhere` (community and extra-curricular facts from §4.6), resume download button (`Button` primary, `download` attr, size and "PDF" label), optional headshot (only if provided).
+1. `/about/`: bio, `~/education` (USC, Mumbai) as `SpecTable`s, `~/experience` (full timeline incl. intern + CTO; no level-design role), `~/elsewhere` (community and extra-curricular facts from §4.6), resume download button (`Button` primary, `download` attr, size and "PDF" label), optional headshot (only if provided).
 2. `404.astro`: terminal-style `$ cd <path>: No such file or directory` with links to home, blog and projects. `noindex`.
 3. `public/works-2.html` redirect stub (D11).
 4. Confirm `/Jay_Parekh_Resume.pdf` is served at the old URL.
@@ -560,11 +562,11 @@ Conventions for every stage:
 | Badge | `■ SOFTWARE ENGINEER · SEATTLE` (proposed; Seattle is from the old site) |
 | H1 (two-tone) | Line 1 `Jay Parekh` (fg); line 2 `Software Development Engineer II @ Amazon` (muted) |
 | One-liner | (proposed) "I build and scale Amazon's shopping cart service: throttling, caching, migrations and latency." → `NEEDS INPUT: approve or rewrite` |
-| Links row | `github` `linkedin` `x` `medium` (hidden until provided) `email` `resume.pdf` |
+| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Monkeytype and Steam Workshop are in the footer `CONNECT` column, §4.9) |
 | CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf  rss.xml`, each a real link. Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
 | 01 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
 | Highlights | `Fig 1. $1.74M` — infrastructure cost saved (cart cache storage refactor). `Fig 2. −15 ms` — global TM99 latency, same change. `Fig 3. 3–4 months` — implementation effort saved by design choice. |
-| 02 `~/blog` | Latest 3–5 posts (`PostListItem`). **At launch:** `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
+| 02 `~/blog` | Latest 3–5 posts (`PostListItem`); at launch the 3 imported Medium posts. With 0 posts: `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
 | 03 `~/projects` | Featured software projects (all 4 by default): title, one-liner, stack tags, link. "all projects → /projects/". |
 | 04 `~/skills` | One static wrapped line: `Java /// Kotlin /// C++ /// Python /// React /// Node.js /// AWS /// Docker /// Linux /// Git /// SQL` (from resume; `NEEDS INPUT: confirm current skill list`) |
 | Footer | §4.9 |
@@ -595,14 +597,14 @@ Conventions for every stage:
 - [*] Ran technical operations for the video-game segments of *U Cypher Season 1* on MTV India.
 - [*] Managed partnerships with brands including Cooler Master and Zowie by BenQ.
 
-**3D Level Designer** · 2017 – 2019 (About only; links to the archive)
+(No "3D Level Designer" role: removed at the Stage 0 checkpoint. Level designs are shown only as projects, §4.7.)
 
 ### 4.3 Blog index `/blog/`
 - H1 `~/blog` with subtitle `NEEDS INPUT: one line on what you write about` (default: hidden).
 - Featured latest post: date, tag(s), title (larger), TL;DR (`summary`), reading time, `[medium]` marker.
 - Filter row: `all` + tags (alphabetical), linking to tag pages.
 - List: `YYYY-MM-DD  [tag]  Title` / TL;DR line / `[medium]` when `mediumUrl`.
-- Empty state at launch (same copy as home) + RSS link.
+- Empty state when there are 0 posts (same copy as home) + RSS link.
 
 ### 4.4 Blog post `/blog/<slug>/`
 Fields: title, date, updated?, reading time, tags, summary (meta description and lead), Medium notice, TOC (conditional), body, prev/next, "← all posts". No author box (single author). Medium cross-post: notice text "Originally published on Medium" + link when canonical points to Medium.
@@ -628,7 +630,7 @@ Per project `NEEDS INPUT`: year for Halma and Mars rover (likely a USC course; d
 ### 4.7 Level Design archive (`/projects/level-design/`)
 Intro (proposed): "Before software engineering, I designed custom multiplayer maps (2017–2019). This is the archive."
 Stats (from the old site, `NEEDS INPUT: confirm or refresh; numbers are as of 2024`): `Fig 1. 55 maps` · `Fig 2. 1,052,075 downloads` · `Fig 3. 12,340,926 views` (old site figures; the resume rounds them to 50+ / 1M+ / 10M+).
-Steam profile link: `steamcommunity.com/id/MatrixIN`.
+Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4).
 
 | Order | slug | Title | Old folder | Images |
 |---|---|---|---|---|
@@ -652,7 +654,7 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 
 ### 4.9 Footer (all pages)
 - Col 1: `AsciiWordmark` (`JP`, `aria-hidden`, plus visually hidden "Jay Parekh") + one muted line: "Software engineer. Writes about building things." (proposed).
-- Col 2 `CONNECT`: GitHub, LinkedIn, X, Medium (when set), Email, RSS.
+- Col 2 `CONNECT`: GitHub, LinkedIn, X, Medium, Email, RSS, Monkeytype, Steam Workshop (Q4).
 - Col 3 `SITE`: blog, projects, level design archive, about, resume.pdf; "back to top" (anchor link, no JS).
 - Bottom bar: `// jay parekh — <year from build>` left; `built with astro · 0 trackers` right (proposed).
 
@@ -666,7 +668,7 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 | Education & experience timeline | Reuse (§4.2, §4.6); drop high school |
 | Works filter (All / Level Designs / Web Dev / AI / ML) | Replaced by Projects + archive |
 | Tech-stack logos | Replaced by a text skills line |
-| Social: Steam, Instagram, Spotify, Monkeytype | Steam on the archive only; others dropped (Q4) |
+| Social: Steam, Instagram, Spotify, Monkeytype | Steam → Steam Workshop link and Monkeytype kept (footer; Steam Workshop also on the archive); Instagram and Spotify dropped (Q4) |
 | "Get in touch" mailto button | Email link in intro and footer |
 | `Matrix_Completed_Games.txt` | Drop |
 | `Jay_Parekh_Resume.pdf` | Keep at the same URL |
@@ -674,7 +676,7 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 ### 4.11 `NEEDS INPUT` register (canonical list)
 | ID | Item | Default if not provided |
 |---|---|---|
-| N1 | Medium profile URL / handle | Medium links hidden |
+| N1 | ~~Medium profile URL / handle~~ **Filled (Stage 0):** `https://medium.com/@jay.parekh7689` | — |
 | N2 | Public email (old site uses jay.parekh7689@gmail.com) | Use that address |
 | N3 | Home one-liner approval | Proposed text |
 | N4 | Bio approval | Proposed text |
@@ -744,7 +746,7 @@ All components are `.astro`, render static HTML, use tokens only (no hard-coded 
 
 Global: CSS ≤ 12 KB gzip · JS ≤ 2 KB gzip per page · fonts ≤ 60 KB total, ≤ 2 files, 1 preload · thumb ≤ 30 KB · detail ≤ 150 KB · large ≤ 450 KB · any `dist` file ≤ 500 KB (allowlist: resume PDF) · 0 third-party requests · 0 raw originals.
 
-Lighthouse (`lighthouserc.json`, mobile preset, 3 runs, median): Performance, Accessibility, Best Practices and SEO ≥ 0.95 on `/`, `/blog/`, `/projects/`, `/projects/halma-ai/`, `/projects/level-design/`, `/projects/level-design/awp-lego-asia/`, `/about/`, `/404.html`, plus one fixture post in the fixture build. Assertions: CLS ≤ 0.02, TBT ≤ 50 ms, LCP ≤ 2.0 s on `/`.
+Lighthouse (`lighthouserc.json`, mobile preset, 3 runs, median): Performance, Accessibility, Best Practices and SEO ≥ 0.95 on `/`, `/blog/`, `/projects/`, `/projects/halma-ai/`, `/projects/level-design/`, `/projects/level-design/awp-lego-asia/`, `/about/`, `/404.html`, one imported Medium post, plus one fixture post in the fixture build. Assertions: CLS ≤ 0.02, TBT ≤ 50 ms, LCP ≤ 2.0 s on `/`.
 
 ### 6.2 Accessibility checklist (WCAG 2.2 AA)
 - [ ] `lang="en"`, skip link to `#main` as the first focusable element, landmarks (`header`, `nav`, `main`, `footer`).
