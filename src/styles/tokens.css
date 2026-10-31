@@ -1,0 +1,76 @@
+/* Design tokens (SPEC Stage 1 task 4, DesignSpec §1.1–1.3, §4).
+   Light is the default theme (SPEC Q1); dark is opt-in via the toggle. */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fg: #000000;
+  --card: #f5f5f5;
+  --panel: #e5e5e5;
+  --muted: #5f5f5f;
+  --border: #d9d9d9;
+  --ring: #000000;
+  --scroll-thumb: #c4c4c4;
+  --scroll-thumb-hover: #9a9a9a;
+  --scroll-track: #ffffff;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #000000;
+  --fg: #ffffff;
+  --card: #0a0a0a;
+  --panel: #1a1a1a;
+  --muted: #a0a0a0;
+  --border: #262626;
+  --ring: #ffffff;
+  --scroll-thumb: #333333;
+  --scroll-thumb-hover: #555555;
+  --scroll-track: #000000;
+}
+
+:root {
+  /* Type: everything is monospace (DesignSpec §1.2). */
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --fs-micro: 0.625rem; /* 10px labels */
+  --fs-ui: 0.75rem; /* 12px UI */
+  --fs-body: 0.875rem; /* 14px body, mobile */
+  --fs-body-lg: 1rem; /* 16px body, md+ */
+  --fs-title: 1.25rem; /* section titles */
+  --fs-hero: clamp(3rem, 1.2rem + 7.5vw, 8rem); /* ~48px → ~128px */
+  --fs-ghost: clamp(4.5rem, 2.5rem + 6vw, 8rem);
+  --lh-tight: 1;
+  --lh-body: 1.65;
+  --tracking-wide: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* Space (4px base) and layout (DesignSpec §1.3). */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-section: clamp(5rem, 3rem + 5vw, 8rem); /* py-20 → lg:py-32 */
+  --container: 80rem;
+  --gutter: 1rem;
+  --prose: 72ch;
+
+  /* Shape and motion. */
+  --radius: 0;
+  --hairline: 1px;
+  --ring-width: 2px;
+  --opacity-ghost: 0.08;
+  --opacity-wordmark: 0.4;
+  --duration: 200ms;
+  --tap: 2.75rem; /* 44px targets for nav and toggle */
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
