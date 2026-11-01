@@ -172,3 +172,7 @@ npm run preview
 2. Open http://localhost:4321/_styleguide/images/ (fixture build only). It lists all 64 sources with their thumbnail (covers only), detail image and a `large` link. Look at a few at 2× browser zoom.
 3. Approve the compression levels, or tell me which preset to push harder or softer.
 4. Afterwards, run `npm run build` again so your local `dist/` is the production build. It doesn't matter for deploys, which build in CI.
+
+## Checkpoint review (Nov 1, 2026)
+
+Jay approved the image and video compression levels as they are. No changes.
