@@ -19,6 +19,7 @@
     "check:links": "node scripts/check-links.mjs",
     "check:links:external": "node scripts/check-links.mjs --external",
     "check:inputs": "node scripts/check-inputs.mjs",
+    "lhci": "lhci autorun",
     "fonts:subset": "node scripts/subset-fonts.mjs",
     "icons": "node scripts/favicons.mjs",
     "media:gifs": "node scripts/convert-gifs.mjs",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@astrojs/markdown-satteri": "0.4.6",
+    "@lhci/cli": "0.15.1",
     "@types/node": "24.19.2",
     "astro": "7.4.4",
     "cross-env": "10.1.0",
