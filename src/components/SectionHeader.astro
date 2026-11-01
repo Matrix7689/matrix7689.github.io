@@ -10,7 +10,7 @@ const { number, title, id } = Astro.props;
 ---
 
 <div class="section-header">
-  <span class="ghost" aria-hidden="true">{number}</span>
+  <span class="ghost" data-n={number} aria-hidden="true"></span>
   <h2 id={id}>{title}</h2>
   <span class="rule" aria-hidden="true"></span>
 </div>
@@ -30,6 +30,12 @@ const { number, title, id } = Astro.props;
     letter-spacing: -0.04em;
     opacity: var(--opacity-ghost);
     user-select: none;
+  }
+
+  /* Generated content: decorative (WCAG "incidental" text), so it stays out of the text and
+     accessibility trees, and contrast checkers don't flag the 8 % opacity. */
+  .ghost::before {
+    content: attr(data-n) / '';
   }
 
   h2 {
