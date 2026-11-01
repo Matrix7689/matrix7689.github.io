@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { readingTimePlugin } from './src/lib/remark-reading-time.ts';
+import pruneOriginals from './src/integrations/prune-originals.mjs';
 
 // The one place the site URL is set (SPEC D1). A custom domain only needs SITE_URL.
 const SITE_URL = process.env.SITE_URL ?? 'https://matrix7689.github.io';
@@ -38,6 +39,6 @@ export default defineConfig({
     },
   },
   markdown: { processor: satteri({ mdastPlugins: [readingTimePlugin] }) },
-  integrations: [fixtureRoutes()],
+  integrations: [fixtureRoutes(), pruneOriginals()],
   devToolbar: { enabled: false },
 });
