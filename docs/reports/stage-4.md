@@ -1,0 +1,101 @@
+# Stage 4 report: home page
+
+Branch `revamp`, Nov 1, 2026. Not merged to `master`: the live home page is still the Stage 1 placeholder.
+
+## What changed
+
+| Commit | What |
+|---|---|
+| `0570df4` fix: prune unreferenced raw originals after build | `src/integrations/prune-originals.mjs`; see "Problem found" below. |
+| `3301774` fix: render section ghost numbers as generated content | `SectionHeader`'s 8 % ghost number is now CSS `content: attr(data-n) / ''` instead of a text node (Lighthouse accessibility fix, below). |
+| `3ec7d73` feat: add ExperienceItem, PostListItem and ProjectCard | Three components, plus `src/lib/inline.ts`, which escapes HTML and renders only `**bold**` and `*italic*`, for metric bullets. |
+| `8ecd6fc` feat: build the home page | `src/pages/index.astro` and a `head` slot in `Base.astro` for the JSON-LD. |
+| `94c8567` chore: add Lighthouse CI | `lighthouserc.json` (mobile preset, 3 runs, the §6.1 assertions), `npm run lhci`, `@lhci/cli@0.15.1`. |
+
+### The page (§4.1), top to bottom
+1. **Intro.** The badge `■ SOFTWARE ENGINEER · SEATTLE` and the two-tone h1 ("Jay Parekh" / "Software Development Engineer II @ Amazon") span the full width. Under them, the one-liner and the links row (`github linkedin x medium email resume.pdf`) sit beside the **CommandBlock**: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf`, built from `Astro.site`, so it follows `SITE_URL`. It has a copy button, an `ls` output of 5 real links, and a `$ █` cursor.
+2. **01 `~/experience`.** SDE II and SDE I, 3 bullets each (`homeBulletLimit`), with `[*]` markers and bold metrics, then "full history →" to /about/.
+3. **Highlights.** `Fig 1. $1.74M`, `Fig 2. −15 ms` and `Fig 3. 3–4 months`, from `src/data/pages.ts`.
+4. **02 `~/blog`.** The 3 imported posts as `YYYY-MM-DD [tag] [medium]` / title / summary. With 0 posts it shows the `EmptyState` (`$ ls blog/` → "0 posts — first one is on the way. Subscribe: rss.xml"). Then "all posts →".
+5. **03 `~/projects`.** 4 `ProjectCard`s, text first, with stack tags and year. The two NewsApps have a tiny grayscale thumbnail (`thumb` preset, lazy) that turns colour on hover or focus. Then "all projects →".
+6. **04 `~/skills`.** One static wrapped line with `///` separators, drawn by CSS so screen readers hear a plain list.
+7. **JSON-LD `Person`.** Name, url, jobTitle, worksFor Amazon, alumniOf USC and University of Mumbai, and `sameAs` with the 5 non-null profile links (GitHub, LinkedIn, X, Medium, Steam Workshop).
+
+## Problem found: raw originals leaking into `dist/`
+
+The home page is the first production page to call `getCollection()`. That made Astro emit every image any collection imports (level galleries, blog figures, the Mars poster) into `dist/_astro/` as raw JPEG/PNG files. Astro deletes an original only after transforming it; images no page renders yet stay behind. `check-budgets` and `check:originals` both failed the build: 68 files, 29.5 MB, up to 912 KB each.
+
+The fix is a small integration that runs at `astro:build:done`. It deletes any `dist/` file that is byte-identical to a file in `src/assets/` **and** whose name no HTML, CSS, JS, XML or JSON file mentions. A raw copy that something does reference is left in place, so `check:originals` still fails on it. Every build now logs `[prune-originals] removed 68 unreferenced raw original(s), 29.5 MB`. The count will drop as Stages 5–7 render those images.
+
+## Verification output
+
+`npm run verify` exits 0:
+```
+astro check      Result (48 files): 0 errors, 0 warnings, 0 hints
+[prune-originals] removed 68 unreferenced raw original(s), 29.5 MB
+check:budgets
+route                                html      css       js    initial   budget      total   budget     fonts
+/                                  5.1 KB   4.1 KB   0.7 KB     9.2 KB      <50    64.7 KB     ≤120   48.1 KB
+/_styleguide/                      4.9 KB   4.0 KB   0.7 KB    15.7 KB      ≤80   104.8 KB     ≤200   48.1 KB
+image outputs by preset: thumb 18 files (avif max 27.9 KB, webp 28.6, jpg 28.2), detail 7, large 2
+all budgets pass, 0 third-party references
+check:originals  0 raw originals in dist/, 0 GIFs, every image ≤ 450 KB
+check:html       clean
+check:links      internal link check: 2 seed pages, 40 ok, 0 broken, 63 skipped
+  pending routes (built in later stages, skipped): /about/, /blog/, /blog/<3 post slugs>/, /projects/,
+  /projects/<4 project slugs>/, /projects/level-design/, /rss.xml
+```
+The total of 64.7 KB counts both lazy thumbnails at their heaviest candidate (600 w AVIF). A phone that picks the 400 w file downloads less.
+
+`npm run lhci` (Lighthouse 12.6.1, mobile preset, simulated throttling, 3 runs) exits 0:
+```
+run  perf  a11y  best-practices  seo   LCP       CLS     TBT
+1    100   100   100             100   1,383 ms  0.0000  0 ms
+2    100   100   100             100   1,364 ms  0.0003  0 ms
+3    100   100   100             100   1,357 ms  0.0003  0 ms
+```
+Assertions: every category ≥ 0.95, CLS ≤ 0.02, TBT ≤ 50 ms, LCP ≤ 2,000 ms (medians). On the first run Accessibility was 96: axe flagged the decorative 8 % ghost numbers for contrast. They're `aria-hidden` and incidental, so WCAG exempts them, but they're now generated content, which axe doesn't test, and Accessibility is 100.
+
+### Browser checks (built-in browser, `npm run preview`)
+- **Headings:** exactly one `h1`. The order is h1 → h2 (`~/experience`, Highlights, `~/blog`, `~/projects`, `~/skills`, then the footer's Connect and Site) → h3 (roles, posts, projects), with no skipped levels.
+- **1440 px:** the name fits on one line; the terminal sits beside the one-liner and links.
+- **360 × 740:** `scrollWidth` = 360, and no element extends past the viewport. The long URL in the command block wraps inside the card, and the cards stack with 96 px thumbnails.
+- **Copy button:** copies exactly `curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf`, shows "copied", announces "Copied" through the `aria-live` region, and resets to "copy" after 2 s. The clipboard API was stubbed in the page for this test, so a real paste is part of your manual check.
+- **Without JS:** the command is plain text in the HTML, and the copy button ships with `hidden`, so the page is fully readable without JS. The browser pane can't turn JS off; this was checked in the built HTML.
+- **Dark theme:** the blog rows, `[medium]` markers and nav read correctly.
+- **Fixture build:** the home page lists the newest 5 posts: the 3 imported posts plus 2 fixtures (`fixture-long-post`, `fixture-medium-crosspost`), in date order.
+
+## Acceptance criteria
+
+| Criterion | Result |
+|---|---|
+| `/` initial < 50 KB gzip excluding fonts; total ≤ 120 KB | **Pass**: 9.2 KB / 64.7 KB |
+| Lighthouse mobile ≥ 95 in all 4 categories on `/` | **Pass**: 100 / 100 / 100 / 100 |
+| Exactly one `<h1>`; h1 → h2 → h3 without skips | **Pass** |
+| Blog section lists the 3 imported posts with `[medium]`; `EmptyState` proven in `/_styleguide/`; fixtures listed in the fixture build | **Pass** |
+| Copy button copies the exact command; without JS the command is selectable text | **Pass** (real paste: manual) |
+| No horizontal scroll at 360 px | **Pass** |
+
+## Deviations from the spec
+
+1. **`prune-originals` integration**, not in the spec. Without it, production would ship 29.5 MB of raw images and fail the guards (above).
+2. **Ghost numbers as generated content** in `SectionHeader`. It looks the same; it just isn't text in the page any more.
+3. **Highlights heading:** the section has an `h2` styled as a small label ("Highlights"), so the heading outline stays complete. §4.1 gives it no number, so it sits between 01 and 02 without one.
+4. **Post rows show the first tag only** (`maxTags = 1`), because each imported post has 5. The blog index (Stage 5) can show more.
+5. **Lighthouse CI serves `dist/` with its own static server** (`staticDistDir`), not `astro preview`. Astro 7 allows only one preview server at a time, so the two conflict. Run `npm run build` first; the spec's `npm run lhci -- --url=/` form isn't needed, because `/` is the only URL so far.
+6. **Thumbnails only on the NewsApp cards:** they're the only projects with a cover. Halma and Mars rover have a video and poster, used on their detail pages in Stage 6.
+
+## Notes for Jay
+
+- **Home one-liner (N3):** the page shows the draft "I build and scale Amazon's shopping cart service: throttling, caching, migrations and latency." It's one of the 6 open `NEEDS INPUT` items; approve it or send a rewrite.
+- **Unbuilt pages:** links to the blog, projects, about and `rss.xml` 404 until Stages 5–8. The link check skips them and lists them on every run.
+- **`npm audit`:** `@lhci/cli` adds 21 advisories in its own dependencies (2 low, 6 moderate, 13 high). They're dev-only tools that run locally or in CI; nothing ships to the site.
+- **Live site:** these commits are only on `revamp`. Merging into `master` would replace the live "Rebuild in progress" placeholder with this home page. Its links to unbuilt pages would show GitHub's 404 page until those stages land.
+
+## Human checkpoint
+
+```
+npm run build
+npm run preview
+```
+Open http://localhost:4321/ on desktop and phone. Approve the copy (especially the one-liner) and the layout, try the copy button and paste the result, and toggle dark mode.
