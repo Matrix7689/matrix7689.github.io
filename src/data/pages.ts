@@ -13,7 +13,7 @@ export const HOME = {
     { value: '−15 ms', caption: 'global TM99 latency, same change' },
     { value: '3–4 months', caption: 'implementation effort saved by design choice' },
   ],
-  // NEEDS INPUT (N6): confirm the current skill list (from the resume).
+  // From the resume; confirmed by Jay (N6, Stage 3 checkpoint).
   skills: ['Java', 'Kotlin', 'C++', 'Python', 'React', 'Node.js', 'AWS', 'Docker', 'Linux', 'Git', 'SQL'],
 };
 
@@ -23,8 +23,8 @@ export const BLOG_INDEX = {
 };
 
 export const ABOUT = {
-  // NEEDS INPUT (N4): approve or rewrite the bio (proposed, from the old About text; it still mentions game levels).
-  bio: "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers, which is where I learned to care about performance.",
+  // Approved by Jay with the last clause removed (N4, Stage 3 checkpoint).
+  bio: "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers.",
   // GPA hidden (Q6); high school dropped.
   education: [
     {
@@ -45,21 +45,22 @@ export const ABOUT = {
     },
   ],
   // Secondary history. The level-design archive link is added by the template.
-  // NEEDS INPUT (N11): eSports events count (old site says 32, resume says 20+). The line is omitted until answered.
+  // eSports count: 32 (old-site figure, confirmed by Jay; N11, Stage 3 checkpoint).
   elsewhere: [
     'Led a 7-week online 3D-modelling workshop for 500+ students.',
     'Head of technical operations for 24+ gaming servers serving 100,000+ users.',
+    'Organised 32 eSports events.',
   ],
-  // NEEDS INPUT (N7): updated resume PDF (the current file predates later SDE II work). Default: existing file.
+  // N7: Jay replaces public/Jay_Parekh_Resume.pdf himself; update the size in this label when he does.
   resumeLabel: 'Download resume (PDF, 217 KB)',
-  // NEEDS INPUT (N8): headshot. Default: none.
+  // No headshot (N8, Jay, Stage 3 checkpoint).
   headshot: null as string | null,
 };
 
 export const LEVEL_DESIGN = {
   // (proposed)
   intro: 'Before software engineering, I designed custom multiplayer maps (2017–2019). This is the archive.',
-  // NEEDS INPUT (N11): confirm or refresh these old-site stats (as of 2024; the resume rounds them to 50+ / 1M+ / 10M+).
+  // Old-site stats, kept as they are (N11, Jay, Stage 3 checkpoint).
   stats: [
     { value: '55', caption: 'maps' },
     { value: '1,052,075', caption: 'downloads' },

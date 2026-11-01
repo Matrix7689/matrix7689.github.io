@@ -67,7 +67,7 @@ function linkDisposition(url) {
     [/twitter\.com|x\.com/i, 'keep', 'X (Q4)'],
     [/mailto:/i, 'keep', 'email (N2)'],
     [/steamcommunity\.com/i, 'transform', 'replaced by the Steam Workshop link (Q4)'],
-    [/monkeytype\.com/i, 'keep', 'footer CONNECT (Q4)'],
+    [/monkeytype\.com/i, 'drop', 'dropped at the Stage 3 checkpoint'],
     [/instagram\.com|spotify\.com/i, 'drop', 'Q4'],
     [/hw8react\.appspot\.com/i, 'review', 'keep only if 2xx/3xx (§4.5)'],
     [/matrix7689\.github\.io\/Jay_Parekh_Resume\.pdf/i, 'keep', 'becomes relative /Jay_Parekh_Resume.pdf'],

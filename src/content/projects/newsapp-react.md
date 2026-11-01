@@ -10,7 +10,7 @@ links:
   # Returned 200 in the Stage 0 link check.
   live: http://hw8react.appspot.com/
 cover: ../../assets/projects/newsapp-react/cover.png
-# NEEDS INPUT (N13): screenshots beyond the existing cover.
+# Screenshots beyond the cover: Stage 6 shows "Screenshots coming soon." (N13, Jay, Stage 3 checkpoint).
 order: 1
 ---
 

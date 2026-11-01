@@ -143,3 +143,25 @@ npm run build:fixtures
 npm run preview
 ```
 Then open http://localhost:4321/_styleguide/content/.
+
+## Checkpoint answers (Nov 1, 2026)
+
+Jay's answers, applied in the content files and in SPEC §4.1, §4.2, §4.5–§4.7, §4.10, §4.11 and Q4:
+
+| Item | Decision | Change |
+|---|---|---|
+| N2 email | Public | Marker removed in `site.config.ts` |
+| Monkeytype | Dropped | Removed from `site.config.ts` and `SiteLinks`, the SPEC, and the inventory script's rule (the Stage 0 inventory outputs are left as historical) |
+| N4 bio | Approved with "which is where I learned to care about performance" removed | `src/data/pages.ts` |
+| N5 SDE II | Jay supplied 9 bullets | Tightened to ≤ 25 words each with the same facts (only number: **>99.99%**). They replace the 2 proposed bullets; home shows the first 3 |
+| N6 skills | Approved | Marker removed |
+| N7 resume | Jay updates the PDF himself later | Marker replaced by a note to update the "217 KB" label when the file changes |
+| N8 headshot | None | Marker removed |
+| N9 years | Mars rover Sep 2019, Halma Nov 2019; Android NewsApp uses Java and Kotlin | `year: 2019`, "Built Sep/Nov 2019." in the bodies; Android stack adds Java and Kotlin |
+| N10 maps | Placeholder text | `description: Description coming soon.` on all 12 maps; markers removed |
+| N11 | 32 eSports events; keep the old level-design stats | Line "Organised 32 eSports events." added to About's elsewhere list; markers removed |
+| N13 screenshots | "Coming soon" | Stage 6 detail pages show "Screenshots coming soon."; markers removed |
+
+Still open (6 markers): **N3** home one-liner (not answered), **N12** blog subtitle (Jay unsure; hidden), and **N9 course context** for the 4 projects (not answered; hidden).
+
+`npm run verify` exits 0 after the changes. The fixture content audit shows SDE II with 9 bullets (3 on home) and the Android stack with Java and Kotlin.

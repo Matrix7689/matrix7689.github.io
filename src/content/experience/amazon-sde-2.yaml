@@ -1,14 +1,20 @@
-# SPEC §4.2. **bold** marks a metric. "(proposed)" bullets are tightened from Jay's own wording.
+# SPEC §4.2. **bold** marks a metric. Bullets are (proposed) tightenings of Jay's own list
+# (Stage 3 checkpoint): same facts and numbers, ≤ 25 words each. Home shows the first 3; About shows all.
 company: Amazon
 title: Software Development Engineer II
 team: Shopping Cart
 start: 2023-12
 location: Seattle, WA
 bullets:
-  # (proposed)
-  - Hardened the shopping cart's request throttling against bot traffic, keeping the service available during attacks.
-  # (proposed)
-  - Owned service documentation and operational dashboards.
-  # NEEDS INPUT (N5): 1–3 recent SDE II achievements with metrics (current bullets date from 2024).
+  - Delivered cross-region cache consistency with a dual-write architecture and migration support, enabling large-scale regional transitions with zero customer impact.
+  - Designed fault-tolerant merging of unauthenticated and authenticated cart sessions, preventing cart-state loss and supporting a major service migration with **>99.99%** success.
+  - Launched reliability, monitoring and load-testing improvements for multiple customer-facing APIs, improving peak-event readiness, deployment safety and incident response.
+  - Migrated critical service integrations to secure authentication and encrypted traffic, coordinating a staged multi-team rollout with automated validation to full production coverage.
+  - Modernized internal dashboards and debugging tools and improved log traceability, reducing investigation time during incidents and production analysis.
+  - Led technical mentoring, including intern project delivery, cross-team onboarding and knowledge-sharing sessions that scaled best practices across partner teams.
+  - Resolved dependency risks, streamlined configuration pipelines and reduced manual operational overhead, improving security, stability and service readiness across environments.
+  - Enhanced the shopping cart's throttling mechanism against bot attacks, keeping the service available without interruption.
+  - Kept the service documentation and dashboards up to date.
 showOnHome: true
+homeBulletLimit: 3
 order: 1

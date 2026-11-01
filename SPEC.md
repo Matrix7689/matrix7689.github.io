@@ -128,7 +128,7 @@ matrix7689.github.io/
 | Q1 | Theme default: always dark, or follow the OS `prefers-color-scheme`? | **Answered (Stage 0): Light** unless the visitor has toggled. The OS setting is not followed. |
 | Q2 | Pixel display font (Silkscreen) for wordmark and hero name, and a single accent color? (DesignSpec §6) | **No** pixel font and **no** accent. Hierarchy comes from size, weight, case and opacity. |
 | Q3 | Footer ASCII block-letter wordmark text? | **`JP`** (fits a 360 px viewport; `JAY PAREKH` does not). |
-| Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. **Stage 1 checkpoint:** the footer `CONNECT` column is GitHub, LinkedIn, Medium, Email only; Steam Workshop goes on the level-design archive (§4.7). |
+| Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. **Stage 3 checkpoint:** Monkeytype dropped entirely. **Stage 1 checkpoint:** the footer `CONNECT` column is GitHub, LinkedIn, Medium, Email only; Steam Workshop goes on the level-design archive (§4.7). |
 | Q5 | Add "Advanced Text Summarization" (on the resume, not on the old site) as a 5th software project? | **No.** |
 | Q6 | Show GPAs (3.67/4, 8.85/10, from the resume) on About? | **No.** |
 
@@ -194,7 +194,7 @@ Conventions for every stage:
 **Tasks:**
 1. Remove old-site runtime files from `revamp`: `index.html`, `works-2.html`, `css/`, `js/`, `fonts/`, `webfonts/`, `Matrix_Completed_Games.txt`, and the unused images (`ajax-loader.gif`, `dots-bg*.svg`, `map.svg`, `map-light.png`, `nike_jordan.png`, `noodles.png`, `blog/*.svg`, tech logos, `avatar_circle*.png`, old `favicon.png`). **Do not touch `images/works/`** (Stage 2) or `Jay_Parekh_Resume.pdf` (moved to `public/` now with `git mv`). They remain on `legacy-2024`.
 2. Scaffold Astro (minimal template, TypeScript strict) in the repo root. `output: 'static'`, `site` from `SITE_URL` env (default `https://matrix7689.github.io`), `trailingSlash: 'ignore'`, `build.format: 'directory'`. Canonicals always use a trailing slash.
-3. `src/site.config.ts`: name, role, tagline, email, links (github, linkedin, x, medium, monkeytype, steamWorkshop; values per Q4), `preferMediumCanonical: true`, `wordmark: 'JP'`. Any unknown value is the literal string `'NEEDS INPUT'` or `null`, and components hide `null` links.
+3. `src/site.config.ts`: name, role, tagline, email, links (github, linkedin, x, medium, steamWorkshop; values per Q4; Monkeytype dropped at the Stage 3 checkpoint), `preferMediumCanonical: true`, `wordmark: 'JP'`. Any unknown value is the literal string `'NEEDS INPUT'` or `null`, and components hide `null` links.
 4. `src/styles/tokens.css`: **light is the default** (Q1): inverted light tokens on `:root, [data-theme="light"]` (bg `#fff`, fg `#000`, card `#f5f5f5`, panel `#e5e5e5`, muted `#5f5f5f`, border `#d9d9d9`, ring `#000`), and DesignSpec §1.1 dark tokens on `[data-theme="dark"]`. The inline theme script applies `dark` only when the visitor has chosen it; with no stored choice, or with JS off, the page is light. Radius 0. Spacing and type scale per §1.2–1.3 (10/12/14/16 px UI scale; hero `clamp()` from ~48 px to ~128 px). Container max 80rem, gutter 16 px mobile / 32 px desktop, prose max 72ch.
 5. `src/styles/base.css`: reset, mono body, `::selection` inversion, 4 px scrollbar, `:focus-visible` 2 px ring, `.visually-hidden`, skip link, blinking-cursor keyframes inside `@media (prefers-reduced-motion: no-preference)` only.
 6. `scripts/subset-fonts.mjs` (`subset-font`): produce `public/fonts/geist-mono-400.woff2` and `-700.woff2` with the D14 range. `@font-face` with `font-display: swap`, `<link rel="preload" as="font" type="font/woff2" crossorigin>` for 400 only. Metric-compatible fallback stack: `ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace`.
@@ -564,7 +564,7 @@ Conventions for every stage:
 | Badge | `■ SOFTWARE ENGINEER · SEATTLE` (proposed; Seattle is from the old site) |
 | H1 (two-tone) | Line 1 `Jay Parekh` (fg); line 2 `Software Development Engineer II @ Amazon` (muted) |
 | One-liner | (proposed) "I build and scale Amazon's shopping cart service: throttling, caching, migrations and latency." → `NEEDS INPUT: approve or rewrite` |
-| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Steam Workshop is on the level-design archive only, §4.7; Monkeytype has no placement yet, `NEEDS INPUT`) |
+| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Steam Workshop is on the level-design archive only, §4.7; Monkeytype dropped at the Stage 3 checkpoint) |
 | CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf  rss.xml`, each a real link. Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
 | 01 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
 | Highlights | `Fig 1. $1.74M` — infrastructure cost saved (cart cache storage refactor). `Fig 2. −15 ms` — global TM99 latency, same change. `Fig 3. 3–4 months` — implementation effort saved by design choice. |
@@ -575,9 +575,16 @@ Conventions for every stage:
 
 ### 4.2 Experience data (home + about)
 **Amazon: Software Development Engineer II**, Shopping Cart · Dec 2023 – present · Seattle, WA
-- [*] (proposed) Hardened the shopping cart's request throttling against bot traffic, keeping the service available during attacks.
-- [*] (proposed) Owned service documentation and operational dashboards.
-- `NEEDS INPUT: 1–3 recent SDE II achievements with metrics (current bullets date from 2024)`
+(Jay supplied 9 bullets at the Stage 3 checkpoint; these are (proposed) tightenings with the same facts. Home shows the first 3.)
+- [*] Delivered cross-region cache consistency with a dual-write architecture and migration support, enabling large-scale regional transitions with zero customer impact.
+- [*] Designed fault-tolerant merging of unauthenticated and authenticated cart sessions, preventing cart-state loss and supporting a major service migration with **>99.99%** success.
+- [*] Launched reliability, monitoring and load-testing improvements for multiple customer-facing APIs, improving peak-event readiness, deployment safety and incident response.
+- [*] Migrated critical service integrations to secure authentication and encrypted traffic, coordinating a staged multi-team rollout with automated validation to full production coverage.
+- [*] Modernized internal dashboards and debugging tools and improved log traceability, reducing investigation time during incidents and production analysis.
+- [*] Led technical mentoring, including intern project delivery, cross-team onboarding and knowledge-sharing sessions that scaled best practices across partner teams.
+- [*] Resolved dependency risks, streamlined configuration pipelines and reduced manual operational overhead, improving security, stability and service readiness across environments.
+- [*] Enhanced the shopping cart's throttling mechanism against bot attacks, keeping the service available without interruption.
+- [*] Kept the service documentation and dashboards up to date.
 
 **Amazon: Software Development Engineer I**, Shopping Cart · Jul 2021 – Dec 2023 · Seattle, WA
 - [*] Refactored the cart's caching storage layer: **$1.74M** infrastructure cost savings and **−15 ms** global TM99 latency.
@@ -615,18 +622,18 @@ Fields: title, date, updated?, reading time, tags, summary (meta description and
 | slug | Title | Facts (from old site / resume only) | Links | Media |
 |---|---|---|---|---|
 | `newsapp-react` | NewsApp: React website | Responsive site in React + Node.js showing latest news by category from the New York Times and Guardian APIs; share via Facebook, X/Twitter, email; bookmarks in localStorage; async keyword search with autosuggest. Mar–May 2020. | GitHub `github.com/Matrix7689/NewsApp-React`; live `hw8react.appspot.com` (keep only if Stage 0 check is 2xx/3xx) | `cover.png` 800×600 |
-| `newsapp-android` | NewsApp: Android app | Android app with Guardian API news and OpenWeatherMap weather for the user's location; bookmarks (SharedPreferences); Google Trends + MPAndroidChart keyword-trend graphs; Bing Autosuggest search. Mar–May 2020. | GitHub `github.com/Matrix7689/NewsApp-Android` | `cover.png` 800×800 |
+| `newsapp-android` | NewsApp: Android app | Android app (Java and Kotlin) with Guardian API news and OpenWeatherMap weather for the user's location; bookmarks (SharedPreferences); Google Trends + MPAndroidChart keyword-trend graphs; Bing Autosuggest search. Mar–May 2020. | GitHub `github.com/Matrix7689/NewsApp-Android` | `cover.png` 800×800 |
 | `halma-ai` | Halma game-playing agent | C++11 AI agent for Halma (16×16 board, 19 pieces per side); alpha-beta pruned minimax to 3-ply picks the best move. | GitHub `github.com/Matrix7689/Halma-AI` | video from `halma.gif` (480×480) |
 | `mars-rover-search` | Mars rover path search (BFS / UCS / A*) | C++11 program that reads a terrain map, landing site, targets and rover limits, and finds the optimal safe path to each target over 8-neighbour moves using BFS, UCS and A*. | GitHub `github.com/Matrix7689/BFS-UCS-AStar` | video from `bfs.gif` (567×320) |
 
-Per project `NEEDS INPUT`: year for Halma and Mars rover (likely a USC course; don't state it), `role/course` context.
+Years (Jay, Stage 3 checkpoint): Mars rover Sep 2019, Halma Nov 2019. Per project `NEEDS INPUT`: `role/course` context (likely USC courses; don't state it until confirmed). Screenshots beyond the existing covers: detail pages show "Screenshots coming soon." (N13).
 
 ### 4.6 About `/about/`
-- **Bio** (proposed, from old About text, re-centred on engineering): "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers, which is where I learned to care about performance." → `NEEDS INPUT: approve or rewrite`
+- **Bio** (proposed, from old About text, re-centred on engineering): "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers." (approved by Jay at the Stage 3 checkpoint with the last clause removed)
 - **Education:** USC, MS Computer Science, Aug 2019 – May 2021, Los Angeles; coursework: Web Technologies, Analysis of Algorithms, Foundations of AI, 3-D Graphics and Rendering, Advanced Mobile Devices and Game Consoles. University of Mumbai, BE Information Technology, Aug 2015 – May 2019; coursework: Data Structures & Algorithm Analysis, Computer Graphics & VR, OOP, Image Processing, Web Programming. (GPA hidden per Q6; high school dropped.)
 - **Experience:** full timeline from §4.2.
-- **Elsewhere (secondary):** level design → archive link; led a 7-week online 3D-modelling workshop for 500+ students; head of technical operations for 24+ gaming servers serving 100,000+ users; organised eSports events (`NEEDS INPUT: old site says 32 events, resume says 20+; which?`).
-- **Resume:** primary button "Download resume (PDF, 217 KB)" → `/Jay_Parekh_Resume.pdf`. `NEEDS INPUT: updated resume PDF (current file predates later SDE II work)`; default = reuse the existing file.
+- **Elsewhere (secondary):** level design → archive link; led a 7-week online 3D-modelling workshop for 500+ students; head of technical operations for 24+ gaming servers serving 100,000+ users; organised 32 eSports events (Jay, Stage 3 checkpoint).
+- **Resume:** primary button "Download resume (PDF, 217 KB)" → `/Jay_Parekh_Resume.pdf`. Jay replaces the PDF himself later (N7); until then the existing file ships.
 - **Headshot:** `NEEDS INPUT` (default: none; the old 177 px avatar is not reused).
 
 ### 4.7 Level Design archive (`/projects/level-design/`)
@@ -649,7 +656,7 @@ Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (
 | 11 | `awp-lego-z` | AWP Lego Z | `awplegoz` | 5 |
 | 12 | `awp-tridust` | AWP Tridust | `awptridust` | 5 |
 
-Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Workshop URL, per-map stats. Default: show the title and gallery only, and hide the empty fields.
+Per map (N10): game/engine, year, description, Steam Workshop URL and per-map stats are still to come. Jay chose placeholder text at the Stage 3 checkpoint: `description: Description coming soon.`; the other fields stay hidden.
 
 ### 4.8 404
 `$ cd <requested-path>` / `bash: cd: <path>: No such file or directory` / links: `~/` `blog/` `projects/`.
@@ -670,7 +677,7 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 | Education & experience timeline | Reuse (§4.2, §4.6); drop high school |
 | Works filter (All / Level Designs / Web Dev / AI / ML) | Replaced by Projects + archive |
 | Tech-stack logos | Replaced by a text skills line |
-| Social: Steam, Instagram, Spotify, Monkeytype | Steam → Steam Workshop link, on the level-design archive only; Monkeytype kept in `site.config.ts` but not shown (placement `NEEDS INPUT`); Instagram and Spotify dropped (Q4) |
+| Social: Steam, Instagram, Spotify, Monkeytype | Steam → Steam Workshop link, on the level-design archive only; Monkeytype dropped (Stage 3 checkpoint); Instagram and Spotify dropped (Q4) |
 | "Get in touch" mailto button | Email link in intro and footer |
 | `Matrix_Completed_Games.txt` | Drop |
 | `Jay_Parekh_Resume.pdf` | Keep at the same URL |
@@ -679,18 +686,18 @@ Per map `NEEDS INPUT`: game/engine, year, 1–2 sentence description, Steam Work
 | ID | Item | Default if not provided |
 |---|---|---|
 | N1 | ~~Medium profile URL / handle~~ **Filled (Stage 0):** `https://medium.com/@jay.parekh7689` | — |
-| N2 | Public email (old site uses jay.parekh7689@gmail.com) | Use that address |
+| N2 | ~~Public email~~ **Filled (Stage 3):** jay.parekh7689@gmail.com, public | — |
 | N3 | Home one-liner approval | Proposed text |
-| N4 | Bio approval | Proposed text |
-| N5 | Recent SDE II achievements + metrics | Show the 2 existing bullets |
-| N6 | Current skills list | Resume list |
-| N7 | Updated resume PDF | Existing PDF |
-| N8 | Headshot | None |
-| N9 | Project years / course context (Halma, Mars rover) | Hidden |
-| N10 | Per-map game, year, description, workshop URL | Hidden |
-| N11 | Level-design stats refresh; eSports count (32 vs 20+) | Old-site map stats; eSports line omitted |
+| N4 | ~~Bio approval~~ **Filled (Stage 3):** approved with the last clause removed | — |
+| N5 | ~~Recent SDE II achievements~~ **Filled (Stage 3):** 9 bullets from Jay (§4.2) | — |
+| N6 | ~~Current skills list~~ **Filled (Stage 3):** resume list approved | — |
+| N7 | Updated resume PDF | Jay replaces it himself; existing PDF until then (no marker) |
+| N8 | ~~Headshot~~ **Decided (Stage 3):** none | — |
+| N9 | Project course context (years filled at Stage 3: Mars rover Sep 2019, Halma Nov 2019; Android is Java and Kotlin) | Hidden |
+| N10 | Per-map game, year, description, workshop URL | **Stage 3:** placeholder "Description coming soon."; other fields hidden (no marker) |
+| N11 | ~~Level-design stats; eSports count~~ **Filled (Stage 3):** keep old-site stats; 32 events | — |
 | N12 | Blog subtitle | Hidden |
-| N13 | Project screenshots beyond the existing covers | Existing covers only |
+| N13 | Project screenshots beyond the existing covers | **Stage 3:** "Screenshots coming soon." on detail pages (no marker) |
 
 ---
 
