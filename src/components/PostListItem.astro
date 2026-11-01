@@ -1,0 +1,91 @@
+---
+// Blog list entry (SPEC §5 PostListItem, §4.3): `YYYY-MM-DD  [tag]  Title` / TL;DR / [medium].
+// The title link covers the whole row; hover underlines the title and tints the row.
+import { isoDate } from '../lib/dates';
+
+interface Props {
+  date: Date;
+  tags: string[];
+  title: string;
+  summary: string;
+  href: string;
+  medium?: boolean;
+  featured?: boolean;
+  /** How many tags to show (the first ones). */
+  maxTags?: number;
+}
+
+const { date, tags, title, summary, href, medium = false, featured = false, maxTags = 1 } = Astro.props;
+---
+
+<article class:list={['post', { 'post--featured': featured }]}>
+  <p class="post__meta">
+    <time datetime={isoDate(date)}>{isoDate(date)}</time>
+    {tags.slice(0, maxTags).map((t) => <span>[{t}]</span>)}
+    {
+      medium && (
+        <span class="post__medium">
+          [medium]<span class="visually-hidden"> also published on Medium</span>
+        </span>
+      )
+    }
+  </p>
+  <h3><a href={href}>{title}</a></h3>
+  <p class="post__summary">{summary}</p>
+</article>
+
+<style>
+  .post {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    margin-inline: calc(var(--space-4) * -1);
+  }
+
+  .post:hover {
+    background: var(--card);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .post__medium {
+    color: var(--fg);
+  }
+
+  h3 {
+    font-size: var(--fs-body);
+    font-weight: 700;
+  }
+
+  .post--featured h3 {
+    font-size: var(--fs-title);
+  }
+
+  h3 a {
+    text-decoration: none;
+  }
+
+  /* Stretched link: the whole row is the hit target. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .post:hover h3 a,
+  h3 a:focus-visible {
+    text-decoration-line: underline;
+  }
+
+  .post__summary {
+    max-width: var(--prose);
+    color: var(--muted);
+  }
+</style>

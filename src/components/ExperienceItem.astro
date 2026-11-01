@@ -1,0 +1,80 @@
+---
+// One role (SPEC §5 ExperienceItem, §4.2): title, company · team, dates · location, [*] bullets.
+// `limit` shows the first N bullets (home); omit it to show all (about).
+import { inlineMarkdown } from '../lib/inline';
+import { roleRange } from '../lib/dates';
+
+interface Props {
+  company: string;
+  title: string;
+  team?: string | undefined;
+  start: string;
+  end?: string | undefined;
+  location: string;
+  bullets: string[];
+  limit?: number | undefined;
+}
+
+const { company, title, team, start, end, location, bullets, limit } = Astro.props;
+const shown = limit ? bullets.slice(0, limit) : bullets;
+---
+
+<article class="role">
+  <header class="role__head">
+    <h3>{title}</h3>
+    <p>{company}{team && <span class="muted"> · {team}</span>}</p>
+    <p class="role__meta">{roleRange(start, end)} · {location}</p>
+  </header>
+  <ul class="role__bullets" role="list">
+    {
+      shown.map((b) => (
+        <li>
+          <span set:html={inlineMarkdown(b)} />
+        </li>
+      ))
+    }
+  </ul>
+</article>
+
+<style>
+  .role {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 64rem) {
+    .role {
+      grid-template-columns: minmax(16rem, 1fr) 2fr;
+      gap: var(--space-8);
+    }
+  }
+
+  h3 {
+    font-size: var(--fs-body);
+    font-weight: 700;
+  }
+
+  .role__meta {
+    margin-top: var(--space-1);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .role__bullets {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--prose);
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+  }
+
+  /* [*] marker (DesignSpec §2.1); the "/ ''" alt text keeps it out of the accessibility tree. */
+  li::before {
+    content: '[*]' / '';
+    color: var(--muted);
+  }
+</style>
