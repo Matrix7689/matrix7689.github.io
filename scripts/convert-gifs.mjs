@@ -1,4 +1,4 @@
-// One-off GIF → video conversion (SPEC D10, Stage 2 task 3). Run with `npm run media:convert`
+// One-off GIF → video conversion (SPEC D10, Stage 2 task 3). Run with `npm run media:gifs`
 // and commit the outputs; the build never runs ffmpeg.
 // For each src/assets/projects/<slug>/demo.gif it writes:
 //   public/media/<slug>/demo.mp4    H.264, yuv420p, faststart

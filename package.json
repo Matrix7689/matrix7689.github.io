@@ -21,12 +21,13 @@
     "check:inputs": "node scripts/check-inputs.mjs",
     "fonts:subset": "node scripts/subset-fonts.mjs",
     "icons": "node scripts/favicons.mjs",
-    "media:convert": "node scripts/convert-gifs.mjs",
+    "media:gifs": "node scripts/convert-gifs.mjs",
     "inventory": "node scripts/inventory.mjs",
     "repo:size": "node scripts/repo-size.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "@astrojs/markdown-satteri": "0.4.6",
     "@types/node": "24.19.2",
     "astro": "7.4.4",
     "cross-env": "10.1.0",

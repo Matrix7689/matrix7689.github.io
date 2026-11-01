@@ -13,7 +13,8 @@
     { "route": "/about/", "initialKB": 40, "totalKB": 100 },
     { "route": "/404", "initialKB": 30, "totalKB": 30 },
     { "route": "/_styleguide/", "initialKB": 80, "totalKB": 200, "$comment": "internal, noindex; not in SPEC §6.1" },
-    { "route": "/_styleguide/images/", "initialKB": 80, "totalKB": 12000, "$comment": "fixture build only (every source image); not in SPEC §6.1" }
+    { "route": "/_styleguide/images/", "initialKB": 80, "totalKB": 12000, "$comment": "fixture build only (every source image); not in SPEC §6.1" },
+    { "route": "/_styleguide/content/", "initialKB": 30, "totalKB": 30, "$comment": "fixture build only (collection audit); not in SPEC §6.1" }
   ],
   "global": {
     "cssKB": 12,

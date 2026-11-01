@@ -1,0 +1,81 @@
+---
+// Fixture-only content audit at /_styleguide/content/ (SPEC Stage 3): every collection entry with
+// its computed fields (reading time, canonical, slug, role dates), so schemas and lib helpers are
+// exercised before the real templates exist. Injected by astro.config.mjs for `npm run build:fixtures`.
+import { getCollection, render } from 'astro:content';
+import Base from '../../../src/layouts/Base.astro';
+import { getPosts, postSlug, adjacent, tagsOf } from '../../../src/lib/posts';
+import { canonicalFor, isMediumCanonical } from '../../../src/lib/canonical';
+import { isoDate, roleRange } from '../../../src/lib/dates';
+
+const site = Astro.site!.origin;
+const posts = await getPosts();
+const rows = await Promise.all(
+  posts.map(async (p) => {
+    const { remarkPluginFrontmatter, headings } = await render(p);
+    const self = `${site}/blog/${postSlug(p)}/`;
+    const { prev, next } = adjacent(posts, p);
+    return { p, readingTime: remarkPluginFrontmatter.readingTime as number, headings: headings.length, canonical: canonicalFor(p.data, self), medium: isMediumCanonical(p.data, self), prev, next };
+  }),
+);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const levels = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order);
+const roles = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Content audit · Jay Parekh" description="Internal content collection audit (fixture build only)." noindex>
+  <div class="container audit">
+    <h1>Content audit</h1>
+
+    <h2>blog ({posts.length}) · tags: {tagsOf(posts).join(', ')}</h2>
+    <table>
+      <thead><tr><th>date</th><th>slug</th><th>draft</th><th>min</th><th>h</th><th>canonical</th><th>prev / next</th></tr></thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr data-post={postSlug(r.p)}>
+              <td>{isoDate(r.p.data.date)}</td>
+              <td>{postSlug(r.p)}</td>
+              <td>{String(r.p.data.draft)}</td>
+              <td data-reading-time>{r.readingTime}</td>
+              <td>{r.headings}</td>
+              <td>{r.canonical}{r.medium && ' (medium)'}</td>
+              <td>{r.prev ? postSlug(r.prev) : '–'} / {r.next ? postSlug(r.next) : '–'}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <h2>projects ({projects.length})</h2>
+    <ul>{projects.map((p) => <li>{p.data.order}. {p.id} · {p.data.stack.join(', ')} · {p.data.cover ? 'cover' : ''}{p.data.video ? 'video' : ''}</li>)}</ul>
+
+    <h2>levels ({levels.length})</h2>
+    <ul>{levels.map((l) => <li>{l.data.order}. {l.data.title} · {l.data.gallery.length} images</li>)}</ul>
+
+    <h2>experience ({roles.length})</h2>
+    <ul>{roles.map((r) => <li>{r.data.title}, {r.data.company} · {roleRange(r.data.start, r.data.end)} · {r.data.bullets.length} bullets{r.data.showOnHome && ` · home (${r.data.homeBulletLimit ?? 'all'})`}</li>)}</ul>
+  </div>
+</Base>
+
+<style>
+  .audit {
+    padding-block: var(--space-12);
+    font-size: var(--fs-ui);
+  }
+
+  h2 {
+    margin-top: var(--space-8);
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    padding: var(--space-1) var(--space-3) var(--space-1) 0;
+    text-align: left;
+    border-bottom: var(--hairline) solid var(--border);
+  }
+</style>

@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
+import { readingTimePlugin } from './src/lib/remark-reading-time.ts';
 
 // The one place the site URL is set (SPEC D1). A custom domain only needs SITE_URL.
 const SITE_URL = process.env.SITE_URL ?? 'https://matrix7689.github.io';
@@ -13,6 +15,7 @@ function fixtureRoutes() {
       'astro:config:setup': ({ injectRoute }) => {
         if (!process.env.INCLUDE_FIXTURES) return;
         injectRoute({ pattern: '/_styleguide/images', entrypoint: './tests/fixtures/pages/image-audit.astro' });
+        injectRoute({ pattern: '/_styleguide/content', entrypoint: './tests/fixtures/pages/content-audit.astro' });
       },
     },
   };
@@ -34,6 +37,7 @@ export default defineConfig({
       config: { jpeg: { mozjpeg: true }, webp: { effort: 6 }, avif: { effort: 4 } },
     },
   },
+  markdown: { processor: satteri({ mdastPlugins: [readingTimePlugin] }) },
   integrations: [fixtureRoutes()],
   devToolbar: { enabled: false },
 });
