@@ -1,0 +1,40 @@
+---
+// Demo video (SPEC D10, §5 Video): controls, preload="none", no autoplay, with a text description
+// beside it (§6.2). Files come from `npm run media:convert` in public/media/<slug>/.
+// MP4 is listed first because every current browser plays H.264; WebM is the fallback.
+import type { ImageMetadata } from 'astro';
+import { posterUrl } from '../lib/images';
+
+interface Props {
+  mp4: string;
+  webm: string;
+  /** First frame (src/assets/projects/<slug>/poster.png), processed with the detail preset. */
+  poster: ImageMetadata;
+  /** Text description shown under the video. */
+  label: string;
+}
+
+const { mp4, webm, poster, label } = Astro.props;
+const posterSrc = await posterUrl(poster);
+---
+
+<figure class="video">
+  <video controls preload="none" playsinline poster={posterSrc} width={poster.width} height={poster.height} data-preset="detail">
+    <source src={mp4} type="video/mp4" />
+    <source src={webm} type="video/webm" />
+    <a href={mp4}>Download the video (MP4)</a>
+  </video>
+  <figcaption class="muted">{label}</figcaption>
+</figure>
+
+<style>
+  .video video {
+    border: var(--hairline) solid var(--border);
+    background: var(--card);
+  }
+
+  figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--fs-ui);
+  }
+</style>

@@ -65,6 +65,22 @@ svg {
   height: auto;
 }
 
+/* Img grayscale prop: colour returns when the enclosing link is hovered or focused (DesignSpec §4 Images). */
+.img-gray {
+  filter: grayscale(1);
+}
+
+a:hover .img-gray,
+a:focus-visible .img-gray {
+  filter: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .img-gray {
+    transition: filter var(--duration);
+  }
+}
+
 input,
 button,
 textarea,

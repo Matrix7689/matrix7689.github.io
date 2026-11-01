@@ -1,0 +1,67 @@
+---
+// Fixture-only image audit at /_styleguide/images/ (SPEC Stage 2 acceptance): every source in
+// src/assets through the presets it will use: thumb for covers, detail and large for everything.
+// Injected by astro.config.mjs only when INCLUDE_FIXTURES is set (`npm run build:fixtures`).
+// It must stay outside src/pages: a production build that merely bundles this glob emits every
+// raw original into dist/. check-budgets then caps every output by preset.
+import type { ImageMetadata } from 'astro';
+import Base from '../../../src/layouts/Base.astro';
+import Img from '../../../src/components/Img.astro';
+import { largeUrl } from '../../../src/lib/images';
+
+const modules = import.meta.glob<{ default: ImageMetadata }>('../../../src/assets/**/*.{jpg,png}', { eager: true });
+const images = await Promise.all(
+  Object.entries(modules)
+    .map(([path, mod]) => ({ path: path.replace('../../../src/assets/', ''), src: mod.default }))
+    .sort((a, b) => a.path.localeCompare(b.path))
+    .map(async (img) => ({
+      ...img,
+      // Covers become thumbnails (map 0_main, project cover); video posters and gallery shots don't.
+      isCover: /\/(0_main\.jpg|cover\.png)$/.test(img.path),
+      large: await largeUrl(img.src),
+    })),
+);
+---
+
+<Base title="Image audit · Jay Parekh" description="Internal image preset audit (fixture build only)." noindex>
+  <div class="container audit">
+    <h1>Image audit</h1>
+    <p class="muted">{images.length} sources. Fixture build only.</p>
+    <ul role="list">
+      {
+        images.map((img) => (
+          <li>
+            <p class="label">
+              {img.path} · {img.src.width}×{img.src.height} · <a href={img.large} data-preset="large">large</a>
+            </p>
+            <div class="row">
+              {img.isCover && <Img src={img.src} alt={`${img.path} (thumb)`} preset="thumb" sizes="300px" />}
+              <Img src={img.src} alt={`${img.path} (detail)`} preset="detail" sizes="600px" />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .audit {
+    padding-block: var(--space-12);
+  }
+
+  li {
+    margin-top: var(--space-8);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .row :global(picture) {
+    width: 300px;
+  }
+</style>

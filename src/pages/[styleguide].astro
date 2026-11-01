@@ -13,9 +13,15 @@ import SectionHeader from '../components/SectionHeader.astro';
 import SpecTable from '../components/SpecTable.astro';
 import Tag from '../components/Tag.astro';
 import TerminalCard from '../components/TerminalCard.astro';
+import Img from '../components/Img.astro';
+import Video from '../components/Video.astro';
 import { SITE } from '../site.config';
 import { contrast, readTokens } from '../lib/contrast';
+import { largeUrl } from '../lib/images';
 import tokensCss from '../styles/tokens.css?raw';
+import mapCover from '../assets/level-design/awp-lego-asia/0_main.jpg';
+import mapShot from '../assets/level-design/awp-lego-asia/1.jpg';
+import halmaPoster from '../assets/projects/halma-ai/poster.png';
 
 export function getStaticPaths() {
   return [{ params: { styleguide: '_styleguide' } }];
@@ -43,6 +49,8 @@ const pairs: [string, string, number][] = [
   ['muted', 'panel', 4.5],
   ['border', 'bg', 1],
 ];
+const mapCoverLarge = await largeUrl(mapCover);
+const mapShotLarge = await largeUrl(mapShot);
 ---
 
 <Base title="Styleguide · Jay Parekh" description="Internal component styleguide." noindex>
@@ -162,6 +170,28 @@ const pairs: [string, string, number][] = [
             link={{ label: 'rss.xml', href: '/rss.xml' }}
           />
 
+          <h3>Images and video</h3>
+          <div class="media">
+            <figure>
+              <a href={mapCoverLarge} class="thumb-link" data-preset="large">
+                <Img src={mapCover} alt="AWP Lego Asia: overview of the map" preset="thumb" sizes="(min-width: 48rem) 300px, 100vw" grayscale />
+              </a>
+              <figcaption class="label">thumb · grayscale, colour on hover/focus</figcaption>
+            </figure>
+            <figure>
+              <Img src={mapShot} alt="AWP Lego Asia: in-game screenshot" preset="detail" sizes="(min-width: 80rem) 1216px, 100vw" />
+              <figcaption class="label">
+                detail · <a href={mapShotLarge} data-preset="large">view original (1920 px WebP)</a>
+              </figcaption>
+            </figure>
+            <Video
+              mp4="/media/halma-ai/demo.mp4"
+              webm="/media/halma-ai/demo.webm"
+              poster={halmaPoster}
+              label="Halma AI demo recording (33 s, no audio). Sample caption; Stage 6 writes the real description."
+            />
+          </div>
+
           <h3>ASCII wordmark</h3>
           <AsciiWordmark text={SITE.wordmark} label={SITE.name} />
         </section>
@@ -275,6 +305,25 @@ const pairs: [string, string, number][] = [
   .figs {
     display: grid;
     gap: var(--space-4);
+  }
+
+  .media {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .media figcaption {
+    margin-top: var(--space-2);
+  }
+
+  .thumb-link {
+    display: block;
+    max-width: 300px;
+    border: var(--hairline) solid var(--border);
+  }
+
+  .media :global(.video) {
+    max-width: 480px;
   }
 
   @media (min-width: 48rem) {
