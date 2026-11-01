@@ -44,7 +44,7 @@ This runs on Windows: use npm scripts (Node ESM), not bash-only commands. Quote 
 - Never gate content behind JS or animation. Site must be fully readable with JS disabled.
 
 ## Git rules
-- Work on `revamp`. Never push to `master` until Stage 11 launch approval. Never modify or force-push `legacy-2024`.
+- `master` is live (early launch, Nov 1, 2026): every push to `master` deploys the site. Work on `revamp`, and merge into `master` only when Jay approves it. Never force-push `master`; never modify or force-push `legacy-2024`.
 - Small conventional commits. Don't commit `dist/`, `.astro/`, `node_modules/` or `.lighthouseci/`.
 - End commit messages with the attribution lines the session gives you, if any.
 

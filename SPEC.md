@@ -104,7 +104,7 @@ matrix7689.github.io/
 | # | Decision |
 |---|---|
 | D1 | **Stack:** Astro static output (§1.4). `site` = `https://matrix7689.github.io`, `base` = `/`, set in **one place** (`astro.config.mjs` reading `SITE_URL` env with that default) so a custom domain is a one-line change. |
-| D2 | **Branches:** preserve old site on `legacy-2024` (from current `origin/master`). Build on `revamp`. `master` is replaced only after Jay's review (Stage 11). |
+| D2 | **Branches:** preserve old site on `legacy-2024` (from current `origin/master`). Build on `revamp`. `master` is replaced only after Jay's review (Stage 11). **Superseded Nov 1, 2026:** Jay asked to go live after Stage 1. `master` was fast-forwarded to `revamp` (`2b5af9d`), Pages Source was switched to GitHub Actions, and `deploy.yml` was added early. Stages now land on `revamp` and reach `master` when Jay approves. |
 | D3 | **Deploy:** GitHub Actions → GitHub Pages. One-time setting: *Settings → Pages → Build and deployment → Source: **GitHub Actions***. |
 | D4 | **Map originals:** link to a build-made 1920 px WebP (≤ 450 KB). Raw JPEGs stay in `src/assets/level-design/` and never ship. |
 | D5 | **Blog at launch:** Jay's 3 Medium posts, imported in Stage 3 as full cross-posts with `mediumUrl` set (canonical → Medium per D6). URLs are stored without the `?sharedUserId=…` query:<br>1. `https://medium.com/@jay.parekh7689/how-to-work-better-with-ai-95b32713664f`<br>2. `https://medium.com/@jay.parekh7689/how-i-avoid-and-handle-burnout-c8caedd9fdf1`<br>3. `https://medium.com/@jay.parekh7689/critical-thinking-is-fading-heres-how-you-can-reclaim-it-d30881b52ccb`<br>Body text is Jay's own and is imported verbatim (no rewriting). An empty state still renders for a 0-post build. Future Medium imports are **documented** (`docs/PUBLISHING.md`) plus a `new:post` scaffold script. No automated importer in v1. |
@@ -140,7 +140,7 @@ All copy and data gaps are listed as `NEEDS INPUT` in Section 4. `npm run check:
 
 Conventions for every stage:
 - Work on branch `revamp`. One commit per logical task, using conventional-commit style (`feat:`, `chore:`, `docs:`).
-- **Never** push to `master` before Stage 11's checkpoint. **Never** force-push `legacy-2024`.
+- **`master` is live** (early launch, Nov 1, 2026, at Jay's request): every push to `master` deploys to https://matrix7689.github.io/ through `deploy.yml`. Merge `revamp` into `master` only when Jay approves it. **Never** force-push `master` or `legacy-2024`.
 - At the end of each stage, write `docs/reports/stage-<n>.md` containing: what changed, the command outputs (budgets, build, checks), the repo-size delta (`npm run repo:size`), the remaining `NEEDS INPUT` count, and any deviations from this spec.
 - "Verify" lists the commands Claude Code must run and paste summarised output from. A stage is not done until every acceptance criterion passes.
 
@@ -490,6 +490,8 @@ Conventions for every stage:
 
 ### Stage 10 — Deployment pipeline (no cutover yet)
 
+> **Early launch (Nov 1, 2026):** task 2 (`deploy.yml`) and the Pages Source switch are already done and live. Stage 10 now covers only `ci.yml`, `rollback-legacy.yml` and `docs/DEPLOY.md`. Rewrite the runbook as "how deploys work now" plus rollback. Criteria that say the live site is unchanged no longer apply.
+
 **Goal:** CI and deploy workflows, a rollback path and a cutover runbook, all tested without touching the live site.
 
 **Depends on:** Stage 9.
@@ -532,7 +534,7 @@ Conventions for every stage:
 3. Cross-browser smoke (manual or Playwright screenshot script, optional): latest Chrome, Firefox and Safari (if available) at 360 px and 1440 px, both themes.
 4. Fix everything below threshold. Re-run.
 5. `npm run check:inputs -- --strict`: the remaining `NEEDS INPUT` markers must be either filled or **explicitly accepted by Jay** to ship hidden (components hide null values). Anything visible that still says `NEEDS INPUT` blocks launch.
-6. **Stop.** Present the report. After Jay says "launch", run the cutover runbook in `docs/DEPLOY.md`, then the post-deploy checks.
+6. **Stop.** Present the report. After Jay says "launch", run the cutover runbook in `docs/DEPLOY.md`, then the post-deploy checks. (Since the early launch, there is no cutover. "Launch" means merging the final `revamp` into `master` and running the post-deploy checks.)
 7. After launch: tag `v1.0.0`, then delete the Stage 0 stash only if Jay agrees.
 
 **Files to create or change:** fixes anywhere; `docs/reports/lighthouse.md`, `docs/reports/stage-11.md`.
