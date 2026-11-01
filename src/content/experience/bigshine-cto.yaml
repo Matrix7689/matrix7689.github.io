@@ -1,0 +1,13 @@
+# SPEC §4.2. About page only, under "earlier roles". There is no Level Designer role (Stage 0 checkpoint).
+company: Bigshine Media & Entertainment
+title: Chief Technical Officer
+start: 2017-07
+end: 2019-02
+location: Mumbai
+bullets:
+  - Led operations across 4 subsidiaries (Mammoth Media, Mammoth Gears, Ironhead Productions, Mammoth Gaming).
+  - Led a team of 3 building 3 websites, front and back end.
+  - Ran technical operations for the video-game segments of *U Cypher Season 1* on MTV India.
+  - Managed partnerships with brands including Cooler Master and Zowie by BenQ.
+showOnHome: false
+order: 4

@@ -1,0 +1,17 @@
+# SPEC §4.2. **bold** marks a metric. Home shows the first 3 bullets; About shows all.
+company: Amazon
+title: Software Development Engineer I
+team: Shopping Cart
+start: 2021-07
+end: 2023-12
+location: Seattle, WA
+bullets:
+  - "Refactored the cart's caching storage layer: **$1.74M** infrastructure cost savings and **−15 ms** global TM99 latency."
+  - Led a cross-team service migration that cut global TM99 latency by **10 ms** and reduced infrastructure cost.
+  - Designed translation and invocation strategies for a new service; reusing existing components saved **3–4 months** of implementation effort.
+  - Kept a client team's migration to the new cart version backward compatible, with tracking metrics.
+  - Restored **3 pipelines across 16 regions**, ran **5 peak-traffic simulations**, and built a mock-request testing framework.
+  - Mentored **2 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
+showOnHome: true
+homeBulletLimit: 3
+order: 2

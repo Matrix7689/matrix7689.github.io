@@ -1,0 +1,11 @@
+# SPEC §4.2. About page only.
+company: Amazon
+title: Software Development Engineer Intern
+start: 2020-05
+end: 2020-08
+location: Los Angeles, CA
+bullets:
+  - Built a full-stack internal tool for the Shopping Cart team that cut an operation from **4 hours to 5 minutes**.
+  - React UI (filtering, sorting, pagination, selection, form validation) over new Java middleware APIs.
+showOnHome: false
+order: 3

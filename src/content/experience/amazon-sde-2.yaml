@@ -1,0 +1,14 @@
+# SPEC §4.2. **bold** marks a metric. "(proposed)" bullets are tightened from Jay's own wording.
+company: Amazon
+title: Software Development Engineer II
+team: Shopping Cart
+start: 2023-12
+location: Seattle, WA
+bullets:
+  # (proposed)
+  - Hardened the shopping cart's request throttling against bot traffic, keeping the service available during attacks.
+  # (proposed)
+  - Owned service documentation and operational dashboards.
+  # NEEDS INPUT (N5): 1–3 recent SDE II achievements with metrics (current bullets date from 2024).
+showOnHome: true
+order: 1
