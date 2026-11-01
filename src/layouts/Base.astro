@@ -35,6 +35,7 @@ const { title, description, current, noindex = false } = Astro.props;
       } catch (e) {}
     </script>
     <noscript><style>.theme-toggle{display:none}</style></noscript>
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

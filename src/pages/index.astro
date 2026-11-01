@@ -1,41 +1,288 @@
 ---
-// Temporary home page (SPEC Stage 1 task 9). Replaced by the real home page in Stage 4.
+// Home page (SPEC Stage 4, §4.1). Order: intro → 01 experience → highlights → 02 blog → 03 projects → 04 skills.
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
+import CommandBlock from '../components/CommandBlock.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import Figure from '../components/Figure.astro';
+import PostListItem from '../components/PostListItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import EmptyState from '../components/EmptyState.astro';
 import { SITE } from '../site.config';
+import { HOME, ABOUT } from '../data/pages';
+import { getPosts, postSlug } from '../lib/posts';
+
+const site = Astro.site!.origin;
+
+const introLinks = [
+  { label: 'github', href: SITE.links.github },
+  { label: 'linkedin', href: SITE.links.linkedin },
+  { label: 'x', href: SITE.links.x },
+  { label: 'medium', href: SITE.links.medium },
+  { label: 'email', href: `mailto:${SITE.email}` },
+  { label: 'resume.pdf', href: SITE.resume },
+].filter((l): l is { label: string; href: string } => l.href !== null);
+
+const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getPosts()).slice(0, 5);
+const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+
+// JSON-LD Person (Stage 4 task 5). sameAs = every non-null profile link.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: `${site}/`,
+  jobTitle: 'Software Development Engineer II',
+  worksFor: { '@type': 'Organization', name: 'Amazon' },
+  alumniOf: ABOUT.education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
+  sameAs: Object.values(SITE.links).filter((l): l is string => l !== null),
+};
 ---
 
 <Base title="Jay Parekh · Software Engineer" description="Portfolio and blog of Jay Parekh, software engineer." current="home">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
+
   <section class="container intro" aria-labelledby="intro-title">
-    <Badge label="Software engineer · Seattle" />
-    <h1 id="intro-title">
-      <span>{SITE.name}</span>
-      <span class="muted">{SITE.role}</span>
-    </h1>
-    <p class="muted">Rebuild in progress.</p>
+    <div class="intro__head">
+      <Badge label={HOME.badge} />
+      <h1 id="intro-title">
+        <span>{SITE.name}</span>
+        <span class="muted">{SITE.role}</span>
+      </h1>
+    </div>
+    <div class="intro__text">
+      <p class="intro__line">{HOME.oneLiner}</p>
+      <ul class="intro__links" role="list" aria-label="Profiles and contact">
+        {
+          introLinks.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="intro__term">
+      <CommandBlock
+        id="home-cmd"
+        title="jay@portfolio ~ terminal"
+        command={`curl -sLO ${site}${SITE.resume}`}
+        outputLinks={[
+          { label: 'blog/', href: '/blog/' },
+          { label: 'projects/', href: '/projects/' },
+          { label: 'about.md', href: '/about/' },
+          { label: 'resume.pdf', href: SITE.resume },
+          { label: 'rss.xml', href: '/rss.xml' },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="experience">
+    <div class="container">
+      <SectionHeader number="01" title="~/experience" id="experience" />
+      <div class="stack-lg">
+        {roles.map((r) => <ExperienceItem {...r.data} limit={r.data.homeBulletLimit} />)}
+      </div>
+      <p class="more"><a href="/about/">full history →</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="highlights">
+    <div class="container">
+      <h2 id="highlights" class="label">Highlights</h2>
+      <div class="figs">
+        {HOME.highlights.map((h, i) => <Figure n={i + 1} value={h.value} caption={h.caption} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="blog">
+    <div class="container">
+      <SectionHeader number="02" title="~/blog" id="blog" />
+      {
+        posts.length > 0 ? (
+          <div class="posts">
+            {posts.map((p) => (
+              <PostListItem
+                date={p.data.date}
+                tags={p.data.tags}
+                title={p.data.title}
+                summary={p.data.summary}
+                href={`/blog/${postSlug(p)}/`}
+                medium={p.data.mediumUrl !== undefined}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState command="ls blog/" message="0 posts — first one is on the way. Subscribe:" link={{ label: 'rss.xml', href: '/rss.xml' }} />
+        )
+      }
+      <p class="more"><a href="/blog/">all posts →</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="projects">
+    <div class="container">
+      <SectionHeader number="03" title="~/projects" id="projects" />
+      <div class="cards">
+        {
+          projects.map((p) => (
+            <ProjectCard title={p.data.title} summary={p.data.summary} stack={p.data.stack} year={p.data.year} href={`/projects/${p.id}/`} thumb={p.data.cover} />
+          ))
+        }
+      </div>
+      <p class="more"><a href="/projects/">all projects →</a></p>
+    </div>
+  </section>
+
+  <section class="band band--last" aria-labelledby="skills">
+    <div class="container">
+      <SectionHeader number="04" title="~/skills" id="skills" />
+      <ul class="skills" role="list">
+        {HOME.skills.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
   </section>
 </Base>
 
 <style>
+  /* Badge and name span the width; one-liner + links sit beside the terminal on wide screens. */
   .intro {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-section);
+  }
+
+  @media (min-width: 64rem) {
+    .intro {
+      grid-template-columns: 1fr minmax(0, 32rem);
+      column-gap: var(--space-12);
+      align-items: start;
+    }
+
+    .intro__head {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .intro__head,
+  .intro__text {
     display: grid;
     justify-items: start;
     gap: var(--space-6);
-    padding-block: var(--space-section);
   }
 
   h1 {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 
   h1 span:first-child {
     font-size: var(--fs-hero);
     line-height: var(--lh-tight);
     letter-spacing: -0.03em;
+    text-wrap: balance;
   }
 
   h1 span:last-child {
     font-size: var(--fs-title);
+  }
+
+  .intro__line {
+    max-width: 60ch;
+  }
+
+  .intro__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+  }
+
+  .intro__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    color: var(--muted);
+  }
+
+  .intro__links a:hover,
+  .intro__links a:focus-visible {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+
+  .band {
+    padding-block: var(--space-section);
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  .stack-lg {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .more {
+    margin-top: var(--space-8);
+    font-size: var(--fs-ui);
+  }
+
+  .more a {
+    color: var(--muted);
+  }
+
+  .more a:hover,
+  .more a:focus-visible {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+
+  #highlights {
+    margin-bottom: var(--space-6);
+    font-weight: 400;
+  }
+
+  .figs {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .figs {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .posts {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 64rem) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) 0;
+    color: var(--muted);
+  }
+
+  /* Static "///" separators (DesignSpec §1.4 tech ticker, without the animation). */
+  .skills li + li::before {
+    content: '///' / '';
+    padding-inline: var(--space-3);
+    opacity: 0.6;
   }
 </style>
