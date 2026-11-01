@@ -1,4 +1,5 @@
-// Size budgets, JS/CSS/font caps, file-size cap and third-party guard (SPEC §6.1, Stage 1 tasks 10–11).
+// Size budgets, JS/CSS/font caps, file-size cap and third-party guard (SPEC §6.1, Stage 1 tasks 10–11),
+// plus per-preset image caps and <img> attribute rules (Stage 2 task 5).
 // Usage: npm run check:budgets   (after a build)
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative, posix, basename } from 'node:path';
@@ -111,6 +112,18 @@ if (fonts.length > G.fontFiles) fail(`fonts: ${fonts.length} files > ${G.fontFil
 if (fontBytes > G.fontsKB * KB) fail(`fonts: ${kb(fontBytes)} > ${G.fontsKB} KB`);
 for (const f of fonts) if (statSync(f).size > G.fontFileKB * KB) fail(`${rel(f)}: ${kb(statSync(f).size)} > ${G.fontFileKB} KB`);
 
+// ---- image outputs by preset (Img data-preset, video poster, "view original" links) ----
+const srcsetUrls = (srcset) => (srcset ? srcset.split(',').map((p) => p.trim().split(/\s+/)[0]) : []);
+const byPreset = new Map(); // file -> preset
+function classify(file, preset, route) {
+  if (!file) return;
+  if (!preset) return;
+  if (!(preset in G.imageKB)) return fail(`${route}: unknown data-preset "${preset}"`);
+  const prev = byPreset.get(file);
+  if (prev && prev !== preset) fail(`${rel(file)}: used as both ${prev} and ${preset}`);
+  byPreset.set(file, preset);
+}
+
 // ---- per page ----
 const rows = [];
 for (const file of files.filter((f) => f.endsWith('.html'))) {
@@ -181,11 +194,50 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
       jsGz += gz(Buffer.from(m[2]));
     }
   }
+  // Images: each one counts once per page, at its heaviest candidate in the first format a modern
+  // browser picks (the first <source>, else the <img>): a high-DPR phone can fetch the largest width.
+  const counted = new Set();
+  const countImage = (file, isLazy) => {
+    if (!file || counted.has(file)) return;
+    counted.add(file);
+    if (isLazy) lazy += statSync(file).size;
+    else eager += statSync(file).size;
+  };
+  const heaviest = (urls) =>
+    urls
+      .map((u) => resolveLocal(u, page))
+      .filter(Boolean)
+      .sort((a, b) => statSync(b).size - statSync(a).size)[0];
+
+  for (const m of html.matchAll(/<picture\b[^>]*>([\s\S]*?)<\/picture>/gi)) {
+    const preset = attrValue(m[0], 'data-preset');
+    const sources = tags(m[1], 'source');
+    const img = tags(m[1], 'img')[0] ?? '';
+    for (const t of [...sources, img]) {
+      for (const u of [attrValue(t, 'src'), ...srcsetUrls(attrValue(t, 'srcset'))]) classify(resolveLocal(u, page), preset, route);
+    }
+    const first = sources[0] ?? img;
+    countImage(heaviest([attrValue(first, 'src'), ...srcsetUrls(attrValue(first, 'srcset'))]), attrValue(img, 'loading') === 'lazy');
+  }
+  const outsidePictures = html.replace(/<picture\b[\s\S]*?<\/picture>/gi, '');
+  for (const t of tags(outsidePictures, 'img')) {
+    countImage(heaviest([attrValue(t, 'src'), ...srcsetUrls(attrValue(t, 'srcset'))]), attrValue(t, 'loading') === 'lazy');
+  }
   for (const t of tags(html, 'img')) {
-    const local = resolveLocal(attrValue(t, 'src'), page);
-    const size = local ? statSync(local).size : 0;
-    if (attrValue(t, 'loading') === 'lazy') lazy += size;
-    else eager += size;
+    const missing = ['width', 'height'].filter((a) => !attrValue(t, a));
+    if (attrValue(t, 'decoding') !== 'async') missing.push('decoding="async"');
+    if (attrValue(t, 'loading') !== 'lazy' && attrValue(t, 'data-eager') === null) missing.push('loading="lazy" (or data-eager)');
+    if (missing.length) fail(`${route}: <img src="${attrValue(t, 'src')}"> lacks ${missing.join(', ')}`);
+  }
+  // A poster downloads with the page even though the video is preload="none".
+  for (const t of tags(html, 'video')) {
+    const poster = resolveLocal(attrValue(t, 'poster'), page);
+    classify(poster, attrValue(t, 'data-preset'), route);
+    countImage(poster, false);
+  }
+  for (const t of tags(html, 'a')) {
+    const preset = attrValue(t, 'data-preset');
+    if (preset) classify(resolveLocal(attrValue(t, 'href'), page), preset, route);
   }
 
   const initial = htmlGz + cssExternalGz + jsExternalGz + eager;
@@ -216,6 +268,20 @@ for (const r of rows.sort((a, b) => a.route.localeCompare(b.route))) {
 }
 console.log(`fonts: ${fonts.length} files, ${kb(fontBytes)} (cap ${G.fontsKB} KB, ${G.fontFileKB} KB each); largest file cap ${G.maxFileKB} KB`);
 console.log('(css/js columns include inline <style>/<script>; initial counts those bytes once, inside html)');
+
+console.log(`\nimage outputs by preset (raw bytes; caps ${Object.entries(G.imageKB).map(([p, n]) => `${p} ${n} KB`).join(', ')})`);
+for (const preset of Object.keys(G.imageKB)) {
+  const list = [...byPreset].filter(([, p]) => p === preset).map(([f]) => ({ f, size: statSync(f).size }));
+  list.sort((a, b) => b.size - a.size);
+  const byFormat = {};
+  for (const { f, size } of list) {
+    const ext = f.split('.').pop();
+    byFormat[ext] = Math.max(byFormat[ext] ?? 0, size);
+    if (size > G.imageKB[preset] * KB) fail(`${rel(f)}: ${kb(size)} > ${preset} cap ${G.imageKB[preset]} KB`);
+  }
+  const maxes = Object.entries(byFormat).map(([ext, n]) => `${ext} max ${kb(n)}`).join(', ');
+  console.log(`  ${pad(preset, 8)}${padL(list.length, 4)} files${list.length ? `  ${maxes}` : ''}`);
+}
 
 if (failures.length) {
   console.error(`\n${failures.length} budget failure(s):`);
