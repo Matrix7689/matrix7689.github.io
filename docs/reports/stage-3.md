@@ -165,3 +165,7 @@ Jay's answers, applied in the content files and in SPEC §4.1, §4.2, §4.5–§
 Still open (6 markers): **N3** home one-liner (not answered), **N12** blog subtitle (Jay unsure; hidden), and **N9 course context** for the 4 projects (not answered; hidden).
 
 `npm run verify` exits 0 after the changes. The fixture content audit shows SDE II with 9 bullets (3 on home) and the Android stack with Java and Kotlin.
+
+## Checkpoint approval (Nov 1, 2026)
+
+Jay approved Stage 3, including the tightened SDE II bullets.
