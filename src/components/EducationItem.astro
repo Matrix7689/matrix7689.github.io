@@ -1,0 +1,68 @@
+---
+// One school (SPEC §4.6): school (and affiliated university), degree, dates · location, coursework.
+// Same two-column layout as ExperienceItem.
+import { roleRange } from '../lib/dates';
+
+interface Props {
+  school: string;
+  affiliation?: string | undefined;
+  degree: string;
+  start: string;
+  end: string;
+  location: string;
+  coursework: string[];
+}
+
+const { school, affiliation, degree, start, end, location, coursework } = Astro.props;
+---
+
+<article class="edu">
+  <header>
+    <h3>{school}</h3>
+    {affiliation && <p class="muted">{affiliation}</p>}
+    <p class="edu__meta">{roleRange(start, end)} · {location}</p>
+  </header>
+  <div class="edu__body">
+    <p>{degree}</p>
+    <p class="edu__courses"><span class="label">Coursework</span> {coursework.join(' · ')}</p>
+  </div>
+</article>
+
+<style>
+  .edu {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 64rem) {
+    .edu {
+      grid-template-columns: minmax(16rem, 1fr) 2fr;
+      gap: var(--space-8);
+    }
+  }
+
+  h3 {
+    font-size: var(--fs-body);
+    font-weight: 700;
+  }
+
+  .edu__meta {
+    margin-top: var(--space-1);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .edu__body {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--prose);
+  }
+
+  .edu__courses {
+    color: var(--muted);
+  }
+
+  .edu__courses .label {
+    margin-right: var(--space-2);
+  }
+</style>

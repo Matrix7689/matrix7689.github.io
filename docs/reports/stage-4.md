@@ -119,3 +119,36 @@ Jay's review, applied:
 **Nav links 404:** the nav points to `/blog/`, `/projects/` and `/about/`, which Stages 5, 6 and 8 build. They 404 until then, both locally and on the live site if this stage is deployed first.
 
 After the changes: `npm run verify` exits 0. `/` is 9.8 KB initial and 65.3 KB total. Lighthouse (3 runs) gives 100/100/100/100 with LCP 1,356 ms, CLS 0.0005 and TBT 0 ms. At 360 px there's no overflow, and the highlights show 2 per row with no value overflowing its box.
+
+## LinkedIn import (Nov 2, 2026)
+
+Jay shared his LinkedIn profile export and asked for "everything" on the home page for now; a compact home page with "view more" toggles comes later (Appendix D backlog). Text was extracted with `pdfjs-dist`, installed in a scratch folder outside the project.
+
+**Added:**
+- **Drag2Death, Community Specialist** (May 2015 – Jun 2017, Mumbai): a new role with 4 bullets. This answers the earlier Drag2Death question: the 24+ servers, 100,000+ users, eSports events, maps and the 500-student workshop all came from this role.
+- **Experience on home:** all 5 roles with every bullet. The internship now has LinkedIn's 4 bullets; Bigshine's partner list adds Circle Gaming, USports and Entity Gaming.
+- **`01 ~/about`:** 3 paragraphs tightened from the LinkedIn summary, with the "passion" phrasing dropped per the §4 copy rules. Proposed copy.
+- **Highlights:** now 29 figures in 4 groups (Engineering 11, Gaming & community 6, Map making 4, Off the clock 8). New figures: 10+ years of programming; 3 websites (Bigshine); 9 years of map design; 20,000+ Instagram views on 20+ videos (resume); 3 spoken languages.
+- **`04 ~/education`:** USC; Dwarkadas J. Sanghvi College of Engineering (University of Mumbai); Jai Hind College high school with the old site's coursework. A new `EducationItem` component renders them.
+- **`06 ~/projects`:** all 5, including **Advanced text summarization** from the resume (Q5 reversed).
+- **`07 ~/skills`:** 5 groups (Languages, Web & mobile, Platforms, Practices, Tools) from the resume and LinkedIn's top skills (CI/CD, SDLC).
+- **`08 ~/credentials`:** 2 certifications, 1 honor, 2 publications and 3 spoken languages (titles only; N14).
+- **JSON-LD:** `knowsLanguage` added; `alumniOf` now lists the two universities.
+- **Font subset:** gains `×` (U+00D7, used in "16×16"). Fonts total 48.3 KB.
+- **Level-design intro:** the years "(2017–2019)" are removed, since LinkedIn shows map-making from at least 2015.
+
+**Numbers that differ between sources** (each is kept as its own source states it):
+
+| Fact | Where shown |
+|---|---|
+| eSports events: old site 32, LinkedIn summary "over 30", Drag2Death role and resume 20+ | Highlights and About: 32 / 30+; Drag2Death bullet: 20+ |
+| Maps: old site 55 / 1,052,075 / 12,340,926; LinkedIn and resume 50+ / 10M+ / 1M+ | Highlights: old-site figures; About summary and Drag2Death bullet: LinkedIn's |
+
+**Still open:** N9 (course context for 4 projects), N12 (blog subtitle), N14 (credential details), N15 (summarization project link and publication link). GPA stays hidden (Q6).
+
+**Checks:**
+- `npm run verify` exits 0: `/` is 12.5 KB initial and 68.1 KB total.
+- Lighthouse, 3 runs: 100/100/100/100, with LCP 1,357–1,382 ms, CLS 0.0005 and TBT 0 ms.
+- Structure: one h1, no skipped heading levels, 8 h2 sections, 29 figures, 5 roles (9/6/4/4/4 bullets), 3 schools, 5 projects, 4 credential groups.
+- At 360 px: no overflow and no figure value overflowing its box. The page is 13,808 px tall on a phone; the compact version should fix that.
+- Skill separators now attach to the end of each item, so wrapped lines never start with `///`.

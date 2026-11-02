@@ -1,0 +1,14 @@
+# From Jay's LinkedIn profile (Stage 4 checkpoint). Numbers exactly as LinkedIn states them for this role;
+# the site-wide figures (32 eSports events, 55 maps, 1,052,075 downloads, 12,340,926 views) are the old site's later totals.
+company: Drag2Death
+title: Community Specialist
+start: 2015-05
+end: 2017-06
+location: Mumbai
+bullets:
+  - Developed and configured **24+** gaming servers serving **100,000+** users.
+  - Organized and ran **20+** eSports events, online and LAN.
+  - Created **50** maps with **10 million** views and **1 million** downloads on Steam Workshop.
+  - Ran a **7-week** online workshop on 3D level design for **500+** students.
+showOnHome: true
+order: 5

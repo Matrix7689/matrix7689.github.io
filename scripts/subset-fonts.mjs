@@ -14,6 +14,7 @@ const GEIST_DIR = join(ROOT, 'node_modules/geist/dist/fonts/geist-mono');
 const ranges = [
   [0x20, 0x7e], // Basic Latin
   [0xa0, 0xbf], // Latin-1 punctuation and symbols (incl. · U+00B7)
+  [0xd7, 0xd7], // × (board sizes such as 16×16)
   [0x2013, 0x2014], // – —
   [0x2018, 0x201f], // curly quotes (imported Medium posts)
   [0x2022, 0x2022], // •

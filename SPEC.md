@@ -129,7 +129,7 @@ matrix7689.github.io/
 | Q2 | Pixel display font (Silkscreen) for wordmark and hero name, and a single accent color? (DesignSpec §6) | **No** pixel font and **no** accent. Hierarchy comes from size, weight, case and opacity. |
 | Q3 | Footer ASCII block-letter wordmark text? | **`JP`** (fits a 360 px viewport; `JAY PAREKH` does not). |
 | Q4 | Which social links to keep? | **Answered (Stage 0):** GitHub, LinkedIn, X, Medium (`https://medium.com/@jay.parekh7689`), Email, RSS, **Monkeytype** (`https://monkeytype.com/profile/matrix7689`) and **Steam Workshop** (`https://steamcommunity.com/id/MatrixIN/myworkshopfiles/`, replacing the old Steam profile link). Drop Instagram and Spotify. **Stage 3 checkpoint:** Monkeytype dropped entirely. **Stage 1 checkpoint:** the footer `CONNECT` column is GitHub, LinkedIn, Medium, Email only; Steam Workshop goes on the level-design archive (§4.7). |
-| Q5 | Add "Advanced Text Summarization" (on the resume, not on the old site) as a 5th software project? | **No.** |
+| Q5 | Add "Advanced Text Summarization" (on the resume, not on the old site) as a 5th software project? | ~~No.~~ **Yes (Stage 4 checkpoint, "add everything").** |
 | Q6 | Show GPAs (3.67/4, 8.85/10, from the resume) on About? | **No.** |
 
 All copy and data gaps are listed as `NEEDS INPUT` in Section 4. `npm run check:inputs` lists every remaining marker.
@@ -596,17 +596,27 @@ Conventions for every stage:
 
 (Home shows the first 3 SDE I bullets; About shows all.)
 
-**Amazon: Software Development Engineer Intern** · May 2020 – Aug 2020 · Los Angeles, CA (About only)
-- [*] Built a full-stack internal tool for the Shopping Cart team that cut an operation from **4 hours to 5 minutes**.
-- [*] React UI (filtering, sorting, pagination, selection, form validation) over new Java middleware APIs.
+**Amazon: Software Development Engineer Intern** · May 2020 – Aug 2020 · Los Angeles, CA (4 bullets from LinkedIn since the Stage 4 checkpoint; see `src/content/experience/amazon-sde-intern.yaml`)
+- [*] Built a full-stack, end-to-end internal tool used by the Ordering Shopping Cart team.
+- [*] Cut an operation from **4 hours to 5 minutes** by automating a manual, error-prone process.
+- [*] Designed a React UI with filtering, sorting, pagination, selection and form validation.
+- [*] Designed and implemented new Java APIs as the middleware between the front end and other back-end components.
 
 **Bigshine Media & Entertainment: Chief Technical Officer** · Jul 2017 – Feb 2019 · Mumbai (About only, "earlier roles")
 - [*] Led operations across 4 subsidiaries (Mammoth Media, Mammoth Gears, Ironhead Productions, Mammoth Gaming).
 - [*] Led a team of 3 building 3 websites, front and back end.
 - [*] Ran technical operations for the video-game segments of *U Cypher Season 1* on MTV India.
-- [*] Managed partnerships with brands including Cooler Master and Zowie by BenQ.
+- [*] Managed partnerships with companies including Cooler Master, Zowie by BenQ, Circle Gaming, USports and Entity Gaming (LinkedIn).
+
+**Drag2Death: Community Specialist** · May 2015 – Jun 2017 · Mumbai (from LinkedIn, Stage 4 checkpoint)
+- [*] Developed and configured **24+** gaming servers serving **100,000+** users.
+- [*] Organized and ran **20+** eSports events, online and LAN.
+- [*] Created **50** maps with **10 million** views and **1 million** downloads on Steam Workshop.
+- [*] Ran a **7-week** online workshop on 3D level design for **500+** students.
 
 (No "3D Level Designer" role: removed at the Stage 0 checkpoint. Level designs are shown only as projects, §4.7.)
+
+**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (summary tightened from LinkedIn), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills), 08 `~/credentials` (certifications, honors, publications, spoken languages). A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
 
 ### 4.3 Blog index `/blog/`
 - H1 `~/blog` with subtitle `NEEDS INPUT: one line on what you write about` (default: hidden).
@@ -630,14 +640,14 @@ Years (Jay, Stage 3 checkpoint): Mars rover Sep 2019, Halma Nov 2019. Per projec
 
 ### 4.6 About `/about/`
 - **Bio** (proposed, from old About text, re-centred on engineering): "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers." (approved by Jay at the Stage 3 checkpoint with the last clause removed)
-- **Education:** USC, MS Computer Science, Aug 2019 – May 2021, Los Angeles; coursework: Web Technologies, Analysis of Algorithms, Foundations of AI, 3-D Graphics and Rendering, Advanced Mobile Devices and Game Consoles. University of Mumbai, BE Information Technology, Aug 2015 – May 2019; coursework: Data Structures & Algorithm Analysis, Computer Graphics & VR, OOP, Image Processing, Web Programming. (GPA hidden per Q6; high school dropped.)
+- **Education:** USC, MS Computer Science, Aug 2019 – May 2021, Los Angeles; coursework: Web Technologies, Analysis of Algorithms, Foundations of AI, 3-D Graphics and Rendering, Advanced Mobile Devices and Game Consoles. Dwarkadas J. Sanghvi College of Engineering (University of Mumbai), BE Information Technology, Aug 2015 – May 2019; coursework: Data Structures & Algorithm Analysis, Computer Graphics & VR, OOP, Image Processing, Web Programming. Jai Hind College, Mumbai, high school (Computer Science), Aug 2013 – May 2015 (added back at the Stage 4 checkpoint). (GPA hidden per Q6.)
 - **Experience:** full timeline from §4.2.
 - **Elsewhere (secondary):** level design → archive link; led a 7-week online 3D-modelling workshop for 500+ students; head of technical operations for 24+ gaming servers serving 100,000+ users; organised 32 eSports events (Jay, Stage 3 checkpoint).
 - **Resume:** primary button "Download resume (PDF, 217 KB)" → `/Jay_Parekh_Resume.pdf`. Jay replaces the PDF himself later (N7); until then the existing file ships.
 - **Headshot:** `NEEDS INPUT` (default: none; the old 177 px avatar is not reused).
 
 ### 4.7 Level Design archive (`/projects/level-design/`)
-Intro (proposed): "Before software engineering, I designed custom multiplayer maps (2017–2019). This is the archive."
+Intro (proposed): "Before software engineering, I designed custom multiplayer maps. This is the archive." (years removed at the Stage 4 checkpoint: LinkedIn shows map-making over 9 years, from at least 2015)
 Stats (from the old site, `NEEDS INPUT: confirm or refresh; numbers are as of 2024`): `Fig 1. 55 maps` · `Fig 2. 1,052,075 downloads` · `Fig 3. 12,340,926 views` (old site figures; the resume rounds them to 50+ / 1M+ / 10M+).
 Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4). This page is the only place the Steam Workshop link appears (Jay, Stage 1 checkpoint): a visible link near the intro/stats, e.g. `Button` "Steam Workshop →". Stage 7 builds it.
 
@@ -698,6 +708,8 @@ Per map (N10): game/engine, year, description, Steam Workshop URL and per-map st
 | N11 | ~~Level-design stats; eSports count~~ **Filled (Stage 3):** keep old-site stats; 32 events | — |
 | N12 | Blog subtitle | Hidden |
 | N13 | Project screenshots beyond the existing covers | **Stage 3:** "Screenshots coming soon." on detail pages (no marker) |
+| N14 | Credential details: issuer and year per certification, scholarship year, venue/year/link per publication | Titles only |
+| N15 | Advanced text summarization: GitHub link; link to the "User-Based Text Summarization" publication? | No links |
 
 ---
 
@@ -853,4 +865,4 @@ See §1.5. Generated or ignored: `dist/`, `.astro/`, `node_modules/`, `.lighthou
 | `npm run build:fixtures` | Build including draft fixtures (`cross-env INCLUDE_FIXTURES=1 SHOW_DRAFTS=1 astro build`); works in PowerShell and bash |
 
 ## Appendix D — Backlog (not in v1)
-Per-post generated OG images (satori, build-time) · automated Medium importer · search (Pagefind, lazy-loaded) · custom domain · `docs/DesignSpec.md` §2.2/§3.2 token refinements · pixel display font.
+**Compact home page with "view more" toggles** (Jay, Stage 4 checkpoint: like a spoiler; native `<details>` keeps it JS-free) · Per-post generated OG images (satori, build-time) · automated Medium importer · search (Pagefind, lazy-loaded) · custom domain · `docs/DesignSpec.md` §2.2/§3.2 token refinements · pixel display font.

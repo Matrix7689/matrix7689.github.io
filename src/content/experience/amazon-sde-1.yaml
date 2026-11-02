@@ -1,4 +1,4 @@
-# SPEC §4.2. **bold** marks a metric. Home shows the first 3 bullets; About shows all.
+# SPEC §4.2. **bold** marks a metric. The home page shows every bullet for now (Jay, Stage 4 checkpoint).
 company: Amazon
 title: Software Development Engineer I
 team: Shopping Cart
@@ -13,5 +13,4 @@ bullets:
   - Restored **3 pipelines across 16 regions**, ran **5 peak-traffic simulations**, and built a mock-request testing framework.
   - Mentored **2 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
 showOnHome: true
-homeBulletLimit: 3
 order: 2

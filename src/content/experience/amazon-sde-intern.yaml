@@ -1,11 +1,13 @@
-# SPEC §4.2. About page only.
+# SPEC §4.2, expanded from Jay's LinkedIn profile (Stage 4 checkpoint). **bold** marks a metric.
 company: Amazon
 title: Software Development Engineer Intern
 start: 2020-05
 end: 2020-08
 location: Los Angeles, CA
 bullets:
-  - Built a full-stack internal tool for the Shopping Cart team that cut an operation from **4 hours to 5 minutes**.
-  - React UI (filtering, sorting, pagination, selection, form validation) over new Java middleware APIs.
-showOnHome: false
+  - Built a full-stack, end-to-end internal tool used by the Ordering Shopping Cart team.
+  - Cut an operation from **4 hours to 5 minutes** by automating a manual, error-prone process.
+  - Designed a React UI with filtering, sorting, pagination, selection and form validation.
+  - Designed and implemented new Java APIs as the middleware between the front end and other back-end components.
+showOnHome: true
 order: 3

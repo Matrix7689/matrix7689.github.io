@@ -1,17 +1,20 @@
 ---
-// Home page (SPEC Stage 4, §4.1). Order: intro → 01 highlights → 02 experience → 03 blog → 04 projects → 05 skills.
+// Home page (SPEC Stage 4, §4.1). For now it shows everything (Jay, Stage 4 checkpoint); a compact
+// version with "view more" toggles comes later. Order: intro → 01 about → 02 highlights → 03 experience
+// → 04 education → 05 blog → 06 projects → 07 skills → 08 credentials.
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import CommandBlock from '../components/CommandBlock.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
+import EducationItem from '../components/EducationItem.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import EmptyState from '../components/EmptyState.astro';
 import { SITE } from '../site.config';
-import { HOME, ABOUT } from '../data/pages';
+import { HOME, ABOUT, CREDENTIALS } from '../data/pages';
 import { getPosts, postSlug } from '../lib/posts';
 
 const site = Astro.site!.origin;
@@ -26,10 +29,17 @@ const introLinks = [
 
 const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort((a, b) => a.data.order - b.data.order);
 const posts = (await getPosts()).slice(0, 5);
-const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
 // Fig numbers run on across the highlight groups.
 const highlightGroups = HOME.highlights.map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, x) => n + x.items.length, 0) }));
+
+const credentialGroups = [
+  { title: 'Certifications', items: CREDENTIALS.certifications },
+  { title: 'Honors & awards', items: CREDENTIALS.honors },
+  { title: 'Publications', items: CREDENTIALS.publications },
+  { title: 'Languages', items: CREDENTIALS.languages.map((l) => `${l.name} (${l.level})`) },
+];
 
 // JSON-LD Person (Stage 4 task 5). sameAs = every non-null profile link.
 const person = {
@@ -39,7 +49,8 @@ const person = {
   url: `${site}/`,
   jobTitle: 'Software Development Engineer II',
   worksFor: { '@type': 'Organization', name: 'Amazon' },
-  alumniOf: ABOUT.education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
+  alumniOf: ABOUT.education.filter((e) => e.level === 'university').map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
+  knowsLanguage: CREDENTIALS.languages.map((l) => l.name),
   sameAs: Object.values(SITE.links).filter((l): l is string => l !== null),
 };
 ---
@@ -82,9 +93,18 @@ const person = {
     </div>
   </section>
 
+  <section class="band" aria-labelledby="about">
+    <div class="container">
+      <SectionHeader number="01" title="~/about" id="about" />
+      <div class="prose summary">
+        {ABOUT.summary.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
   <section class="band" aria-labelledby="highlights">
     <div class="container">
-      <SectionHeader number="01" title="~/highlights" id="highlights" />
+      <SectionHeader number="02" title="~/highlights" id="highlights" />
       <div class="stack-lg">
         {
           highlightGroups.map((g) => (
@@ -104,17 +124,25 @@ const person = {
 
   <section class="band" aria-labelledby="experience">
     <div class="container">
-      <SectionHeader number="02" title="~/experience" id="experience" />
+      <SectionHeader number="03" title="~/experience" id="experience" />
       <div class="stack-lg">
         {roles.map((r) => <ExperienceItem {...r.data} limit={r.data.homeBulletLimit} />)}
       </div>
-      <p class="more"><a href="/about/">full history →</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="education">
+    <div class="container">
+      <SectionHeader number="04" title="~/education" id="education" />
+      <div class="stack-lg">
+        {ABOUT.education.map((e) => <EducationItem {...e} />)}
+      </div>
     </div>
   </section>
 
   <section class="band" aria-labelledby="blog">
     <div class="container">
-      <SectionHeader number="03" title="~/blog" id="blog" />
+      <SectionHeader number="05" title="~/blog" id="blog" />
       {
         posts.length > 0 ? (
           <div class="posts">
@@ -139,7 +167,7 @@ const person = {
 
   <section class="band" aria-labelledby="projects">
     <div class="container">
-      <SectionHeader number="04" title="~/projects" id="projects" />
+      <SectionHeader number="06" title="~/projects" id="projects" />
       <div class="cards">
         {
           projects.map((p) => (
@@ -151,12 +179,45 @@ const person = {
     </div>
   </section>
 
-  <section class="band band--last" aria-labelledby="skills">
+  <section class="band" aria-labelledby="skills">
     <div class="container">
-      <SectionHeader number="05" title="~/skills" id="skills" />
-      <ul class="skills" role="list">
-        {HOME.skills.map((s) => <li>{s}</li>)}
-      </ul>
+      <SectionHeader number="07" title="~/skills" id="skills" />
+      <dl class="skill-groups">
+        {
+          HOME.skillGroups.map((g) => (
+            <div>
+              <dt class="label">{g.label}</dt>
+              <dd>
+                <ul class="skills" role="list">
+                  {g.items.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="credentials">
+    <div class="container">
+      <SectionHeader number="08" title="~/credentials" id="credentials" />
+      <div class="creds">
+        {
+          credentialGroups.map((g) => (
+            <div>
+              <h3 class="label group">{g.title}</h3>
+              <ul class="bullets" role="list">
+                {g.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 </Base>
@@ -232,6 +293,11 @@ const person = {
     border-top: var(--hairline) solid var(--border);
   }
 
+  .summary {
+    display: grid;
+    gap: var(--space-4);
+  }
+
   .stack-lg {
     display: grid;
     gap: var(--space-12);
@@ -296,6 +362,23 @@ const person = {
     }
   }
 
+  .skill-groups {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .skill-groups > div {
+      display: grid;
+      grid-template-columns: minmax(16rem, 1fr) 2fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .skill-groups dt {
+    margin-bottom: var(--space-2);
+  }
+
   .skills {
     display: flex;
     flex-wrap: wrap;
@@ -303,10 +386,38 @@ const person = {
     color: var(--muted);
   }
 
-  /* Static "///" separators (DesignSpec §1.4 tech ticker, without the animation). */
-  .skills li + li::before {
+  /* Static "///" separators (DesignSpec §1.4 tech ticker, without the animation); attached to the
+     end of each item so wrapped lines never start with one. */
+  .skills li:not(:last-child)::after {
     content: '///' / '';
     padding-inline: var(--space-3);
     opacity: 0.6;
+  }
+
+  .creds {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 48rem) {
+    .creds {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .bullets {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .bullets li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+  }
+
+  .bullets li::before {
+    content: '[*]' / '';
+    color: var(--muted);
   }
 </style>

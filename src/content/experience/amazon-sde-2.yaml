@@ -1,5 +1,5 @@
 # SPEC §4.2. **bold** marks a metric. Bullets are (proposed) tightenings of Jay's own list
-# (Stage 3 checkpoint): same facts and numbers, ≤ 25 words each. Home shows the first 3; About shows all.
+# (Stage 3 checkpoint): same facts and numbers, ≤ 25 words each. The home page shows every bullet for now (Jay, Stage 4 checkpoint).
 company: Amazon
 title: Software Development Engineer II
 team: Shopping Cart
@@ -16,5 +16,4 @@ bullets:
   - Enhanced the shopping cart's throttling mechanism against bot attacks, keeping the service available without interruption.
   - Kept the service documentation and dashboards up to date.
 showOnHome: true
-homeBulletLimit: 3
 order: 1
