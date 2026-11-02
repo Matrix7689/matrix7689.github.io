@@ -181,3 +181,7 @@ That leaves **23 cards** (Engineering 8). `npm run verify` exits 0; `/` is 12.3 
 ## Credentials section removed (Nov 2, 2026)
 
 At Jay's request, `08 ~/credentials` is gone from the home page, along with its styles and mapping. The `CREDENTIALS` data (certifications, honors, publications, languages) stays in `src/data/pages.ts`. Its only remaining use is the invisible JSON-LD `knowsLanguage`, and it's there if the About page wants it later. The N14 marker stays open for the same reason. Seven sections remain. `npm run verify` exits 0; `/` is 12.0 KB initial.
+
+## Checkpoint approval (Nov 2, 2026)
+
+Jay approved the Stage 4 home page (copy and layout) after the revisions above.
