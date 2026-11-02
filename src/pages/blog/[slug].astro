@@ -1,0 +1,44 @@
+---
+// Blog post pages (SPEC Stage 5 task 3). Slugs drop the file's `yyyy-` prefix.
+import { render } from 'astro:content';
+import Post from '../../layouts/Post.astro';
+import { getPosts, postSlug, adjacent, type Post as PostEntry } from '../../lib/posts';
+import { canonicalFor, isMediumCanonical } from '../../lib/canonical';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: postSlug(post) }, props: { post, posts } }));
+}
+
+interface Props {
+  post: PostEntry;
+  posts: PostEntry[];
+}
+
+const { post, posts } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
+const self = new URL(`/blog/${postSlug(post)}/`, Astro.site).href;
+const { prev, next } = adjacent(posts, post);
+const link = (p?: PostEntry) => (p ? { title: p.data.title, href: `/blog/${postSlug(p)}/` } : undefined);
+// Imported posts open with their own summary text, so the lead would repeat it.
+const leadText = post.data.summary.replace(/…$/, '');
+const showLead = !(post.body ?? '').includes(leadText);
+---
+
+<Post
+  title={post.data.title}
+  summary={post.data.summary}
+  date={post.data.date}
+  updated={post.data.updated}
+  tags={post.data.tags}
+  readingTime={remarkPluginFrontmatter.readingTime as number}
+  headings={headings}
+  canonical={canonicalFor(post.data, self)}
+  mediumUrl={post.data.mediumUrl}
+  mediumCanonical={isMediumCanonical(post.data, self)}
+  showLead={showLead}
+  prev={link(prev)}
+  next={link(next)}
+>
+  <Content />
+</Post>

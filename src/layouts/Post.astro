@@ -1,0 +1,194 @@
+---
+// Blog post layout (SPEC Stage 5 task 3, §4.4): title, dates, reading time, tags, Medium notice,
+// optional lead and TOC, body at ≤ 72ch, prev/next, "← all posts". Canonical per D6.
+import Base from './Base.astro';
+import Tag from '../components/Tag.astro';
+import Toc from '../components/Toc.astro';
+import PrevNext from '../components/PrevNext.astro';
+import { isoDate } from '../lib/dates';
+import '../styles/prose.css';
+import '../styles/code.css';
+
+interface Link {
+  title: string;
+  href: string;
+}
+interface Props {
+  title: string;
+  summary: string;
+  date: Date;
+  updated?: Date | undefined;
+  tags: string[];
+  readingTime: number;
+  headings: { depth: number; slug: string; text: string }[];
+  canonical: string;
+  mediumUrl?: string | undefined;
+  /** True when the canonical points to Medium (D6). */
+  mediumCanonical: boolean;
+  /** Hide the lead when the body already opens with the summary (imported posts). */
+  showLead: boolean;
+  prev?: Link | undefined;
+  next?: Link | undefined;
+}
+
+const { title, summary, date, updated, tags, readingTime, headings, canonical, mediumUrl, mediumCanonical, showLead, prev, next } = Astro.props;
+// TOC only for long, structured posts: ≥ 3 h2/h3 and ≥ 5 min (Stage 5 task 3).
+// <title> stays ≤ 70 characters (html-validate long-title): long post titles drop the site suffix.
+const withSuffix = `${title} · Jay Parekh`;
+const pageTitle = withSuffix.length <= 70 ? withSuffix : title;
+const showToc = headings.filter((h) => h.depth === 2 || h.depth === 3).length >= 3 && readingTime >= 5;
+---
+
+<Base title={pageTitle} description={summary} current="blog" canonical={canonical}>
+  <article class="container post">
+    <header class="post__head">
+      <p class="back"><a href="/blog/">← all posts</a></p>
+      <h1>{title}</h1>
+      <p class="post__meta">
+        <time datetime={isoDate(date)}>{isoDate(date)}</time>
+        {
+          updated && (
+            <span>
+              · updated <time datetime={isoDate(updated)}>{isoDate(updated)}</time>
+            </span>
+          )
+        }
+        <span>· {readingTime} min read</span>
+      </p>
+      <ul class="post__tags" role="list" aria-label="Tags">
+        {
+          tags.map((t) => (
+            <li>
+              <Tag label={t} href={`/blog/tags/${t}/`} />
+            </li>
+          ))
+        }
+      </ul>
+      {
+        mediumUrl && (
+          <p class="post__medium">
+            <a href={mediumUrl}>{mediumCanonical ? 'Originally published on Medium' : 'Also published on Medium'} →</a>
+          </p>
+        )
+      }
+      {showLead && <p class="post__lead">{summary}</p>}
+    </header>
+
+    <div class:list={['post__grid', { 'post__grid--toc': showToc }]}>
+      {
+        showToc && (
+          <aside class="post__toc">
+            <Toc headings={headings} />
+          </aside>
+        )
+      }
+      <div class="post-body">
+        <slot />
+      </div>
+    </div>
+
+    <footer class="post__foot">
+      <PrevNext prev={prev} next={next} />
+      <p class="back"><a href="/blog/">← all posts</a></p>
+    </footer>
+  </article>
+</Base>
+
+<script>
+  // Copy buttons on code blocks (SPEC D9b).
+  import '../scripts/copy.ts';
+</script>
+
+<style>
+  .post {
+    padding-block: var(--space-12) var(--space-section);
+  }
+
+  .post__head {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--prose);
+    margin-bottom: var(--space-12);
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .post__medium {
+    font-size: var(--fs-ui);
+  }
+
+  .post__medium a,
+  .back a {
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  .back {
+    font-size: var(--fs-ui);
+  }
+
+  .back a {
+    color: var(--muted);
+  }
+
+  .post__lead {
+    font-size: var(--fs-body-lg);
+    color: var(--muted);
+  }
+
+  /* minmax(0, …) and min-width: 0 stop a long code line from widening the column (and the page);
+     code scrolls inside its own box instead. */
+  .post__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  .post-body {
+    min-width: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .post__grid--toc {
+      grid-template-columns: minmax(0, var(--prose)) 16rem;
+      gap: var(--space-12);
+    }
+
+    /* The TOC sits to the right of the text and follows the reader. */
+    .post__toc {
+      grid-column: 2;
+      grid-row: 1;
+      position: sticky;
+      top: 5rem;
+      align-self: start;
+    }
+  }
+
+  .post__foot {
+    display: grid;
+    gap: var(--space-8);
+    max-width: var(--prose);
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: var(--hairline) solid var(--border);
+  }
+</style>

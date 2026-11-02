@@ -11,9 +11,12 @@ interface Props {
   description: string;
   current?: NavId | undefined;
   noindex?: boolean;
+  /** Absolute canonical URL; defaults to this page's own URL (posts pass the D6 result). */
+  canonical?: string | undefined;
 }
 
-const { title, description, current, noindex = false } = Astro.props;
+const { title, description, current, noindex = false, canonical } = Astro.props;
+const canonicalHref = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -24,6 +27,7 @@ const { title, description, current, noindex = false } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonicalHref} />
     <link rel="preload" href="/fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />

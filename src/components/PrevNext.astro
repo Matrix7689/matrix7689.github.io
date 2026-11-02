@@ -1,0 +1,67 @@
+---
+// Previous / next post links (SPEC §5 PrevNext). A missing side is not rendered.
+interface Link {
+  title: string;
+  href: string;
+}
+interface Props {
+  prev?: Link | undefined;
+  next?: Link | undefined;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav class="prevnext" aria-label="More posts">
+      {prev && (
+        <a class="prev" href={prev.href}>
+          <span class="label">← older</span>
+          <span class="t">{prev.title}</span>
+        </a>
+      )}
+      {next && (
+        <a class="next" href={next.href}>
+          <span class="label">newer →</span>
+          <span class="t">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .prevnext {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .prevnext {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .next {
+      grid-column: 2;
+      text-align: right;
+    }
+  }
+
+  a {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border: var(--hairline) solid var(--border);
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:focus-visible {
+    border-color: var(--fg);
+  }
+
+  .t {
+    font-weight: 700;
+  }
+</style>

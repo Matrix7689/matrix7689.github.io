@@ -1,0 +1,100 @@
+---
+// Table of contents (SPEC §5 Toc, Stage 5 task 3): h2/h3 links, no JS. Phones get a closed
+// <details>; wide screens get the same list always open. Only one is displayed at a time, so
+// assistive tech never meets both.
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<div class="toc">
+  <details class="toc__narrow">
+    <summary class="label">Contents</summary>
+    <ol role="list">
+      {items.map((h) => <li class:list={{ sub: h.depth === 3 }}><a href={`#${h.slug}`}>{h.text}</a></li>)}
+    </ol>
+  </details>
+  <nav class="toc__wide" aria-labelledby="toc-title">
+    <p class="label" id="toc-title">Contents</p>
+    <ol role="list">
+      {items.map((h) => <li class:list={{ sub: h.depth === 3 }}><a href={`#${h.slug}`}>{h.text}</a></li>)}
+    </ol>
+  </nav>
+</div>
+
+<style>
+  .toc {
+    font-size: var(--fs-ui);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: '+' / '';
+    margin-right: var(--space-2);
+  }
+
+  details[open] summary::before {
+    content: '−' / '';
+  }
+
+  .toc__narrow {
+    border: var(--hairline) solid var(--border);
+    padding-inline: var(--space-4);
+  }
+
+  .toc__narrow ol {
+    padding-bottom: var(--space-4);
+  }
+
+  .toc__wide {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    .toc__narrow {
+      display: none;
+    }
+
+    .toc__wide {
+      display: block;
+    }
+
+    .toc__wide .label {
+      margin-bottom: var(--space-3);
+    }
+  }
+
+  ol {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .sub {
+    padding-left: var(--space-4);
+  }
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:focus-visible {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+</style>

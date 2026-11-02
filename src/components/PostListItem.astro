@@ -13,9 +13,12 @@ interface Props {
   featured?: boolean;
   /** How many tags to show (the first ones). */
   maxTags?: number;
+  /** Heading level for the title: 2 when the list sits directly under the page's h1. */
+  level?: 2 | 3;
 }
 
-const { date, tags, title, summary, href, medium = false, featured = false, maxTags = 1 } = Astro.props;
+const { date, tags, title, summary, href, medium = false, featured = false, maxTags = 1, level = 3 } = Astro.props;
+const Heading = level === 2 ? 'h2' : 'h3';
 ---
 
 <article class:list={['post', { 'post--featured': featured }]}>
@@ -30,7 +33,7 @@ const { date, tags, title, summary, href, medium = false, featured = false, maxT
       )
     }
   </p>
-  <h3><a href={href}>{title}</a></h3>
+  <Heading class="post__title"><a href={href}>{title}</a></Heading>
   <p class="post__summary">{summary}</p>
 </article>
 
@@ -59,28 +62,28 @@ const { date, tags, title, summary, href, medium = false, featured = false, maxT
     color: var(--fg);
   }
 
-  h3 {
+  .post__title {
     font-size: var(--fs-body);
     font-weight: 700;
   }
 
-  .post--featured h3 {
+  .post--featured .post__title {
     font-size: var(--fs-title);
   }
 
-  h3 a {
+  .post__title a {
     text-decoration: none;
   }
 
   /* Stretched link: the whole row is the hit target. */
-  h3 a::after {
+  .post__title a::after {
     content: '';
     position: absolute;
     inset: 0;
   }
 
-  .post:hover h3 a,
-  h3 a:focus-visible {
+  .post:hover .post__title a,
+  .post__title a:focus-visible {
     text-decoration-line: underline;
   }
 
