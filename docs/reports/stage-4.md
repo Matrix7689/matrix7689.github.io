@@ -156,3 +156,16 @@ Jay shared his LinkedIn profile export and asked for "everything" on the home pa
 ## About text (Nov 2, 2026)
 
 At Jay's request, `01 ~/about` now shows his own two paragraphs, verbatim: the Shopping Cart paragraph and "Away from work…". It's followed by a secondary button, "more about me →", that links to `/about/` (Stage 8; it 404s until then, and the link check skips it as pending). The LinkedIn-based draft moved to `ABOUT.longSummary` as a starting point for the About page's longer version. `npm run verify` exits 0, and `/` is 12.7 KB initial.
+
+## Highlights revision (Nov 2, 2026)
+
+Jay's 13 edits, applied:
+- **No "Fig N." prefix:** `Figure`'s `n` is now optional, and the home page omits it.
+- **No source labels:** "(Amazon SDE I)", "(Drag2Death)", "(Bigshine)" and the like are removed from every caption.
+- **Removed cards:** 0 customer impact, 4 h → 5 min, 3 websites, Instagram views, and languages spoken.
+- **New values from Jay:** 13 years of programming (also in the About-page draft), 6 peak-traffic simulations, 3 engineers mentored, 975 cups of coffee, and "minutes on Spotify (2025)".
+- **TM99 captions:** the −15 ms and −10 ms cards now name their own changes, the cart cache storage refactor and a cross-team service migration, instead of "the same refactor".
+
+That leaves **24 cards**: Engineering 9, Gaming & community 5, Map making 4, Off the clock 6. `npm run verify` exits 0; `/` is 12.4 KB initial.
+
+Open question: the SDE I experience bullets still say "Mentored **2 engineers**" and "ran **5 peak-traffic simulations**", as the resume and LinkedIn do for that role. The new highlight totals are 3 and 6.

@@ -1,7 +1,7 @@
 ---
-// Highlight stat with a "Fig N." caption (SPEC §5, DesignSpec §2.1).
+// Highlight stat with an optional "Fig N." caption prefix (SPEC §5, DesignSpec §2.1). Omit n for no prefix.
 interface Props {
-  n: number;
+  n?: number | undefined;
   value: string;
   caption: string;
 }
@@ -11,7 +11,7 @@ const { n, value, caption } = Astro.props;
 
 <figure class="stat">
   <p class="stat__value">{value}</p>
-  <figcaption><span class="stat__n">Fig {n}.</span> {caption}</figcaption>
+  <figcaption>{n !== undefined && <span class="stat__n">Fig {n}. </span>}{caption}</figcaption>
 </figure>
 
 <style>

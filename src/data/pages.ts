@@ -8,23 +8,21 @@ export const HOME = {
   badge: 'Software engineer · Seattle',
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
-  // Highlights of everything (Jay, Stage 4 checkpoint). Every number comes from §4.2, the resume, the old
-  // site or LinkedIn; nothing is rounded or added. Figures are numbered across groups.
+  // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or
+  // Jay directly (13 years, 6 simulations, 3 mentees, 975 coffees, Spotify 2025). No source labels on the cards.
   highlights: [
     {
       group: 'Engineering',
       items: [
-        { value: '10+ years', caption: 'of programming experience' },
-        { value: '>99.99%', caption: 'success on a major service migration (cart session merging, Amazon SDE II)' },
-        { value: '0', caption: 'customer impact across large-scale regional cache transitions (Amazon SDE II)' },
-        { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage (Amazon SDE I)' },
-        { value: '−15 ms', caption: 'global TM99 latency from the same refactor (Amazon SDE I)' },
-        { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration (Amazon SDE I)' },
-        { value: '3–4 months', caption: 'implementation effort saved by reusing existing components (Amazon SDE I)' },
-        { value: '16 regions', caption: '3 pipelines restored across them (Amazon SDE I)' },
-        { value: '5', caption: 'peak-traffic simulations run (Amazon SDE I)' },
-        { value: '2', caption: 'engineers mentored (Amazon SDE I)' },
-        { value: '4 h → 5 min', caption: 'operation time cut by an internal tool (Amazon intern)' },
+        { value: '13 years', caption: 'of programming experience' },
+        { value: '>99.99%', caption: 'success on a major service migration' },
+        { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage' },
+        { value: '−15 ms', caption: 'global TM99 latency from the cart cache storage refactor' },
+        { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration' },
+        { value: '3–4 months', caption: 'implementation effort saved by reusing existing components' },
+        { value: '16 regions', caption: '3 pipelines restored across them' },
+        { value: '6', caption: 'peak-traffic simulations run' },
+        { value: '3', caption: 'engineers mentored' },
       ],
     },
     {
@@ -32,11 +30,10 @@ export const HOME = {
       items: [
         // Old-site total, confirmed by Jay (N11); LinkedIn's summary says "over 30 eSports tournaments in India".
         { value: '32', caption: 'eSports tournaments organised in India, online and LAN' },
-        { value: '24+', caption: 'gaming servers built and configured (Drag2Death)' },
-        { value: '100,000+', caption: 'users served by those servers (Drag2Death)' },
-        { value: '500+', caption: 'students in a 7-week online 3D level design workshop (Drag2Death)' },
-        { value: '4', caption: 'subsidiaries led as CTO, including Mammoth Gaming (Bigshine)' },
-        { value: '3', caption: 'websites built with a team of 3 (Bigshine)' },
+        { value: '24+', caption: 'gaming servers built and configured' },
+        { value: '100,000+', caption: 'users served by those servers' },
+        { value: '500+', caption: 'students in a 7-week online 3D level design workshop' },
+        { value: '4', caption: 'subsidiaries led as CTO, including Mammoth Gaming' },
       ],
     },
     {
@@ -50,17 +47,15 @@ export const HOME = {
       ],
     },
     {
-      // Old-site fun stats as of 2024; videos from the resume; languages from LinkedIn.
+      // Old-site fun stats as of 2024, updated by Jay where noted above.
       group: 'Off the clock',
       items: [
         { value: '123 WPM', caption: 'typing speed' },
-        { value: '622', caption: 'cups of coffee' },
+        { value: '975', caption: 'cups of coffee' },
         { value: '340', caption: 'bowls of ramen' },
         { value: '25', caption: 'pairs of sneakers' },
         { value: '72', caption: 'video games played' },
-        { value: '74,156', caption: 'minutes on Spotify' },
-        { value: '20,000+', caption: 'Instagram views on 20+ vertical videos I edited' },
-        { value: '3', caption: 'languages spoken: Gujarati, Hindi and English' },
+        { value: '74,156', caption: 'minutes on Spotify (2025)' },
       ],
     },
   ],
@@ -90,7 +85,7 @@ export const ABOUT = {
   // (proposed) Longer version for the About page (Stage 8), tightened from the LinkedIn summary;
   // "passion" phrasing dropped per the §4 copy rules. Jay will write the final long version there.
   longSummary: [
-    "I'm a Software Development Engineer II at Amazon. I graduated from the University of Southern California with an MS in Computer Science in May 2021, and I have 10+ years of programming experience. Problem-solving, decision-making and analysis draw me to projects across very different domains.",
+    "I'm a Software Development Engineer II at Amazon. I graduated from the University of Southern California with an MS in Computer Science in May 2021, and I have 13 years of programming experience. Problem-solving, decision-making and analysis draw me to projects across very different domains.",
     "I also design 3D levels (maps) for video games. Over 9 years I've created 50+ maps, with 10+ million views and 1 million downloads on Steam Workshop.",
     "I've organized and run technical operations for 30+ eSports tournaments in India, online and LAN, and built and managed community gaming servers hosted on AWS and in local data centers.",
   ],
