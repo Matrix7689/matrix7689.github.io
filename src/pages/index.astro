@@ -121,10 +121,17 @@ const person = {
     <div class="container">
       <SectionHeader number="03" title="~/experience" id="experience" />
       <CompactToggle id="compact-experience" label="experience" />
-      <!-- Reserved for a horizontal timeline, 2015 – present (Jay, Stage 5 checkpoint). -->
-      <div class="timeline-slot" aria-hidden="true"></div>
+      <!-- Reserved for a horizontal timeline, 2015 – present (Jay, Stage 5 checkpoint). Placeholder text until then. -->
+      <div class="timeline-slot">
+        <p>// timeline: 2015 → present</p>
+        <p class="muted">coming soon</p>
+      </div>
       <div class="stack-lg">
-        {roles.map((r) => <ExperienceItem {...r.data} limit={r.data.homeBulletLimit} compact={r.data.compactBullets} />)}
+        {
+          roles.map(({ data: r }) => (
+            <ExperienceItem company={r.company} title={r.title} start={r.start} end={r.end} location={r.location} bullets={r.bullets} limit={r.homeBulletLimit} compact={r.compactBullets} />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -132,11 +139,10 @@ const person = {
   <section class="band" aria-labelledby="education">
     <div class="container">
       <SectionHeader number="04" title="~/education" id="education" />
-      <CompactToggle id="compact-education" label="education" />
       <div class="stack-lg">
         {
           ABOUT.education.map((e) => (
-            <ExperienceItem company={e.school} team={e.affiliation} title={e.degree} start={e.start} end={e.end} location={e.location} bullets={[coursework(e.coursework)]} compact={[]} />
+            <ExperienceItem company={e.school} title={e.degree} start={e.start} end={e.end} location={e.location} tags={e.affiliation ? [e.affiliation] : []} bullets={[coursework(e.coursework)]} />
           ))
         }
       </div>
@@ -243,8 +249,14 @@ const person = {
 
   /* Empty on purpose: space for the planned 2015 – present timeline. */
   .timeline-slot {
+    display: grid;
+    place-content: center;
+    gap: var(--space-1);
     min-height: 8rem;
     margin-bottom: var(--space-12);
+    border: var(--hairline) dashed var(--border);
+    font-size: var(--fs-ui);
+    text-align: center;
   }
 
   .stack-lg {

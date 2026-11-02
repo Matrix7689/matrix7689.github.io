@@ -185,3 +185,10 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Fix:** `CompactToggle` now renders the checkbox as a visually hidden sibling *before* the section's content, plus a `<label for>` that draws `[x]`/`[ ]`. The rule is now `.compact-input:checked ~ * .is-extra { display: none }`, a plain sibling selector supported everywhere. A bullet list with nothing left in compact mode carries `is-extra` itself, so no `:has()` is needed there either. `.compact-scope` is gone.
 - **Tested with real clicks and keyboard:** experience 12 ↔ 27 bullets; education 0 ↔ 3 coursework lines; Tab shows the focus ring on the switch, and Space toggles it.
 - **Checks:** `npm run verify` exits 0. Lighthouse on `/` is 100/100/100/100 (3 runs), and all lhci assertions pass.
+
+### Role header, timeline placeholder, education switch (Jay, Stage 5 checkpoint)
+
+- **Left column of each role/education entry:** sizes go largest to smallest from top to bottom: title (`--fs-title`, bold), then the company or school as a `Badge` (■ AMAZON), then the dates, location and any extra item as `Tag`s. The team ("Shopping Cart") is no longer shown; the `team` field stays in the YAML as data. A college's university ("University of Mumbai") is an extra tag.
+- **Timeline placeholder:** the reserved area now has a dashed border and the text "// timeline: 2015 → present / coming soon".
+- **Education:** the compact switch is removed; the coursework always shows. Experience keeps its switch.
+- **Checks:** `npm run verify` exits 0 (astro check 0 errors). No horizontal scroll at 375 px. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post (3 runs each).

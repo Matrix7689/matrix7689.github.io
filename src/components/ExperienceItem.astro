@@ -1,23 +1,27 @@
 ---
-// One role (SPEC §5 ExperienceItem, §4.2): title, company · team, dates · location, [*] bullets.
+// One role (SPEC §5 ExperienceItem, §4.2). Left column, largest to smallest (Jay, Stage 5 checkpoint):
+// title, company as a Badge, then dates · location (and any extra `tags`) as Tags; [*] bullets on the right.
 // `limit` shows the first N bullets; omit it to show all. `compact` lists the 1-based bullets kept in
-// compact mode: the others render with `is-extra`, which an enclosing CompactToggle scope hides.
+// compact mode: the others render with `is-extra`, which a preceding CompactToggle hides.
+import Badge from './Badge.astro';
+import Tag from './Tag.astro';
 import { inlineMarkdown } from '../lib/inline';
 import { roleRange } from '../lib/dates';
 
 interface Props {
   company: string;
   title: string;
-  team?: string | undefined;
   start: string;
   end?: string | undefined;
   location: string;
   bullets: string[];
+  /** Extra tags after the dates and location, e.g. a college's university. */
+  tags?: string[] | undefined;
   limit?: number | undefined;
   compact?: number[] | undefined;
 }
 
-const { company, title, team, start, end, location, bullets, limit, compact } = Astro.props;
+const { company, title, start, end, location, bullets, tags = [], limit, compact } = Astro.props;
 const shown = limit ? bullets.slice(0, limit) : bullets;
 const isExtra = (i: number) => compact !== undefined && !compact.includes(i + 1);
 // A list left with nothing to show in compact mode is extra too, so it collapses with its bullets.
@@ -27,8 +31,10 @@ const allExtra = shown.every((_, i) => isExtra(i));
 <article class="role">
   <header class="role__head">
     <h3>{title}</h3>
-    <p>{company}{team && <span class="muted"> · {team}</span>}</p>
-    <p class="role__meta">{roleRange(start, end)} · {location}</p>
+    <p class="role__company"><Badge label={company} /></p>
+    <ul class="role__tags" role="list">
+      {[roleRange(start, end), location, ...tags].map((t) => <li><Tag label={t} /></li>)}
+    </ul>
   </header>
   <ul class:list={['role__bullets', { 'is-extra': allExtra }]} role="list">
     {
@@ -54,15 +60,22 @@ const allExtra = shown.every((_, i) => isExtra(i));
     }
   }
 
-  h3 {
-    font-size: var(--fs-body);
-    font-weight: 700;
+  .role__head {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
   }
 
-  .role__meta {
-    margin-top: var(--space-1);
-    font-size: var(--fs-ui);
-    color: var(--muted);
+  h3 {
+    font-size: var(--fs-title);
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .role__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
 
   .role__bullets {
@@ -71,14 +84,14 @@ const allExtra = shown.every((_, i) => isExtra(i));
     max-width: var(--prose);
   }
 
-  li {
+  .role__bullets > li {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: var(--space-3);
   }
 
   /* [*] marker (DesignSpec §2.1); the "/ ''" alt text keeps it out of the accessibility tree. */
-  li::before {
+  .role__bullets > li::before {
     content: '[*]' / '';
     color: var(--muted);
   }
