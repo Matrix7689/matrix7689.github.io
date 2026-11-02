@@ -186,23 +186,12 @@ const person = {
 </Base>
 
 <style>
-  /* Badge and name span the width; one-liner + links sit beside the terminal on wide screens. */
+  /* One column at every width: name + badges, the one-liner, then the terminal across the full
+     container width (Jay, Stage 5 checkpoint). */
   .intro {
     display: grid;
     gap: var(--space-8);
     padding-block: var(--space-section);
-  }
-
-  @media (min-width: 64rem) {
-    .intro {
-      grid-template-columns: 1fr minmax(0, 32rem);
-      column-gap: var(--space-12);
-      align-items: start;
-    }
-
-    .intro__head {
-      grid-column: 1 / -1;
-    }
   }
 
   .intro__head,
