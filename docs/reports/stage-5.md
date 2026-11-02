@@ -192,3 +192,10 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Timeline placeholder:** the reserved area now has a dashed border and the text "// timeline: 2015 → present / coming soon".
 - **Education:** the compact switch is removed; the coursework always shows. Experience keeps its switch.
 - **Checks:** `npm run verify` exits 0 (astro check 0 errors). No horizontal scroll at 375 px. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post (3 runs each).
+
+### Compact switch regression, inverted tags (Jay, Stage 5 checkpoint)
+
+- **Regression:** after the role header change, the bullet rule became `.role__bullets > li`. Astro scoping adds an attribute to each compound, so it outranked the global hide rule and every bullet stayed visible. The hide rule is now `display: none !important`, so no scoped style can override it.
+- **Tested with real clicks:** experience 12 ↔ 27 bullets, both ways.
+- **Inverted tags:** `Tag` has a new `inverted` prop (foreground fill, background text, the same look as an active filter tag). The dates, location and extra tags in each role's left column use it: black on white in light mode, white on black in dark mode.
+- **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.

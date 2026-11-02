@@ -117,9 +117,11 @@ ol[role='list'] {
 }
 
 /* Compact mode (CompactToggle): while the switch is checked, .is-extra content in the elements that follow
-   it is hidden. A plain sibling selector, so it works in every browser (no :has()). */
+   it is hidden. A plain sibling selector, so it works in every browser (no :has()). !important because a
+   component's scoped rule (e.g. `.role__bullets > li`, which gains an attribute per compound) can otherwise
+   outrank it and keep the content showing. */
 .compact-input:checked ~ * .is-extra {
-  display: none;
+  display: none !important;
 }
 
 pre,

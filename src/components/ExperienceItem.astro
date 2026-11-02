@@ -33,7 +33,7 @@ const allExtra = shown.every((_, i) => isExtra(i));
     <h3>{title}</h3>
     <p class="role__company"><Badge label={company} /></p>
     <ul class="role__tags" role="list">
-      {[roleRange(start, end), location, ...tags].map((t) => <li><Tag label={t} /></li>)}
+      {[roleRange(start, end), location, ...tags].map((t) => <li><Tag label={t} inverted /></li>)}
     </ul>
   </header>
   <ul class:list={['role__bullets', { 'is-extra': allExtra }]} role="list">

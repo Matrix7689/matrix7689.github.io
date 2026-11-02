@@ -4,9 +4,11 @@ interface Props {
   label: string;
   href?: string | undefined;
   active?: boolean;
+  /** Solid fill (foreground background, background text), e.g. the role header tags. */
+  inverted?: boolean;
 }
 
-const { label, href, active = false } = Astro.props;
+const { label, href, active = false, inverted = false } = Astro.props;
 ---
 
 {
@@ -15,7 +17,7 @@ const { label, href, active = false } = Astro.props;
       {label}
     </a>
   ) : (
-    <span class:list={['tag', { active }]}>{label}</span>
+    <span class:list={['tag', { active, inverted }]}>{label}</span>
   )
 }
 
@@ -39,7 +41,8 @@ const { label, href, active = false } = Astro.props;
   }
 
   a.tag:hover,
-  .tag.active {
+  .tag.active,
+  .tag.inverted {
     border-color: var(--fg);
     background: var(--fg);
     color: var(--bg);
