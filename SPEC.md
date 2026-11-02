@@ -616,7 +616,7 @@ Conventions for every stage:
 
 (No "3D Level Designer" role: removed at the Stage 0 checkpoint. Level designs are shown only as projects, §4.7.)
 
-**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (summary tightened from LinkedIn), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills), 08 `~/credentials` (certifications, honors, publications, spoken languages). A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
+**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (Jay's own two paragraphs, verbatim, then a secondary `Button` "more about me" → `/about/`; the longer About-page version is drafted in `ABOUT.longSummary` for Stage 8), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills), 08 `~/credentials` (certifications, honors, publications, spoken languages). A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
 
 ### 4.3 Blog index `/blog/`
 - H1 `~/blog` with subtitle `NEEDS INPUT: one line on what you write about` (default: hidden).
@@ -639,6 +639,7 @@ Fields: title, date, updated?, reading time, tags, summary (meta description and
 Years (Jay, Stage 3 checkpoint): Mars rover Sep 2019, Halma Nov 2019. Per project `NEEDS INPUT`: `role/course` context (likely USC courses; don't state it until confirmed). Screenshots beyond the existing covers: detail pages show "Screenshots coming soon." (N13).
 
 ### 4.6 About `/about/`
+- **Long "about me"** (Stage 4 checkpoint): the About page carries the longer version; draft in `ABOUT.longSummary` (from LinkedIn), final text from Jay in Stage 8. The home page links here with "more about me".
 - **Bio** (proposed, from old About text, re-centred on engineering): "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers." (approved by Jay at the Stage 3 checkpoint with the last clause removed)
 - **Education:** USC, MS Computer Science, Aug 2019 – May 2021, Los Angeles; coursework: Web Technologies, Analysis of Algorithms, Foundations of AI, 3-D Graphics and Rendering, Advanced Mobile Devices and Game Consoles. Dwarkadas J. Sanghvi College of Engineering (University of Mumbai), BE Information Technology, Aug 2015 – May 2019; coursework: Data Structures & Algorithm Analysis, Computer Graphics & VR, OOP, Image Processing, Web Programming. Jai Hind College, Mumbai, high school (Computer Science), Aug 2013 – May 2015 (added back at the Stage 4 checkpoint). (GPA hidden per Q6.)
 - **Experience:** full timeline from §4.2.

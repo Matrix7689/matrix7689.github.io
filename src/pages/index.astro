@@ -5,6 +5,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
+import Button from '../components/Button.astro';
 import CommandBlock from '../components/CommandBlock.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
@@ -98,6 +99,9 @@ const person = {
       <SectionHeader number="01" title="~/about" id="about" />
       <div class="prose summary">
         {ABOUT.summary.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="about-more">
+        <Button href="/about/" variant="secondary">more about me</Button>
       </div>
     </div>
   </section>
@@ -296,6 +300,10 @@ const person = {
   .summary {
     display: grid;
     gap: var(--space-4);
+  }
+
+  .about-more {
+    margin-top: var(--space-8);
   }
 
   .stack-lg {

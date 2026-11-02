@@ -82,8 +82,14 @@ export const BLOG_INDEX = {
 export const ABOUT = {
   // Approved by Jay with the last clause removed (N4, Stage 3 checkpoint).
   bio: "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers.",
-  // (proposed) Tightened from the LinkedIn summary; "passion" phrasing dropped per the §4 copy rules.
+  // Home "~/about" text, Jay's own words verbatim (Stage 4 checkpoint). Followed by a "more about me" button.
   summary: [
+    'I’m a software engineer on Amazon’s Shopping Cart team, building the backend behind every cart for billions of customers in the US, Japan, Europe, and India. Anyone can build a cart. The hard part is keeping it fast, always available, and accurate, even through migrations, traffic spikes, and bot attacks.',
+    'Away from work, you’ll find me writing tech blogs, playing badminton, or lost in a video game.',
+  ],
+  // (proposed) Longer version for the About page (Stage 8), tightened from the LinkedIn summary;
+  // "passion" phrasing dropped per the §4 copy rules. Jay will write the final long version there.
+  longSummary: [
     "I'm a Software Development Engineer II at Amazon. I graduated from the University of Southern California with an MS in Computer Science in May 2021, and I have 10+ years of programming experience. Problem-solving, decision-making and analysis draw me to projects across very different domains.",
     "I also design 3D levels (maps) for video games. Over 9 years I've created 50+ maps, with 10+ million views and 1 million downloads on Steam Workshop.",
     "I've organized and run technical operations for 30+ eSports tournaments in India, online and LAN, and built and managed community gaming servers hosted on AWS and in local data centers.",

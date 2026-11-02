@@ -152,3 +152,7 @@ Jay shared his LinkedIn profile export and asked for "everything" on the home pa
 - Structure: one h1, no skipped heading levels, 8 h2 sections, 29 figures, 5 roles (9/6/4/4/4 bullets), 3 schools, 5 projects, 4 credential groups.
 - At 360 px: no overflow and no figure value overflowing its box. The page is 13,808 px tall on a phone; the compact version should fix that.
 - Skill separators now attach to the end of each item, so wrapped lines never start with `///`.
+
+## About text (Nov 2, 2026)
+
+At Jay's request, `01 ~/about` now shows his own two paragraphs, verbatim: the Shopping Cart paragraph and "Away from work…". It's followed by a secondary button, "more about me →", that links to `/about/` (Stage 8; it 404s until then, and the link check skips it as pending). The LinkedIn-based draft moved to `ABOUT.longSummary` as a starting point for the About page's longer version. `npm run verify` exits 0, and `/` is 12.7 KB initial.
