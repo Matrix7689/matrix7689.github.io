@@ -616,7 +616,7 @@ Conventions for every stage:
 
 (No "3D Level Designer" role: removed at the Stage 0 checkpoint. Level designs are shown only as projects, §4.7.)
 
-**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (Jay's own two paragraphs, verbatim, then a secondary `Button` "more about me" → `/about/`; the longer About-page version is drafted in `ABOUT.longSummary` for Stage 8), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills), 08 `~/credentials` (certifications, honors, publications, spoken languages). A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
+**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (Jay's own two paragraphs, verbatim, then a secondary `Button` "more about me" → `/about/`; the longer About-page version is drafted in `ABOUT.longSummary` for Stage 8), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills). The `08 ~/credentials` section was removed at Jay's request; the data stays in `CREDENTIALS` (`src/data/pages.ts`) and only feeds JSON-LD `knowsLanguage`. A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
 
 ### 4.3 Blog index `/blog/`
 - H1 `~/blog` with subtitle `NEEDS INPUT: one line on what you write about` (default: hidden).

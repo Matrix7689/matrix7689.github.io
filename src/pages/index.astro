@@ -1,7 +1,7 @@
 ---
 // Home page (SPEC Stage 4, §4.1). For now it shows everything (Jay, Stage 4 checkpoint); a compact
 // version with "view more" toggles comes later. Order: intro → 01 about → 02 highlights → 03 experience
-// → 04 education → 05 blog → 06 projects → 07 skills → 08 credentials.
+// → 04 education → 05 blog → 06 projects → 07 skills.
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
@@ -33,12 +33,6 @@ const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
 
-const credentialGroups = [
-  { title: 'Certifications', items: CREDENTIALS.certifications },
-  { title: 'Honors & awards', items: CREDENTIALS.honors },
-  { title: 'Publications', items: CREDENTIALS.publications },
-  { title: 'Languages', items: CREDENTIALS.languages.map((l) => `${l.name} (${l.level})`) },
-];
 
 // JSON-LD Person (Stage 4 task 5). sameAs = every non-null profile link.
 const person = {
@@ -203,25 +197,6 @@ const person = {
     </div>
   </section>
 
-  <section class="band" aria-labelledby="credentials">
-    <div class="container">
-      <SectionHeader number="08" title="~/credentials" id="credentials" />
-      <div class="creds">
-        {
-          credentialGroups.map((g) => (
-            <div>
-              <h3 class="label group">{g.title}</h3>
-              <ul class="bullets" role="list">
-                {g.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
 </Base>
 
 <style>
@@ -398,32 +373,5 @@ const person = {
     content: '///' / '';
     padding-inline: var(--space-3);
     opacity: 0.6;
-  }
-
-  .creds {
-    display: grid;
-    gap: var(--space-8);
-  }
-
-  @media (min-width: 48rem) {
-    .creds {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .bullets {
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  .bullets li {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-3);
-  }
-
-  .bullets li::before {
-    content: '[*]' / '';
-    color: var(--muted);
   }
 </style>

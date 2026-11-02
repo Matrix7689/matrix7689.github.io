@@ -177,3 +177,7 @@ Open question: the SDE I experience bullets still say "Mentored **2 engineers**"
 - **Added card:** "**3** hackathons won at Amazon" in Engineering, after "engineers mentored". Source: Jay.
 
 That leaves **23 cards** (Engineering 8). `npm run verify` exits 0; `/` is 12.3 KB initial.
+
+## Credentials section removed (Nov 2, 2026)
+
+At Jay's request, `08 ~/credentials` is gone from the home page, along with its styles and mapping. The `CREDENTIALS` data (certifications, honors, publications, languages) stays in `src/data/pages.ts`. Its only remaining use is the invisible JSON-LD `knowsLanguage`, and it's there if the About page wants it later. The N14 marker stays open for the same reason. Seven sections remain. `npm run verify` exits 0; `/` is 12.0 KB initial.
