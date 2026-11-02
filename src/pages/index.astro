@@ -4,7 +4,7 @@
 // → 04 education → 05 blog → 06 projects → 07 skills.
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Badge from '../components/Badge.astro';
+import Tag from '../components/Tag.astro';
 import Button from '../components/Button.astro';
 import CommandBlock from '../components/CommandBlock.astro';
 import SectionHeader from '../components/SectionHeader.astro';
@@ -58,11 +58,11 @@ const person = {
   <section class="container intro" aria-labelledby="intro-title">
     <div class="intro__head">
       <h1 id="intro-title">{SITE.name}</h1>
-      <ul class="intro__badges" role="list">
+      <ul class="intro__tags" role="list" aria-label="About me">
         {
-          HOME.badges.map((b) => (
+          HOME.tags.map((t) => (
             <li>
-              <Badge label={b} />
+              <Tag label={t} />
             </li>
           ))
         }
@@ -186,7 +186,7 @@ const person = {
 </Base>
 
 <style>
-  /* One column at every width: name + badges, the one-liner, then the terminal across the full
+  /* One column at every width: name + tags, the one-liner, then the terminal across the full
      container width (Jay, Stage 5 checkpoint). */
   .intro {
     display: grid;
@@ -208,7 +208,7 @@ const person = {
     text-wrap: balance;
   }
 
-  .intro__badges {
+  .intro__tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);

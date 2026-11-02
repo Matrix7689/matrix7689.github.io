@@ -561,7 +561,7 @@ Conventions for every stage:
 ### 4.1 Home `/`
 | Section | Content |
 |---|---|
-| Badge | Removed (Jay, Stage 5 checkpoint). Three `Badge`s sit under the name instead: `Software Engineer`, `Amazon`, `Seattle`. |
+| Badge | Removed (Jay, Stage 5 checkpoint). Three `Tag`s sit under the name instead: `Software Engineer`, `Amazon`, `Seattle` (badges at first, tags since a later Stage 5 checkpoint request). |
 | H1 | `Jay Parekh` only; the muted role line was removed as redundant with the badges (Jay, Stage 5 checkpoint). |
 | One-liner | "I build and scale Amazon's shopping cart service." (approved by Jay at the Stage 4 checkpoint, list after the colon removed) |
 | Links row | Removed (Jay, Stage 5 checkpoint): github, linkedin, medium and email moved into the terminal's `ls` output. |

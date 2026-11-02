@@ -4,8 +4,8 @@
 // Sources: SPEC §4, the resume PDF, the old site and Jay's LinkedIn profile export (Stage 4 checkpoint).
 
 export const HOME = {
-  // Badges under the name (Jay, Stage 5 checkpoint); they replace the eyebrow badge and the role line.
-  badges: ['Software Engineer', 'Amazon', 'Seattle'],
+  // Tags under the name (Jay, Stage 5 checkpoint); they replace the eyebrow badge and the role line.
+  tags: ['Software Engineer', 'Amazon', 'Seattle'],
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
   // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or

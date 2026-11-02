@@ -155,3 +155,4 @@ Jay's requests, applied:
 - At 360 px there's no overflow.
 - Checked in the browser: one h1, three badges, terminal links as listed, the resume button, three education entries with degree titles, five skill rows with values left-aligned (192 px label column, 16 px text), and ghost opacity 0.22 in both themes.
 - **Terminal placement (follow-up):** the intro is one column at every width: name and badges, the one-liner, then the terminal across the full container width (1,216 px at a 1,440 px window), then the Download resume button. `npm run verify` exits 0; `/` is 12.3 KB initial.
+- **Intro tags (follow-up):** "Software Engineer", "Amazon" and "Seattle" now use the `Tag` component (bordered, mixed case, no square) instead of `Badge` (`HOME.tags`). `npm run verify` exits 0; `/` is 11.8 KB initial.
