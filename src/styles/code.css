@@ -1,0 +1,90 @@
+/* Blog code blocks (SPEC Stage 5 task 3, §5 CodeBlock, D15). Markup comes from
+   src/lib/markdown-plugins.ts: figure.codeblock > figcaption.codeblock__bar + pre.astro-code.
+   Token colours are classes, so the theme toggle recolours code without JS. */
+
+.codeblock {
+  margin-block: var(--space-6);
+  border: var(--hairline) solid var(--border);
+}
+
+.codeblock__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: var(--hairline) solid var(--border);
+  font-size: var(--fs-micro);
+  color: var(--muted);
+}
+
+.codeblock__dots {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+.codeblock__dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--fg);
+}
+
+.codeblock__dots span:nth-child(2) {
+  opacity: 0.5;
+}
+
+.codeblock__dots span:nth-child(3) {
+  opacity: 0.3;
+}
+
+.codeblock__lang {
+  flex: 1;
+  text-transform: lowercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.codeblock__copy {
+  min-height: 1.5rem;
+  min-width: 3.5rem;
+  padding: 0 var(--space-2);
+  border: var(--hairline) solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.codeblock__copy:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+/* Horizontal scroll stays inside the block; the page never widens (§6.2). */
+.codeblock pre {
+  margin: 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  background: var(--card);
+  font-size: var(--fs-ui);
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.codeblock code {
+  font: inherit;
+  background: none;
+  padding: 0;
+  border: 0;
+}
+
+.tok-comment {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.tok-keyword {
+  font-weight: 700;
+}
+
+/* Constants and names (.tok-constant, .tok-entity) stay in the foreground colour. */
+.tok-string,
+.tok-punct {
+  color: var(--muted);
+}

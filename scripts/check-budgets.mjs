@@ -221,6 +221,8 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
   }
   const outsidePictures = html.replace(/<picture\b[\s\S]*?<\/picture>/gi, '');
   for (const t of tags(outsidePictures, 'img')) {
+    // Blog Markdown images are single-format <img srcset> with data-preset (markdown-plugins.ts).
+    for (const u of [attrValue(t, 'src'), ...srcsetUrls(attrValue(t, 'srcset'))]) classify(resolveLocal(u, page), attrValue(t, 'data-preset'), route);
     countImage(heaviest([attrValue(t, 'src'), ...srcsetUrls(attrValue(t, 'srcset'))]), attrValue(t, 'loading') === 'lazy');
   }
   for (const t of tags(html, 'img')) {

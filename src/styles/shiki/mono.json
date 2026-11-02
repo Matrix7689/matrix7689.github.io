@@ -1,0 +1,23 @@
+{
+  "$comment": "SPEC D15. A token-class theme, not a colour theme: each foreground is a placeholder that src/lib/markdown-plugins.ts maps to a tok-* class, whose colour comes from tokens.css in both themes. Shiki's inline styles never reach the HTML.",
+  "name": "mono",
+  "type": "light",
+  "colors": {
+    "editor.background": "#ffffff",
+    "editor.foreground": "#000001"
+  },
+  "tokenColors": [
+    { "scope": ["comment", "punctuation.definition.comment"], "settings": { "foreground": "#000002" } },
+    {
+      "scope": ["keyword", "keyword.control", "keyword.operator.new", "keyword.operator.expression", "storage", "storage.type", "storage.modifier"],
+      "settings": { "foreground": "#000003" }
+    },
+    { "scope": ["string", "string.quoted", "string.template", "punctuation.definition.string"], "settings": { "foreground": "#000004" } },
+    { "scope": ["constant", "constant.numeric", "constant.language", "support.constant", "variable.other.constant"], "settings": { "foreground": "#000005" } },
+    {
+      "scope": ["entity.name.function", "support.function", "entity.name.type", "entity.name.class", "support.type", "support.class"],
+      "settings": { "foreground": "#000006" }
+    },
+    { "scope": ["punctuation", "meta.brace", "keyword.operator"], "settings": { "foreground": "#000007" } }
+  ]
+}
