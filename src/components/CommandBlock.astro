@@ -9,12 +9,14 @@ interface Props {
   outputLinks?: { label: string; href: string }[];
   cursor?: boolean;
   id: string;
+  /** Title bar style, passed to TerminalCard. */
+  variant?: 'default' | 'inverted';
 }
 
-const { command, title = 'terminal', outputLinks = [], cursor = true, id } = Astro.props;
+const { command, title = 'terminal', outputLinks = [], cursor = true, id, variant = 'default' } = Astro.props;
 ---
 
-<TerminalCard title={title}>
+<TerminalCard title={title} variant={variant}>
   <div class="cmd">
     <p class="cmd__line"><span class="muted" aria-hidden="true">$ </span><code id={id}>{command}</code></p>
     <button type="button" class="cmd__copy" data-copy-target={id} aria-label="Copy command" hidden>copy</button>

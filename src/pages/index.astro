@@ -11,6 +11,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
 import SpecTable from '../components/SpecTable.astro';
 import CompactToggle from '../components/CompactToggle.astro';
+import SectionRail from '../components/SectionRail.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -35,6 +36,13 @@ const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
+// Vertical "on this page" rail (Jay, Stage 5 checkpoint); ids match the SectionHeaders below.
+const sections = ['about', 'highlights', 'experience', 'education', 'blog', 'projects', 'skills'].map((id, i) => ({
+  n: String(i + 1).padStart(2, '0'),
+  id,
+  name: `~/${id}`,
+}));
+
 // Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
 const courses = new Intl.ListFormat('en', { type: 'conjunction' });
 const coursework = (list: string[]) => `Coursework included ${courses.format(list)}.`;
@@ -55,6 +63,7 @@ const person = {
 
 <Base title="Jay Parekh · Software Engineer" description="Portfolio and blog of Jay Parekh, software engineer." current="home">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
+  <SectionRail sections={sections} />
 
   <section class="container intro" aria-labelledby="intro-title">
     <div class="intro__head">
@@ -76,11 +85,12 @@ const person = {
       <CommandBlock
         id="home-cmd"
         title="jay@portfolio ~ terminal"
+        variant="inverted"
         command={`curl -sLO ${site}${SITE.resume}`}
         outputLinks={terminalLinks}
       />
       <div class="intro__cta">
-        <Button href={SITE.resume} download>Download resume</Button>
+        <Button href={SITE.resume} newTab>Preview resume</Button>
       </div>
     </div>
   </section>
@@ -142,7 +152,7 @@ const person = {
       <div class="stack-lg">
         {
           ABOUT.education.map((e) => (
-            <ExperienceItem company={e.school} title={e.degree} start={e.start} end={e.end} location={e.location} tags={e.affiliation ? [e.affiliation] : []} bullets={[coursework(e.coursework)]} />
+            <ExperienceItem company={e.school} title={e.degree} start={e.start} end={e.end} location={e.location} bullets={[coursework(e.coursework)]} />
           ))
         }
       </div>
@@ -231,6 +241,13 @@ const person = {
 
   .intro__cta {
     margin-top: var(--space-6);
+  }
+
+  /* Room on the right for the fixed SectionRail; from 88rem the centred container's margin is enough. */
+  @media (min-width: 64rem) and (max-width: 88rem) {
+    .container {
+      padding-right: calc(var(--gutter) + 3rem);
+    }
   }
 
   .band {

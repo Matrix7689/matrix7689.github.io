@@ -1,6 +1,6 @@
 ---
 // One role (SPEC §5 ExperienceItem, §4.2). Left column, largest to smallest (Jay, Stage 5 checkpoint):
-// title, company as a Badge, then dates · location (and any extra `tags`) as Tags; [*] bullets on the right.
+// title, company as a Badge, then dates and location as Tags; [*] bullets on the right.
 // `limit` shows the first N bullets; omit it to show all. `compact` lists the 1-based bullets kept in
 // compact mode: the others render with `is-extra`, which a preceding CompactToggle hides.
 import Badge from './Badge.astro';
@@ -15,13 +15,11 @@ interface Props {
   end?: string | undefined;
   location: string;
   bullets: string[];
-  /** Extra tags after the dates and location, e.g. a college's university. */
-  tags?: string[] | undefined;
   limit?: number | undefined;
   compact?: number[] | undefined;
 }
 
-const { company, title, start, end, location, bullets, tags = [], limit, compact } = Astro.props;
+const { company, title, start, end, location, bullets, limit, compact } = Astro.props;
 const shown = limit ? bullets.slice(0, limit) : bullets;
 const isExtra = (i: number) => compact !== undefined && !compact.includes(i + 1);
 // A list left with nothing to show in compact mode is extra too, so it collapses with its bullets.
@@ -33,7 +31,7 @@ const allExtra = shown.every((_, i) => isExtra(i));
     <h3>{title}</h3>
     <p class="role__company"><Badge label={company} /></p>
     <ul class="role__tags" role="list">
-      {[roleRange(start, end), location, ...tags].map((t) => <li><Tag label={t} inverted /></li>)}
+      {[roleRange(start, end), location].map((t) => <li><Tag label={t} /></li>)}
     </ul>
   </header>
   <ul class:list={['role__bullets', { 'is-extra': allExtra }]} role="list">

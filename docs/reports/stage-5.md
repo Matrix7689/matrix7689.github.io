@@ -199,3 +199,11 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Tested with real clicks:** experience 12 ↔ 27 bullets, both ways.
 - **Inverted tags:** `Tag` has a new `inverted` prop (foreground fill, background text, the same look as an active filter tag). The dates, location and extra tags in each role's left column use it: black on white in light mode, white on black in dark mode.
 - **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.
+
+### Resume preview, inverted terminal bar, plain tags, section rail (Jay, Stage 5 checkpoint)
+
+- **Resume:** the intro button is now "Preview resume". It opens `/Jay_Parekh_Resume.pdf` in a new tab (`target="_blank" rel="noopener"`, with visually hidden "(opens in a new tab)") instead of downloading it. `Button` has a new `newTab` prop.
+- **Terminal:** the home terminal uses `TerminalCard`'s inverted title bar (DesignSpec §1.4 variant); `CommandBlock` now passes `variant` through. The decorative "bash 5.2.15" label from the template variant is not added.
+- **Tags:** the role/education tags are back to the plain bordered style (the inverted look was reverted and the `inverted` Tag prop removed). "University of Mumbai" is no longer shown; the `affiliation` field stays in the data.
+- **Section rail (home only):** new `SectionRail.astro`, a fixed vertical `<nav aria-label="On this page">` on the right edge with 01–07 linking to each section. Hovering or focusing a number shows its name (e.g. "~/experience") beside it; screen readers always get the name. Shown from 64rem up, hidden on narrower screens. Between 64rem and 88rem the home containers get 3rem extra right padding so the rail never covers content. Section headings get `scroll-margin-top`, so a jump lands with the ghost number below the sticky nav (measured: 35 px gap).
+- **Checks:** `npm run verify` exits 0; `/` is 13.6 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.

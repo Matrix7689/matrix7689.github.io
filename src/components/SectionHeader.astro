@@ -38,9 +38,11 @@ const { number, title, id } = Astro.props;
     content: attr(data-n) / '';
   }
 
+  /* Anchor jumps (#id) land with the whole header, ghost number included, below the sticky nav. */
   h2 {
     font-size: var(--fs-title);
     white-space: nowrap;
+    scroll-margin-top: calc(var(--fs-ghost) / 2 + 5rem);
   }
 
   .rule {

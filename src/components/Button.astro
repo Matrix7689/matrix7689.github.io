@@ -5,13 +5,22 @@ interface Props {
   variant?: 'primary' | 'secondary';
   download?: boolean | string;
   arrow?: boolean;
+  /** Open in a new tab (e.g. the resume PDF preview); screen readers hear that it does. */
+  newTab?: boolean;
 }
 
-const { href, variant = 'primary', download, arrow = true } = Astro.props;
+const { href, variant = 'primary', download, arrow = true, newTab = false } = Astro.props;
 ---
 
-<a class:list={['btn', `btn--${variant}`]} href={href} download={download === true ? '' : download || undefined}>
+<a
+  class:list={['btn', `btn--${variant}`]}
+  href={href}
+  download={download === true ? '' : download || undefined}
+  target={newTab ? '_blank' : undefined}
+  rel={newTab ? 'noopener' : undefined}
+>
   <slot />
+  {newTab && <span class="visually-hidden"> (opens in a new tab)</span>}
   {arrow && <span class="btn__arrow" aria-hidden="true">→</span>}
 </a>
 

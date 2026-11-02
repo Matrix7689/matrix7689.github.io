@@ -1,0 +1,90 @@
+---
+// Vertical, fixed "on this page" rail of section numbers (Jay, Stage 5 checkpoint; home page only for now).
+// Plain anchor links, no JS. Each link's section name is visually hidden and appears beside the number on
+// hover or keyboard focus. Shown from 64rem up; narrower screens have no spare edge for it.
+interface Props {
+  sections: { n: string; id: string; name: string }[];
+}
+
+const { sections } = Astro.props;
+---
+
+<nav class="rail" aria-label="On this page">
+  <ul role="list">
+    {
+      sections.map((s) => (
+        <li>
+          <a href={`#${s.id}`}>
+            <span class="rail__n">{s.n}</span>
+            <span class="rail__name">{s.name}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    .rail {
+      display: block;
+      position: fixed;
+      top: 50%;
+      right: var(--space-4);
+      z-index: 5;
+      transform: translateY(-50%);
+    }
+  }
+
+  ul {
+    display: grid;
+    border: var(--hairline) solid var(--border);
+    background: var(--bg);
+  }
+
+  a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap);
+    min-height: 2.25rem;
+    font-size: var(--fs-ui);
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:focus-visible {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* Visually hidden until hover/focus, then a label to the left of the rail. */
+  .rail__name {
+    position: absolute;
+    right: 100%;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  a:hover .rail__name,
+  a:focus-visible .rail__name {
+    width: auto;
+    height: auto;
+    margin-right: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    clip: auto;
+    border: var(--hairline) solid var(--fg);
+    background: var(--bg);
+    color: var(--fg);
+  }
+</style>
