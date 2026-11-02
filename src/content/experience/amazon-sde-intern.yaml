@@ -10,4 +10,6 @@ bullets:
   - Designed a React UI with filtering, sorting, pagination, selection and form validation.
   - Designed and implemented new Java APIs as the middleware between the front end and other back-end components.
 showOnHome: true
+# Compact mode keeps these bullets (1-based; Claude's proposed picks, Stage 5 checkpoint).
+compactBullets: [1, 2]
 order: 3

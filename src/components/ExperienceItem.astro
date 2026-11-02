@@ -1,6 +1,7 @@
 ---
 // One role (SPEC §5 ExperienceItem, §4.2): title, company · team, dates · location, [*] bullets.
-// `limit` shows the first N bullets (home); omit it to show all (about).
+// `limit` shows the first N bullets; omit it to show all. `compact` lists the 1-based bullets kept in
+// compact mode: the others render with `is-extra`, which an enclosing CompactToggle scope hides.
 import { inlineMarkdown } from '../lib/inline';
 import { roleRange } from '../lib/dates';
 
@@ -13,9 +14,10 @@ interface Props {
   location: string;
   bullets: string[];
   limit?: number | undefined;
+  compact?: number[] | undefined;
 }
 
-const { company, title, team, start, end, location, bullets, limit } = Astro.props;
+const { company, title, team, start, end, location, bullets, limit, compact } = Astro.props;
 const shown = limit ? bullets.slice(0, limit) : bullets;
 ---
 
@@ -27,8 +29,8 @@ const shown = limit ? bullets.slice(0, limit) : bullets;
   </header>
   <ul class="role__bullets" role="list">
     {
-      shown.map((b) => (
-        <li>
+      shown.map((b, i) => (
+        <li class:list={{ 'is-extra': compact !== undefined && !compact.includes(i + 1) }}>
           <span set:html={inlineMarkdown(b)} />
         </li>
       ))

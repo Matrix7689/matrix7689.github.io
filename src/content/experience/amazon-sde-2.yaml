@@ -16,4 +16,6 @@ bullets:
   - Enhanced the shopping cart's throttling mechanism against bot attacks, keeping the service available without interruption.
   - Kept the service documentation and dashboards up to date.
 showOnHome: true
+# Compact mode keeps these bullets (1-based; Claude's proposed picks, Stage 5 checkpoint).
+compactBullets: [1, 2, 4]
 order: 1

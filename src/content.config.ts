@@ -76,6 +76,8 @@ const experience = defineCollection({
     bullets: z.array(z.string()).min(1),
     showOnHome: z.boolean(),
     homeBulletLimit: z.number().int().positive().optional(),
+    // 1-based positions of the bullets kept in compact mode (home toggle); omit to keep all.
+    compactBullets: z.array(z.number().int().positive()).optional(),
     order: z.number().int(),
   }),
 });

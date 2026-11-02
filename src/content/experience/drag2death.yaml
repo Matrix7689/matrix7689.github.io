@@ -11,4 +11,6 @@ bullets:
   - Created **50** maps with **10 million** views and **1 million** downloads on Steam Workshop.
   - Ran a **7-week** online workshop on 3D level design for **500+** students.
 showOnHome: true
+# Compact mode keeps these bullets (1-based; Claude's proposed picks, Stage 5 checkpoint).
+compactBullets: [1, 2]
 order: 5

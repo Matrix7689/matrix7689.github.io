@@ -13,4 +13,6 @@ bullets:
   - Restored **3 pipelines across 16 regions**, ran **6 peak-traffic simulations**, and built a mock-request testing framework.
   - Mentored **3 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
 showOnHome: true
+# Compact mode keeps these bullets (1-based; Claude's proposed picks, Stage 5 checkpoint).
+compactBullets: [1, 2, 3]
 order: 2

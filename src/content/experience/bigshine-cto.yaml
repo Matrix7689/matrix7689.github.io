@@ -10,4 +10,6 @@ bullets:
   - Ran technical operations for the video-game segments of *U Cypher Season 1* on MTV India.
   - Managed partnerships with companies including Cooler Master, Zowie by BenQ, Circle Gaming, USports and Entity Gaming.
 showOnHome: true
+# Compact mode keeps these bullets (1-based; Claude's proposed picks, Stage 5 checkpoint).
+compactBullets: [1, 3]
 order: 4

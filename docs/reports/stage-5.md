@@ -156,3 +156,25 @@ Jay's requests, applied:
 - Checked in the browser: one h1, three badges, terminal links as listed, the resume button, three education entries with degree titles, five skill rows with values left-aligned (192 px label column, 16 px text), and ghost opacity 0.22 in both themes.
 - **Terminal placement (follow-up):** the intro is one column at every width: name and badges, the one-liner, then the terminal across the full container width (1,216 px at a 1,440 px window), then the Download resume button. `npm run verify` exits 0; `/` is 12.3 KB initial.
 - **Intro tags (follow-up):** "Software Engineer", "Amazon" and "Seattle" now use the `Tag` component (bordered, mixed case, no square) instead of `Badge` (`HOME.tags`). `npm run verify` exits 0; `/` is 11.8 KB initial.
+
+## Compact mode and timeline space (Nov 2, 2026)
+
+Jay asked for a compact on/off toggle on experience and education (on by default), and an empty area at the start of experience for a planned horizontal timeline, 2015 – present.
+
+- **`CompactToggle`** (new component): a native `<input type="checkbox" role="switch" checked>` inside a `[x] compact` / `[ ] compact` label. Its accessible names are "Compact experience" and "Compact education", and it keeps the 2 px focus ring and a 44 px target.
+- **CSS only, no JS:** a rule in `base.css` hides `.is-extra` content inside a `.compact-scope` while its switch is checked. Everything stays in the HTML, so a browser without `:has()` shows the full version.
+- **Experience:** each role's new `compactBullets` field (1-based) lists the bullets compact mode keeps. These are my picks, for Jay to adjust in the YAML:
+
+  | Role | Kept in compact |
+  |---|---|
+  | SDE II | 1 (cache consistency, zero customer impact), 2 (>99.99% migration), 4 (secure authentication migration) |
+  | SDE I | 1–3 ($1.74M and −15 ms, −10 ms migration, 3–4 months saved) |
+  | Intern | 1–2 (full-stack tool, 4 h → 5 min) |
+  | Bigshine | 1 (4 subsidiaries), 3 (U Cypher on MTV India) |
+  | Drag2Death | 1–2 (24+ servers and 100,000+ users, 20+ eSports events) |
+
+  Tested: compact on shows 3/3/2/2/2 bullets, off shows 9/6/4/4/4, and toggling back works.
+- **Education:** compact mode hides the coursework sentence, leaving degree, school, dates and location. Tested in both states.
+- **Timeline slot:** an empty `div.timeline-slot` (`aria-hidden`, 8 rem tall) between the experience header and the first role, marked with an HTML comment.
+- **Checks:** `npm run verify` exits 0; `/` is 12.7 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.
+- **Note:** browsers may restore a visitor's own toggle state on reload. `autocomplete="off"` would prevent that, but it's invalid HTML on checkboxes, so it isn't used.

@@ -1,0 +1,69 @@
+---
+// Compact-mode switch for a section (Jay, Stage 5 checkpoint). CSS only, no JS: a native checkbox
+// (role="switch", checked = compact by default). While it is checked, any `.is-extra` element inside
+// the nearest `.compact-scope` is hidden (base.css). Everything is in the HTML either way, so without
+// :has() support the full version simply shows. A browser may restore a visitor's own toggle on reload.
+interface Props {
+  /** Unique id for the checkbox. */
+  id: string;
+  /** What the switch compacts, for the accessible name, e.g. "experience". */
+  label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<label class="switch">
+  <input class="switch__input" type="checkbox" role="switch" id={id} checked aria-label={`Compact ${label}`} />
+  <span class="switch__box" aria-hidden="true"></span>
+  <span class="switch__text" aria-hidden="true">compact</span>
+</label>
+
+<style>
+  .switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .switch:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+
+  /* The native checkbox stays focusable and clickable but invisible; the label draws the state. */
+  .switch__input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .switch:has(.switch__input:focus-visible) {
+    outline: var(--ring-width) solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  .switch__box::before {
+    content: '[ ]';
+  }
+
+  .switch__input:checked + .switch__box::before {
+    content: '[x]';
+  }
+
+  .switch:has(.switch__input:checked) {
+    color: var(--fg);
+  }
+</style>
