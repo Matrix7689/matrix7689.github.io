@@ -37,11 +37,15 @@ const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
 // Vertical "on this page" rail (Jay, Stage 5 checkpoint); ids match the SectionHeaders below.
-const sections = ['about', 'highlights', 'experience', 'education', 'blog', 'projects', 'skills'].map((id, i) => ({
-  n: String(i + 1).padStart(2, '0'),
-  id,
-  name: `~/${id}`,
-}));
+// 00 is back to the top (#top is on <body>, see Base).
+const sections = [
+  { n: '00', id: 'top', name: 'top' },
+  ...['about', 'highlights', 'experience', 'education', 'blog', 'projects', 'skills'].map((id, i) => ({
+    n: String(i + 1).padStart(2, '0'),
+    id,
+    name: `~/${id}`,
+  })),
+];
 
 // Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
 const courses = new Intl.ListFormat('en', { type: 'conjunction' });

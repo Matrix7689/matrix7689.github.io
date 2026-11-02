@@ -1,0 +1,71 @@
+---
+// Page-load stat in the nav (Jay, Stage 5 checkpoint; SPEC D9c). A tiny inline script reads the Navigation
+// Timing entry after `load` and shows load time in ms; hover or focus shows the start and end as Unix
+// timestamps (ms). Hidden until the script fills it, so without JS nothing shows. Shown from 40rem up.
+---
+
+<span class="loadtime" id="loadtime" tabindex="0" aria-describedby="loadtime-tip" hidden>
+  <span class="loadtime__label">load</span>
+  <span class="loadtime__ms"></span>
+  <span class="loadtime__tip" id="loadtime-tip" role="tooltip"></span>
+</span>
+<script is:inline>
+  (function () {
+    var el = document.getElementById('loadtime');
+    if (!el || !window.performance || !performance.getEntriesByType) return;
+    function show() {
+      var n = performance.getEntriesByType('navigation')[0];
+      if (!n || !n.loadEventEnd) return;
+      var t0 = Math.round(performance.timeOrigin + n.startTime);
+      var t1 = Math.round(performance.timeOrigin + n.loadEventEnd);
+      el.querySelector('.loadtime__ms').textContent = Math.round(n.loadEventEnd - n.startTime) + ' ms';
+      el.querySelector('.loadtime__tip').textContent = 'load start ' + t0 + '\nload end   ' + t1 + '\n(unix ms)';
+      el.hidden = false;
+    }
+    if (document.readyState === 'complete') setTimeout(show);
+    else addEventListener('load', function () { setTimeout(show); });
+  })();
+</script>
+
+<style>
+  .loadtime {
+    position: relative;
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    font-size: var(--fs-ui);
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    cursor: default;
+  }
+
+  @media (min-width: 40rem) {
+    .loadtime:not([hidden]) {
+      display: inline-flex;
+    }
+  }
+
+  .loadtime__ms {
+    color: var(--fg);
+  }
+
+  .loadtime__tip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
+    padding: var(--space-2) var(--space-3);
+    border: var(--hairline) solid var(--fg);
+    background: var(--bg);
+    color: var(--fg);
+    white-space: pre;
+    line-height: 1.6;
+  }
+
+  .loadtime:hover .loadtime__tip,
+  .loadtime:focus-visible .loadtime__tip {
+    display: block;
+  }
+</style>

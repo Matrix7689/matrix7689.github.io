@@ -32,7 +32,7 @@ npm run repo:size           # repo and dist size report
 This runs on Windows: use npm scripts (Node ESM), not bash-only commands. Quote paths (the folder has a space).
 
 ## Hard performance rules (non-negotiable)
-- Zero client JS by default. Only allowed: inline theme init + toggle, and the copy button. ≤ 2 KB gzip per page.
+- Zero client JS by default. Only allowed: inline theme init + toggle, the copy button, and the nav page-load stat (SPEC D9c). ≤ 2 KB gzip per page.
 - No jQuery, Bootstrap, Tailwind, CSS frameworks, animation libraries, UI frameworks or hydration islands.
 - No third-party requests: no Google Fonts, CDNs, icon kits, analytics or embeds.
 - Home page < 50 KB transferred (gzip, excluding fonts). Lighthouse mobile ≥ 95 on Performance, Accessibility, Best Practices and SEO.

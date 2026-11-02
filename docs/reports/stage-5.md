@@ -207,3 +207,11 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Tags:** the role/education tags are back to the plain bordered style (the inverted look was reverted and the `inverted` Tag prop removed). "University of Mumbai" is no longer shown; the `affiliation` field stays in the data.
 - **Section rail (home only):** new `SectionRail.astro`, a fixed vertical `<nav aria-label="On this page">` on the right edge with 01–07 linking to each section. Hovering or focusing a number shows its name (e.g. "~/experience") beside it; screen readers always get the name. Shown from 64rem up, hidden on narrower screens. Between 64rem and 88rem the home containers get 3rem extra right padding so the rail never covers content. Section headings get `scroll-margin-top`, so a jump lands with the ghost number below the sticky nav (measured: 35 px gap).
 - **Checks:** `npm run verify` exits 0; `/` is 13.6 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.
+
+### Rail 00, post TOC rule, Medium notice size, nav load stat (Jay, Stage 5 checkpoint)
+
+- **Rail 00:** the section rail starts with 00 → `#top` (on `<body>`). Tested: from `#skills` (scrollY 7306) it returns to 0.
+- **TOC:** "How I Avoid and Handle Burnout" is 4 min with 10 h2/h3, so the old "≥ 3 headings **and** ≥ 5 min" rule hid it. The rule is now ≥ 3 h2/h3 only (SPEC Stage 5 task 3 updated). All three published posts now have a TOC; among the fixtures, still only the long post qualifies (the other two have 1 heading each).
+- **Medium notice:** "Originally/Also published on Medium →" is now `--fs-body-lg` (16 px, was 12 px).
+- **Load stat (all pages):** new `LoadTime.astro` in the nav after the name, e.g. "load 113 ms". After `load`, a tiny inline script reads the Navigation Timing entry (`loadEventEnd − startTime`). Hover or keyboard focus shows a tooltip with load start and end as Unix ms timestamps (`timeOrigin + startTime` / `+ loadEventEnd`). It stays hidden without JS and on screens under 40rem (no room beside the menu). This is a new JS allowance, recorded as SPEC D9(c) and in CLAUDE.md's hard rules. JS per page is 0.8 KB (cap 2 KB).
+- **Checks:** `npm run verify` exits 0; `/` is 14.1 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post, with CLS ≤ 0.001. No horizontal scroll at 375 px.

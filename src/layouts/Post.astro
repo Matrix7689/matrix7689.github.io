@@ -36,7 +36,8 @@ const { title, summary, date, updated, tags, readingTime, headings, canonical, m
 // <title> stays ≤ 70 characters (html-validate long-title): long post titles drop the site suffix.
 const withSuffix = `${title} · Jay Parekh`;
 const pageTitle = withSuffix.length <= 70 ? withSuffix : title;
-const showToc = headings.filter((h) => h.depth === 2 || h.depth === 3).length >= 3 && readingTime >= 5;
+// TOC whenever there are ≥ 3 h2/h3 (Jay, Stage 5 checkpoint: the 5-minute minimum hid it on a 4-minute post).
+const showToc = headings.filter((h) => h.depth === 2 || h.depth === 3).length >= 3;
 ---
 
 <Base title={pageTitle} description={summary} current="blog" canonical={canonical}>
@@ -133,7 +134,7 @@ const showToc = headings.filter((h) => h.depth === 2 || h.depth === 3).length >=
   }
 
   .post__medium {
-    font-size: var(--fs-ui);
+    font-size: var(--fs-body-lg);
   }
 
   .post__medium a,
