@@ -311,7 +311,7 @@ Conventions for every stage:
 **Inputs:** §4.1; DesignSpec §1.4 and §4 "Home page content order".
 
 **Tasks:**
-1. `src/pages/index.astro` sections, in order: **Intro** → **Experience** (SDE II, SDE I) → **Highlights** (Fig 1–3) → **Latest posts** (3–5, or `EmptyState`) → **Selected projects** (featured, max 4) → **Skills** (static wrapped line, `///` separators) → Footer.
+1. `src/pages/index.astro` sections, in order: **Intro** → **Experience** (SDE II, SDE I) → **Highlights** (Fig 1–3) → **Latest posts** (3–5, or `EmptyState`) → **Selected projects** (featured, max 4) → **Skills** (static wrapped line, `///` separators) → Footer. **Stage 4 checkpoint:** Highlights moved first and expanded to 24 figures; sections are now 01 `~/highlights`, 02 `~/experience`, 03 `~/blog`, 04 `~/projects`, 05 `~/skills` (§4.1).
 2. The intro contains the one `CommandBlock` as the primary visual (§4.1), built from `SITE_URL` so it stays correct after a custom-domain switch.
 3. Section headers use `SectionHeader` with ghost numbers `01`–`04` and prompt-style titles (`~/experience`, `~/blog`, `~/projects`, `~/skills`).
 4. Project cards show text first; the tiny thumbnail (`thumb` preset, grayscale) is optional per card and lazy.
@@ -563,14 +563,14 @@ Conventions for every stage:
 |---|---|
 | Badge | `■ SOFTWARE ENGINEER · SEATTLE` (proposed; Seattle is from the old site) |
 | H1 (two-tone) | Line 1 `Jay Parekh` (fg); line 2 `Software Development Engineer II @ Amazon` (muted) |
-| One-liner | (proposed) "I build and scale Amazon's shopping cart service: throttling, caching, migrations and latency." → `NEEDS INPUT: approve or rewrite` |
-| Links row | `github` `linkedin` `x` `medium` `email` `resume.pdf` (Steam Workshop is on the level-design archive only, §4.7; Monkeytype dropped at the Stage 3 checkpoint) |
-| CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf  rss.xml`, each a real link. Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
-| 01 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
-| Highlights | `Fig 1. $1.74M` — infrastructure cost saved (cart cache storage refactor). `Fig 2. −15 ms` — global TM99 latency, same change. `Fig 3. 3–4 months` — implementation effort saved by design choice. |
-| 02 `~/blog` | Latest 3–5 posts (`PostListItem`); at launch the 3 imported Medium posts. With 0 posts: `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
-| 03 `~/projects` | Featured software projects (all 4 by default): title, one-liner, stack tags, link. "all projects → /projects/". |
-| 04 `~/skills` | One static wrapped line: `Java /// Kotlin /// C++ /// Python /// React /// Node.js /// AWS /// Docker /// Linux /// Git /// SQL` (from resume; `NEEDS INPUT: confirm current skill list`) |
+| One-liner | "I build and scale Amazon's shopping cart service." (approved by Jay at the Stage 4 checkpoint, list after the colon removed) |
+| Links row | `github` `linkedin` `medium` `email` `resume.pdf` (X removed at the Stage 4 checkpoint; the URL stays in `site.config.ts` for `twitter:site` and JSON-LD `sameAs`. Steam Workshop is on the level-design archive only, §4.7; Monkeytype dropped at the Stage 3 checkpoint) |
+| CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf`, each a real link (`rss.xml` removed at the Stage 4 checkpoint). Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
+| 01 `~/highlights` | Placed before experience (Jay, Stage 4 checkpoint). 24 `Figure`s, numbered `Fig 1`–`Fig 24` across four groups. **At Amazon:** >99.99% migration success and 0 customer impact (SDE II); $1.74M, −15 ms, −10 ms, 3–4 months, 16 regions / 3 pipelines, 5 peak simulations, 2 engineers mentored (SDE I); 4 h → 5 min (intern). **Gaming & community:** 4 Bigshine subsidiaries incl. Mammoth Gaming; 24+ gaming servers; 100,000+ users; 32 eSports events; 500+ workshop students. **Steam Workshop:** 55 maps, 1,052,075 downloads, 12,340,926 views. **Off the clock** (old-site counts): 123 WPM, 622 cups of coffee, 340 bowls of ramen, 25 sneakers, 72 video games, 74,156 Spotify minutes. Data in `src/data/pages.ts`. `NEEDS INPUT`: Drag2Death eSports achievements, and which organisation the community numbers belong to. |
+| 02 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
+| 03 `~/blog` | Latest 3–5 posts (`PostListItem`); at launch the 3 imported Medium posts. With 0 posts: `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
+| 04 `~/projects` | Featured software projects (all 4 by default): title, one-liner, stack tags, link. "all projects → /projects/". |
+| 05 `~/skills` | One static wrapped line: `Java /// Kotlin /// C++ /// Python /// React /// Node.js /// AWS /// Docker /// Linux /// Git /// SQL` (from the resume; confirmed by Jay, N6) |
 | Footer | §4.9 |
 
 ### 4.2 Experience data (home + about)
@@ -673,7 +673,7 @@ Per map (N10): game/engine, year, description, Steam Workshop URL and per-map st
 | Rotating text "Jay, JP, Matrix7689", preloader, scroll mouse | Drop |
 | "Matrix7689" handle | Keep only in the GitHub URL; not used as a display name |
 | About stats: maps / downloads / views / eSports | Move to the level-design archive (§4.7) |
-| Stats: lines of code, WPM, GitHub repos, coffee, sneakers, Spotify, ramen, video games | Drop |
+| Stats: lines of code, WPM, GitHub repos, coffee, sneakers, Spotify, ramen, video games | WPM, coffee, ramen, sneakers, video games and Spotify minutes return as home highlights (Jay, Stage 4 checkpoint); lines of code and GitHub repos stay dropped |
 | Education & experience timeline | Reuse (§4.2, §4.6); drop high school |
 | Works filter (All / Level Designs / Web Dev / AI / ML) | Replaced by Projects + archive |
 | Tech-stack logos | Replaced by a text skills line |
@@ -687,7 +687,7 @@ Per map (N10): game/engine, year, description, Steam Workshop URL and per-map st
 |---|---|---|
 | N1 | ~~Medium profile URL / handle~~ **Filled (Stage 0):** `https://medium.com/@jay.parekh7689` | — |
 | N2 | ~~Public email~~ **Filled (Stage 3):** jay.parekh7689@gmail.com, public | — |
-| N3 | Home one-liner approval | Proposed text |
+| N3 | ~~Home one-liner approval~~ **Filled (Stage 4):** "I build and scale Amazon's shopping cart service." | — |
 | N4 | ~~Bio approval~~ **Filled (Stage 3):** approved with the last clause removed | — |
 | N5 | ~~Recent SDE II achievements~~ **Filled (Stage 3):** 9 bullets from Jay (§4.2) | — |
 | N6 | ~~Current skills list~~ **Filled (Stage 3):** resume list approved | — |

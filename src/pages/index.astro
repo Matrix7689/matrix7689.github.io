@@ -1,5 +1,5 @@
 ---
-// Home page (SPEC Stage 4, §4.1). Order: intro → 01 experience → highlights → 02 blog → 03 projects → 04 skills.
+// Home page (SPEC Stage 4, §4.1). Order: intro → 01 highlights → 02 experience → 03 blog → 04 projects → 05 skills.
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
@@ -19,7 +19,6 @@ const site = Astro.site!.origin;
 const introLinks = [
   { label: 'github', href: SITE.links.github },
   { label: 'linkedin', href: SITE.links.linkedin },
-  { label: 'x', href: SITE.links.x },
   { label: 'medium', href: SITE.links.medium },
   { label: 'email', href: `mailto:${SITE.email}` },
   { label: 'resume.pdf', href: SITE.resume },
@@ -28,6 +27,9 @@ const introLinks = [
 const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort((a, b) => a.data.order - b.data.order);
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+
+// Fig numbers run on across the highlight groups.
+const highlightGroups = HOME.highlights.map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, x) => n + x.items.length, 0) }));
 
 // JSON-LD Person (Stage 4 task 5). sameAs = every non-null profile link.
 const person = {
@@ -75,15 +77,34 @@ const person = {
           { label: 'projects/', href: '/projects/' },
           { label: 'about.md', href: '/about/' },
           { label: 'resume.pdf', href: SITE.resume },
-          { label: 'rss.xml', href: '/rss.xml' },
         ]}
       />
     </div>
   </section>
 
+  <section class="band" aria-labelledby="highlights">
+    <div class="container">
+      <SectionHeader number="01" title="~/highlights" id="highlights" />
+      <div class="stack-lg">
+        {
+          highlightGroups.map((g) => (
+            <div>
+              <h3 class="label group">{g.group}</h3>
+              <div class="figs">
+                {g.items.map((h, i) => (
+                  <Figure n={g.start + i} value={h.value} caption={h.caption} />
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="band" aria-labelledby="experience">
     <div class="container">
-      <SectionHeader number="01" title="~/experience" id="experience" />
+      <SectionHeader number="02" title="~/experience" id="experience" />
       <div class="stack-lg">
         {roles.map((r) => <ExperienceItem {...r.data} limit={r.data.homeBulletLimit} />)}
       </div>
@@ -91,18 +112,9 @@ const person = {
     </div>
   </section>
 
-  <section class="band" aria-labelledby="highlights">
-    <div class="container">
-      <h2 id="highlights" class="label">Highlights</h2>
-      <div class="figs">
-        {HOME.highlights.map((h, i) => <Figure n={i + 1} value={h.value} caption={h.caption} />)}
-      </div>
-    </div>
-  </section>
-
   <section class="band" aria-labelledby="blog">
     <div class="container">
-      <SectionHeader number="02" title="~/blog" id="blog" />
+      <SectionHeader number="03" title="~/blog" id="blog" />
       {
         posts.length > 0 ? (
           <div class="posts">
@@ -127,7 +139,7 @@ const person = {
 
   <section class="band" aria-labelledby="projects">
     <div class="container">
-      <SectionHeader number="03" title="~/projects" id="projects" />
+      <SectionHeader number="04" title="~/projects" id="projects" />
       <div class="cards">
         {
           projects.map((p) => (
@@ -141,7 +153,7 @@ const person = {
 
   <section class="band band--last" aria-labelledby="skills">
     <div class="container">
-      <SectionHeader number="04" title="~/skills" id="skills" />
+      <SectionHeader number="05" title="~/skills" id="skills" />
       <ul class="skills" role="list">
         {HOME.skills.map((s) => <li>{s}</li>)}
       </ul>
@@ -240,20 +252,32 @@ const person = {
     text-decoration-line: underline;
   }
 
-  #highlights {
-    margin-bottom: var(--space-6);
+  .group {
+    margin-bottom: var(--space-4);
     font-weight: 400;
   }
 
+  /* Two columns on phones, up to five on wide screens; values shrink to fit narrow cells. */
   .figs {
     display: grid;
-    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+    gap: var(--space-3);
   }
 
   @media (min-width: 48rem) {
     .figs {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+      gap: var(--space-4);
     }
+  }
+
+  .figs :global(.stat) {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .figs :global(.stat__value) {
+    font-size: clamp(1.125rem, 0.85rem + 1.4vw, 1.75rem);
+    overflow-wrap: anywhere;
   }
 
   .posts {

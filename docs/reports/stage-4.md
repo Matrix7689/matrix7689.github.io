@@ -99,3 +99,23 @@ npm run build
 npm run preview
 ```
 Open http://localhost:4321/ on desktop and phone. Approve the copy (especially the one-liner) and the layout, try the copy button and paste the result, and toggle dark mode.
+
+## Checkpoint changes (Nov 2, 2026)
+
+Jay's review, applied:
+
+| Request | Change |
+|---|---|
+| Shorten the one-liner | "I build and scale Amazon's shopping cart service." (N3 filled) |
+| Remove "x" from the links row | Links row: github, linkedin, medium, email, resume.pdf. The X URL stays in `site.config.ts` for JSON-LD `sameAs` and `twitter:site` (Stage 9). |
+| Remove `rss.xml` from the terminal | `ls` output: blog/, projects/, about.md, resume.pdf |
+| Remove the API names from project stacks | NewsApp React: React, Node.js. NewsApp Android: Android, Java, Kotlin. |
+| Highlights first, covering everything | New `01 ~/highlights` before experience, so the sections are now 01–05. 24 `Figure`s in 4 groups (At Amazon 10, Gaming & community 5, Steam Workshop 3, Off the clock 6), numbered Fig 1–24. Every number comes from §4.2, the resume or the old site. Phones show 2 per row, wide screens up to 5. |
+
+**Is `curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` valid?** Yes. `-s` is silent, `-L` follows redirects, and `-O` saves under the remote file name. Run against the live site, it downloaded `Jay_Parekh_Resume.pdf` (222,433 bytes, a `%PDF-1.7` header), byte-identical to `public/Jay_Parekh_Resume.pdf`. It works in macOS and Linux terminals, Windows `cmd` and PowerShell 7. In Windows PowerShell 5.1, `curl` is an alias for `Invoke-WebRequest`, so this exact syntax fails there; `curl.exe -sLO …` works.
+
+**Not added (no source):** Drag2Death eSports achievements. Neither the old site nor the resume mentions Drag2Death, and the resume's "Community Developer" numbers (24+ servers, 100,000+ users, eSports events) don't name an organisation. A new `NEEDS INPUT` in `src/data/pages.ts` holds both questions. The old site's "64,214 lines of code" and "8 GitHub repos" were left out of "Off the clock".
+
+**Nav links 404:** the nav points to `/blog/`, `/projects/` and `/about/`, which Stages 5, 6 and 8 build. They 404 until then, both locally and on the live site if this stage is deployed first.
+
+After the changes: `npm run verify` exits 0. `/` is 9.8 KB initial and 65.3 KB total. Lighthouse (3 runs) gives 100/100/100/100 with LCP 1,356 ms, CLS 0.0005 and TBT 0 ms. At 360 px there's no overflow, and the highlights show 2 per row with no value overflowing its box.

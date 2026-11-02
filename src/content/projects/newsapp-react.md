@@ -3,7 +3,7 @@
 title: "NewsApp: React website"
 summary: Responsive React and Node.js news site with New York Times and Guardian news, sharing, bookmarks and autosuggest search.
 year: 2020
-stack: [React, Node.js, New York Times API, Guardian API]
+stack: [React, Node.js]
 # NEEDS INPUT (N9): role/course context. The live app's page title reads "CSCI 571 NewsApp"; not stated until confirmed.
 links:
   github: https://github.com/Matrix7689/NewsApp-React

@@ -3,7 +3,7 @@
 title: "NewsApp: Android app"
 summary: Android app with Guardian news, local weather, bookmarks, keyword-trend charts and autosuggest search.
 year: 2020
-stack: [Android, Java, Kotlin, Guardian API, OpenWeatherMap API, MPAndroidChart]
+stack: [Android, Java, Kotlin]
 # NEEDS INPUT (N9): role/course context.
 links:
   github: https://github.com/Matrix7689/NewsApp-Android
