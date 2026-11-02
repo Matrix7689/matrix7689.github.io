@@ -1,38 +1,11 @@
-// Image presets (SPEC Stage 2 task 2). Qualities were tuned against every source in src/assets
-// so the worst-case output stays under its cap (thumb ≤ 30 KB, detail ≤ 150 KB, large ≤ 450 KB);
-// check-budgets enforces the caps on every build. Encoder options (mozjpeg, effort) are in astro.config.mjs.
+// Image helpers built on the presets in image-presets.ts (SPEC Stage 2 task 2).
+// Encoder options (mozjpeg, effort) are in astro.config.mjs.
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
+import { PRESETS, LARGE, type Format } from './image-presets.ts';
 
-export type Format = 'avif' | 'webp' | 'jpg';
-export type Preset = 'thumb' | 'detail';
-
-interface PresetSpec {
-  widths: number[];
-  /** Picture sources in order, then the <img> fallback (last entry). */
-  formats: { format: Format; quality: number }[];
-}
-
-export const PRESETS: Record<Preset, PresetSpec> = {
-  thumb: {
-    widths: [400, 600],
-    formats: [
-      { format: 'avif', quality: 55 },
-      { format: 'webp', quality: 55 },
-      { format: 'jpg', quality: 45 },
-    ],
-  },
-  detail: {
-    widths: [800, 1280],
-    formats: [
-      { format: 'avif', quality: 55 },
-      { format: 'webp', quality: 50 },
-      { format: 'jpg', quality: 65 },
-    ],
-  },
-};
-
-export const LARGE = { width: 1920, format: 'webp' as const, quality: 75 };
+export { PRESETS, LARGE };
+export type { Format, Preset } from './image-presets.ts';
 
 /** Preset widths that don't upscale the source; the source width if it is smaller than all of them. */
 export function widthsFor(src: ImageMetadata, widths: number[]): number[] {

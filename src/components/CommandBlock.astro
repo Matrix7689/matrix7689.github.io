@@ -41,29 +41,8 @@ const { command, title = 'terminal', outputLinks = [], cursor = true, id } = Ast
 </TerminalCard>
 
 <script>
-  // Copy-to-clipboard (SPEC D9b): progressive enhancement, one handler per button.
-  for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-copy-target]')) {
-    const target = document.getElementById(btn.dataset.copyTarget ?? '');
-    const status = btn.nextElementSibling;
-    if (!target || !navigator.clipboard) continue;
-    btn.hidden = false;
-    let timer = 0;
-    btn.addEventListener('click', async () => {
-      let ok = true;
-      try {
-        await navigator.clipboard.writeText(target.textContent ?? '');
-      } catch {
-        ok = false;
-      }
-      btn.textContent = ok ? 'copied' : 'failed';
-      if (status) status.textContent = ok ? 'Copied' : 'Copy failed';
-      clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        btn.textContent = 'copy';
-        if (status) status.textContent = '';
-      }, 2000);
-    });
-  }
+  // Copy button behaviour (SPEC D9b), shared with blog code blocks.
+  import '../scripts/copy.ts';
 </script>
 
 <style>
