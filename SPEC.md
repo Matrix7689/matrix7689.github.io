@@ -117,7 +117,7 @@ matrix7689.github.io/
 | D12 | **OG image:** one static default `public/og/default.png` (1200×630, ≤ 60 KB) for all pages in v1. Per-post generated OG images go to the backlog. |
 | D13 | **Feeds:** RSS 2.0 at `/rss.xml` (satisfies "RSS/Atom"). Sitemap via `@astrojs/sitemap`. `robots.txt` points to it. |
 | D14 | **Fonts:** Geist Mono (OFL) self-hosted as subset woff2, weights 400 and 700, `font-display: swap`, only 400 preloaded. Subset = Basic Latin + Latin-1 punctuation + `→ ← ↑ ↓ — – • ·` + box-drawing (U+2500–257F) + block elements (U+2580–259F). |
-| D15 | **Syntax highlighting:** Shiki at build time with custom monochrome dark and light themes (`src/styles/shiki/`), dual-theme output via CSS variables so the theme toggle switches code colors with no JS. |
+| D15 | **Syntax highlighting:** Shiki at build time with custom monochrome dark and light themes (`src/styles/shiki/`), dual-theme output via CSS variables so the theme toggle switches code colors with no JS. **Implemented (Stage 5)** as one token-class theme (`src/styles/shiki/mono.json`): a hast plugin maps its placeholder colours to `tok-*` classes coloured by theme tokens, so no inline styles ship. |
 | D16 | **Level-design maps:** all **12** maps from both old pages are included (§4.7). |
 | D17 | **CSS:** hand-written, tokens in `tokens.css`, no framework or preprocessor. Global CSS ≤ 12 KB gzip. Astro `build.inlineStylesheets: 'auto'`. |
 | D18 | **DesignSpec §2.2 and §3.2 (OpenCode and TypeSafe computed styles) are still unfilled.** Stage 1 builds from DesignSpec **§1 and §4 only**. If Jay fills them later, a follow-up session adjusts `tokens.css` only. |
