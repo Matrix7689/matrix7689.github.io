@@ -41,7 +41,9 @@ const canonicalHref = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <noscript><style>.theme-toggle{display:none}</style></noscript>
     <slot name="head" />
   </head>
-  <body>
+  <!-- id="top": the footer's back-to-top target. It can't be the sticky header, which is always
+       on screen, so jumping to it never scrolls. -->
+  <body id="top">
     <a class="skip-link" href="#main">Skip to content</a>
     <Nav current={current} />
     <main id="main" tabindex="-1">

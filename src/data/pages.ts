@@ -4,8 +4,8 @@
 // Sources: SPEC §4, the resume PDF, the old site and Jay's LinkedIn profile export (Stage 4 checkpoint).
 
 export const HOME = {
-  // (proposed; Seattle is from the old site and LinkedIn)
-  badge: 'Software engineer · Seattle',
+  // Badges under the name (Jay, Stage 5 checkpoint); they replace the eyebrow badge and the role line.
+  badges: ['Software Engineer', 'Amazon', 'Seattle'],
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
   // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or
@@ -93,7 +93,7 @@ export const ABOUT = {
     {
       level: 'university',
       school: 'University of Southern California',
-      degree: 'MS Computer Science',
+      degree: 'Master of Science in Computer Science',
       start: '2019-08',
       end: '2021-05',
       location: 'Los Angeles',
@@ -103,7 +103,7 @@ export const ABOUT = {
       level: 'university',
       school: 'Dwarkadas J. Sanghvi College of Engineering',
       affiliation: 'University of Mumbai',
-      degree: 'BE Information Technology',
+      degree: 'Bachelor of Engineering in Information Technology',
       start: '2015-08',
       end: '2019-05',
       location: 'Mumbai',
@@ -112,7 +112,7 @@ export const ABOUT = {
     {
       level: 'school',
       school: 'Jai Hind College',
-      degree: 'High school, Computer Science',
+      degree: 'High School, Computer Science specialization',
       start: '2013-08',
       end: '2015-05',
       location: 'Mumbai',

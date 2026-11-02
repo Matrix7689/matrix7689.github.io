@@ -1,5 +1,5 @@
 ---
-// Label/value facts table (SPEC §5, DesignSpec §1.4 Spec table).
+// Label/value facts table (SPEC §5, DesignSpec §1.4 Spec table). size="lg" uses body text and more spacing.
 interface Row {
   label: string;
   value: string;
@@ -9,12 +9,13 @@ interface Row {
 interface Props {
   label: string;
   rows: Row[];
+  size?: 'sm' | 'lg';
 }
 
-const { label, rows } = Astro.props;
+const { label, rows, size = 'sm' } = Astro.props;
 ---
 
-<div class="spec">
+<div class:list={['spec', `spec--${size}`]}>
   <p class="spec__head label"><span class="sq" aria-hidden="true"></span>{label}</p>
   <dl>
     {
@@ -63,8 +64,30 @@ const { label, rows } = Astro.props;
     background: var(--card);
   }
 
+  /* Large rows read as a two-column list: a fixed label column, values left-aligned beside it. */
+  .spec--lg .spec__row {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--fs-body-lg);
+  }
+
+  .spec--lg dd {
+    text-align: left;
+  }
+
   dt {
+    flex: none;
     color: var(--muted);
+  }
+
+  /* Long values (skill lists) stack under their label on narrow screens. */
+  @media (max-width: 47.99rem) {
+    .spec--lg .spec__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+      padding: var(--space-3) var(--space-4);
+    }
   }
 
   dd {

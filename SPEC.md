@@ -561,11 +561,11 @@ Conventions for every stage:
 ### 4.1 Home `/`
 | Section | Content |
 |---|---|
-| Badge | `■ SOFTWARE ENGINEER · SEATTLE` (proposed; Seattle is from the old site) |
-| H1 (two-tone) | Line 1 `Jay Parekh` (fg); line 2 `Software Development Engineer II @ Amazon` (muted) |
+| Badge | Removed (Jay, Stage 5 checkpoint). Three `Badge`s sit under the name instead: `Software Engineer`, `Amazon`, `Seattle`. |
+| H1 | `Jay Parekh` only; the muted role line was removed as redundant with the badges (Jay, Stage 5 checkpoint). |
 | One-liner | "I build and scale Amazon's shopping cart service." (approved by Jay at the Stage 4 checkpoint, list after the colon removed) |
-| Links row | `github` `linkedin` `medium` `email` `resume.pdf` (X removed at the Stage 4 checkpoint; the URL stays in `site.config.ts` for `twitter:site` and JSON-LD `sameAs`. Steam Workshop is on the level-design archive only, §4.7; Monkeytype dropped at the Stage 3 checkpoint) |
-| CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf`, each a real link (`rss.xml` removed at the Stage 4 checkpoint). Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
+| Links row | Removed (Jay, Stage 5 checkpoint): github, linkedin, medium and email moved into the terminal's `ls` output. |
+| CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  github  linkedin  medium  email`, each a real link (Stage 5 checkpoint: `about.md` and `resume.pdf` removed, profiles moved in). Below the terminal: a primary `Button` "Download resume" → `/Jay_Parekh_Resume.pdf` (download). Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
 | 02 `~/highlights` | Placed before experience (Jay, Stage 4 checkpoint). 23 `Figure`s **without** the "Fig N." prefix and without source labels, in four groups (Engineering 8, Gaming & community 5, Map making 4, Off the clock 6). Jay's updates: 13 years programming, 6 peak simulations, 3 engineers mentored (SDE I bullets updated to match), 3 hackathons won at Amazon, 975 cups of coffee, Spotify minutes labelled 2025; removed: 0 customer impact, 4 h → 5 min, 3–4 months, 16 regions, 3 websites, Instagram views, languages spoken. Data in `src/data/pages.ts`. |
 | 02 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
 | 03 `~/blog` | Latest 3–5 posts (`PostListItem`); at launch the 3 imported Medium posts. With 0 posts: `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
@@ -616,7 +616,7 @@ Conventions for every stage:
 
 (No "3D Level Designer" role: removed at the Stage 0 checkpoint. Level designs are shown only as projects, §4.7.)
 
-**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (Jay's own two paragraphs, verbatim, then a secondary `Button` "more about me" → `/about/`; the longer About-page version is drafted in `ABOUT.longSummary` for Stage 8), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills). The `08 ~/credentials` section was removed at Jay's request; the data stays in `CREDENTIALS` (`src/data/pages.ts`) and only feeds JSON-LD `knowsLanguage`. A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
+**Stage 4 checkpoint (LinkedIn import):** for now the home page shows everything: 01 `~/about` (Jay's own two paragraphs, verbatim, then a secondary `Button` "more about me" → `/about/`; the longer About-page version is drafted in `ABOUT.longSummary` for Stage 8), 02 `~/highlights` (29 figures), 03 `~/experience` (all 5 roles, every bullet), 04 `~/education` (incl. high school; rendered with `ExperienceItem` like experience: the degree as the title and one "Coursework included …" sentence, Stage 5 checkpoint), 05 `~/blog`, 06 `~/projects` (all 5), 07 `~/skills` (grouped, resume + LinkedIn top skills; a large `SpecTable` since the Stage 5 checkpoint). The `08 ~/credentials` section was removed at Jay's request; the data stays in `CREDENTIALS` (`src/data/pages.ts`) and only feeds JSON-LD `knowsLanguage`. A compact home page with "view more" toggles comes later (Appendix D). Data lives in `src/data/pages.ts` and `src/content/`.
 
 ### 4.3 Blog index `/blog/`
 - H1 `~/blog` with subtitle `NEEDS INPUT: one line on what you write about` (default: hidden).

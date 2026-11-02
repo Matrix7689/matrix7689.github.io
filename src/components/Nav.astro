@@ -11,7 +11,7 @@ const { current } = Astro.props;
 const items = NAV.map((item, i) => ({ ...item, n: String(i + 1).padStart(2, '0') }));
 ---
 
-<header class="site-header" id="top">
+<header class="site-header">
   <div class="container bar">
     <a class="brand" href="/" aria-current={current === 'home' ? 'page' : undefined}>
       <span class="prompt" aria-hidden="true">&gt;</span>

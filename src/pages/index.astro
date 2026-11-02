@@ -9,7 +9,7 @@ import Button from '../components/Button.astro';
 import CommandBlock from '../components/CommandBlock.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
-import EducationItem from '../components/EducationItem.astro';
+import SpecTable from '../components/SpecTable.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -20,19 +20,23 @@ import { getPosts, postSlug } from '../lib/posts';
 
 const site = Astro.site!.origin;
 
-const introLinks = [
+// The terminal's ls output: site sections, then profiles (Jay, Stage 5 checkpoint).
+const terminalLinks = [
+  { label: 'blog/', href: '/blog/' },
+  { label: 'projects/', href: '/projects/' },
   { label: 'github', href: SITE.links.github },
   { label: 'linkedin', href: SITE.links.linkedin },
   { label: 'medium', href: SITE.links.medium },
   { label: 'email', href: `mailto:${SITE.email}` },
-  { label: 'resume.pdf', href: SITE.resume },
 ].filter((l): l is { label: string; href: string } => l.href !== null);
 
 const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort((a, b) => a.data.order - b.data.order);
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
-
+// Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
+const courses = new Intl.ListFormat('en', { type: 'conjunction' });
+const coursework = (list: string[]) => `Coursework included ${courses.format(list)}.`;
 
 // JSON-LD Person (Stage 4 task 5). sameAs = every non-null profile link.
 const person = {
@@ -53,36 +57,30 @@ const person = {
 
   <section class="container intro" aria-labelledby="intro-title">
     <div class="intro__head">
-      <Badge label={HOME.badge} />
-      <h1 id="intro-title">
-        <span>{SITE.name}</span>
-        <span class="muted">{SITE.role}</span>
-      </h1>
-    </div>
-    <div class="intro__text">
-      <p class="intro__line">{HOME.oneLiner}</p>
-      <ul class="intro__links" role="list" aria-label="Profiles and contact">
+      <h1 id="intro-title">{SITE.name}</h1>
+      <ul class="intro__badges" role="list">
         {
-          introLinks.map((l) => (
+          HOME.badges.map((b) => (
             <li>
-              <a href={l.href}>{l.label}</a>
+              <Badge label={b} />
             </li>
           ))
         }
       </ul>
+    </div>
+    <div class="intro__text">
+      <p class="intro__line">{HOME.oneLiner}</p>
     </div>
     <div class="intro__term">
       <CommandBlock
         id="home-cmd"
         title="jay@portfolio ~ terminal"
         command={`curl -sLO ${site}${SITE.resume}`}
-        outputLinks={[
-          { label: 'blog/', href: '/blog/' },
-          { label: 'projects/', href: '/projects/' },
-          { label: 'about.md', href: '/about/' },
-          { label: 'resume.pdf', href: SITE.resume },
-        ]}
+        outputLinks={terminalLinks}
       />
+      <div class="intro__cta">
+        <Button href={SITE.resume} download>Download resume</Button>
+      </div>
     </div>
   </section>
 
@@ -131,7 +129,11 @@ const person = {
     <div class="container">
       <SectionHeader number="04" title="~/education" id="education" />
       <div class="stack-lg">
-        {ABOUT.education.map((e) => <EducationItem {...e} />)}
+        {
+          ABOUT.education.map((e) => (
+            <ExperienceItem company={e.school} team={e.affiliation} title={e.degree} start={e.start} end={e.end} location={e.location} bullets={[coursework(e.coursework)]} />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -178,25 +180,9 @@ const person = {
   <section class="band" aria-labelledby="skills">
     <div class="container">
       <SectionHeader number="07" title="~/skills" id="skills" />
-      <dl class="skill-groups">
-        {
-          HOME.skillGroups.map((g) => (
-            <div>
-              <dt class="label">{g.label}</dt>
-              <dd>
-                <ul class="skills" role="list">
-                  {g.items.map((s) => (
-                    <li>{s}</li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
+      <SpecTable label="Skills" size="lg" rows={HOME.skillGroups.map((g) => ({ label: g.label, value: g.items.join(', ') }))} />
     </div>
   </section>
-
 </Base>
 
 <style>
@@ -227,42 +213,24 @@ const person = {
   }
 
   h1 {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  h1 span:first-child {
     font-size: var(--fs-hero);
     line-height: var(--lh-tight);
     letter-spacing: -0.03em;
     text-wrap: balance;
   }
 
-  h1 span:last-child {
-    font-size: var(--fs-title);
+  .intro__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
 
   .intro__line {
     max-width: 60ch;
   }
 
-  .intro__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-4);
-  }
-
-  .intro__links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.75rem;
-    color: var(--muted);
-  }
-
-  .intro__links a:hover,
-  .intro__links a:focus-visible {
-    color: var(--fg);
-    text-decoration-line: underline;
+  .intro__cta {
+    margin-top: var(--space-6);
   }
 
   .band {
@@ -299,9 +267,12 @@ const person = {
     text-decoration-line: underline;
   }
 
+  /* Highlight group titles, larger than the micro label style (Jay, Stage 5 checkpoint). */
   .group {
     margin-bottom: var(--space-4);
-    font-weight: 400;
+    font-size: var(--fs-body-lg);
+    font-weight: 700;
+    color: var(--fg);
   }
 
   /* Two columns on phones, up to five on wide screens; values shrink to fit narrow cells. */
@@ -341,37 +312,5 @@ const person = {
     .cards {
       grid-template-columns: repeat(2, 1fr);
     }
-  }
-
-  .skill-groups {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  @media (min-width: 64rem) {
-    .skill-groups > div {
-      display: grid;
-      grid-template-columns: minmax(16rem, 1fr) 2fr;
-      gap: var(--space-8);
-    }
-  }
-
-  .skill-groups dt {
-    margin-bottom: var(--space-2);
-  }
-
-  .skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) 0;
-    color: var(--muted);
-  }
-
-  /* Static "///" separators (DesignSpec §1.4 tech ticker, without the animation); attached to the
-     end of each item so wrapped lines never start with one. */
-  .skills li:not(:last-child)::after {
-    content: '///' / '';
-    padding-inline: var(--space-3);
-    opacity: 0.6;
   }
 </style>

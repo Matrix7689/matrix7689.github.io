@@ -63,7 +63,7 @@
   --radius: 0;
   --hairline: 1px;
   --ring-width: 2px;
-  --opacity-ghost: 0.08;
+  --opacity-ghost: 0.22; /* raised from 8 % at Jay's request (Stage 5 checkpoint) */
   --opacity-wordmark: 0.4;
   --duration: 200ms;
   --tap: 2.75rem; /* 44px targets for nav and toggle */

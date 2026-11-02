@@ -134,3 +134,23 @@ npm run preview
 3. Read `docs/PUBLISHING.md`.
 4. Confirm the blog name and nav label.
 5. Run `npm run build` afterwards to get the production `dist/` back.
+
+## Home and shared tweaks (Nov 2, 2026, during the Stage 5 checkpoint)
+
+Jay's requests, applied:
+
+| Request | Change |
+|---|---|
+| Ghost numbers (01, 02, …) more visible | `--opacity-ghost` raised from 0.08 to 0.22: darker on light, brighter on dark. The numbers are CSS-generated, so contrast audits don't apply. |
+| "resume.pdf" appeared three times | The links row is removed. The terminal's `ls` output is now `blog/ projects/ github linkedin medium email`, without `about.md` or `resume.pdf`. A primary **Download resume** button sits under the terminal. |
+| Badge and role line were redundant | The eyebrow badge and the "Software Development Engineer II @ Amazon" line are removed. The h1 is just "Jay Parekh", with three badges below it: Software Engineer, Amazon, Seattle (`HOME.badges`). |
+| Bigger highlight group titles | Engineering, Gaming & community, Map making and Off the clock are now 1 rem, bold, in the foreground colour (they were 10 px muted labels). |
+| Education like experience | Rendered with `ExperienceItem`: the degree as the bold title (now spelled out, e.g. "Master of Science in Computer Science"), the school and affiliation below, dates and location, and one sentence: "Coursework included A, B, and C." `EducationItem.astro` is deleted. |
+| Skills: bigger, more spacing, no slashes | A `SpecTable` with a new `size="lg"`: 16 px rows, more padding, a 12 rem label column with values beside it. On phones the value stacks under its label. The `///` separators are gone. |
+| Back to top didn't work | `id="top"` was on the sticky header, which is always on screen, so jumping to it never scrolled. It moved to `<body>`. Tested: clicking "back to top" from the bottom (scrollY 8,234) now lands at 0. |
+
+**Checks:**
+- `npm run verify` exits 0; `/` is 12.6 KB initial.
+- Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.
+- At 360 px there's no overflow.
+- Checked in the browser: one h1, three badges, terminal links as listed, the resume button, three education entries with degree titles, five skill rows with values left-aligned (192 px label column, 16 px text), and ghost opacity 0.22 in both themes.
