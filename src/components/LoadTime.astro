@@ -1,7 +1,7 @@
 ---
 // Page-load stat in the nav (Jay, Stage 5 checkpoint; SPEC D9c). A tiny inline script reads the Navigation
 // Timing entry after `load` and shows load time in ms; hover or focus shows the start and end as Unix
-// timestamps (ms). Hidden until the script fills it, so without JS nothing shows. Shown from 40rem up.
+// timestamps (ms), each with a readable local date and time. Hidden until the script fills it, so without JS nothing shows. Shown from 40rem up.
 ---
 
 <span class="loadtime" id="loadtime" tabindex="0" aria-describedby="loadtime-tip" hidden>
@@ -13,13 +13,20 @@
   (function () {
     var el = document.getElementById('loadtime');
     if (!el || !window.performance || !performance.getEntriesByType) return;
+    // e.g. "2026-11-03 00:43:06.537" in the visitor's time zone (ISO string shifted by the zone offset).
+    function human(ms) {
+      return new Date(ms - new Date(ms).getTimezoneOffset() * 6e4).toISOString().replace('T', ' ').slice(0, 23);
+    }
     function show() {
       var n = performance.getEntriesByType('navigation')[0];
       if (!n || !n.loadEventEnd) return;
       var t0 = Math.round(performance.timeOrigin + n.startTime);
       var t1 = Math.round(performance.timeOrigin + n.loadEventEnd);
       el.querySelector('.loadtime__ms').textContent = Math.round(n.loadEventEnd - n.startTime) + ' ms';
-      el.querySelector('.loadtime__tip').textContent = 'load start ' + t0 + '\nload end   ' + t1 + '\n(unix ms)';
+      el.querySelector('.loadtime__tip').textContent =
+        'load start ' + t0 + '\n           ' + human(t0) +
+        '\nload end   ' + t1 + '\n           ' + human(t1) +
+        '\n(unix ms · your local time)';
       el.hidden = false;
     }
     if (document.readyState === 'complete') setTimeout(show);
