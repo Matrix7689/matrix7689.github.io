@@ -116,10 +116,9 @@ ol[role='list'] {
   padding: 0;
 }
 
-/* Compact mode (CompactToggle): while a scope's switch is checked, its .is-extra content is hidden,
-   and a bullet list left with nothing to show collapses too. */
-.compact-scope:has(.switch__input:checked) .is-extra,
-.compact-scope:has(.switch__input:checked) .role__bullets:not(:has(> li:not(.is-extra))) {
+/* Compact mode (CompactToggle): while the switch is checked, .is-extra content in the elements that follow
+   it is hidden. A plain sibling selector, so it works in every browser (no :has()). */
+.compact-input:checked ~ * .is-extra {
   display: none;
 }
 

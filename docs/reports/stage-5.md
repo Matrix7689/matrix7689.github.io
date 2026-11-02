@@ -162,7 +162,7 @@ Jay's requests, applied:
 Jay asked for a compact on/off toggle on experience and education (on by default), and an empty area at the start of experience for a planned horizontal timeline, 2015 – present.
 
 - **`CompactToggle`** (new component): a native `<input type="checkbox" role="switch" checked>` inside a `[x] compact` / `[ ] compact` label. Its accessible names are "Compact experience" and "Compact education", and it keeps the 2 px focus ring and a 44 px target.
-- **CSS only, no JS:** a rule in `base.css` hides `.is-extra` content inside a `.compact-scope` while its switch is checked. Everything stays in the HTML, so a browser without `:has()` shows the full version.
+- **CSS only, no JS:** a rule in `base.css` hides `.is-extra` content while its switch is checked (mechanism revised below; no `:has()`). Everything stays in the HTML.
 - **Experience:** each role's new `compactBullets` field (1-based) lists the bullets compact mode keeps. These are my picks, for Jay to adjust in the YAML:
 
   | Role | Kept in compact |
@@ -178,3 +178,10 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Timeline slot:** an empty `div.timeline-slot` (`aria-hidden`, 8 rem tall) between the experience header and the first role, marked with an HTML comment.
 - **Checks:** `npm run verify` exits 0; `/` is 12.7 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.
 - **Note:** browsers may restore a visitor's own toggle state on reload. `autocomplete="off"` would prevent that, but it's invalid HTML on checkboxes, so it isn't used.
+
+### Compact toggle fix (Jay: "the compact toggle isn't working")
+
+- **Cause:** the hide rule depended on CSS `:has()`, which older browsers (Firefox before 121, older Safari) don't support and some apply unreliably when a checkbox changes. Real clicks worked in Chromium here, so this was the weak point rather than a reproduced failure.
+- **Fix:** `CompactToggle` now renders the checkbox as a visually hidden sibling *before* the section's content, plus a `<label for>` that draws `[x]`/`[ ]`. The rule is now `.compact-input:checked ~ * .is-extra { display: none }`, a plain sibling selector supported everywhere. A bullet list with nothing left in compact mode carries `is-extra` itself, so no `:has()` is needed there either. `.compact-scope` is gone.
+- **Tested with real clicks and keyboard:** experience 12 ↔ 27 bullets; education 0 ↔ 3 coursework lines; Tab shows the focus ring on the switch, and Space toggles it.
+- **Checks:** `npm run verify` exits 0. Lighthouse on `/` is 100/100/100/100 (3 runs), and all lhci assertions pass.

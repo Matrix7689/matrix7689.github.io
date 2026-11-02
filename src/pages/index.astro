@@ -117,10 +117,10 @@ const person = {
     </div>
   </section>
 
-  <section class="band compact-scope" aria-labelledby="experience">
+  <section class="band" aria-labelledby="experience">
     <div class="container">
       <SectionHeader number="03" title="~/experience" id="experience" />
-      <div class="section-tools"><CompactToggle id="compact-experience" label="experience" /></div>
+      <CompactToggle id="compact-experience" label="experience" />
       <!-- Reserved for a horizontal timeline, 2015 – present (Jay, Stage 5 checkpoint). -->
       <div class="timeline-slot" aria-hidden="true"></div>
       <div class="stack-lg">
@@ -129,10 +129,10 @@ const person = {
     </div>
   </section>
 
-  <section class="band compact-scope" aria-labelledby="education">
+  <section class="band" aria-labelledby="education">
     <div class="container">
       <SectionHeader number="04" title="~/education" id="education" />
-      <div class="section-tools"><CompactToggle id="compact-education" label="education" /></div>
+      <CompactToggle id="compact-education" label="education" />
       <div class="stack-lg">
         {
           ABOUT.education.map((e) => (
@@ -239,12 +239,6 @@ const person = {
 
   .about-more {
     margin-top: var(--space-8);
-  }
-
-  .section-tools {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: var(--space-6);
   }
 
   /* Empty on purpose: space for the planned 2015 – present timeline. */

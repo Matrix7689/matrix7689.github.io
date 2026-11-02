@@ -19,6 +19,9 @@ interface Props {
 
 const { company, title, team, start, end, location, bullets, limit, compact } = Astro.props;
 const shown = limit ? bullets.slice(0, limit) : bullets;
+const isExtra = (i: number) => compact !== undefined && !compact.includes(i + 1);
+// A list left with nothing to show in compact mode is extra too, so it collapses with its bullets.
+const allExtra = shown.every((_, i) => isExtra(i));
 ---
 
 <article class="role">
@@ -27,10 +30,10 @@ const shown = limit ? bullets.slice(0, limit) : bullets;
     <p>{company}{team && <span class="muted"> · {team}</span>}</p>
     <p class="role__meta">{roleRange(start, end)} · {location}</p>
   </header>
-  <ul class="role__bullets" role="list">
+  <ul class:list={['role__bullets', { 'is-extra': allExtra }]} role="list">
     {
       shown.map((b, i) => (
-        <li class:list={{ 'is-extra': compact !== undefined && !compact.includes(i + 1) }}>
+        <li class:list={{ 'is-extra': isExtra(i) }}>
           <span set:html={inlineMarkdown(b)} />
         </li>
       ))

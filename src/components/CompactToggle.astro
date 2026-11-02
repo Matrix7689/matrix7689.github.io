@@ -1,8 +1,10 @@
 ---
 // Compact-mode switch for a section (Jay, Stage 5 checkpoint). CSS only, no JS: a native checkbox
-// (role="switch", checked = compact by default). While it is checked, any `.is-extra` element inside
-// the nearest `.compact-scope` is hidden (base.css). Everything is in the HTML either way, so without
-// :has() support the full version simply shows. A browser may restore a visitor's own toggle on reload.
+// (role="switch", checked = compact by default). The checkbox is rendered as a sibling placed *before* the
+// section's content, so `.compact-input:checked ~ * .is-extra` (base.css) hides the extra content with a
+// plain sibling selector that every browser supports; no :has(). Place it directly inside the same parent as
+// the content it compacts. Everything is in the HTML either way. A browser may restore a visitor's own
+// toggle on reload.
 interface Props {
   /** Unique id for the checkbox. */
   id: string;
@@ -13,15 +15,34 @@ interface Props {
 const { id, label } = Astro.props;
 ---
 
-<label class="switch">
-  <input class="switch__input" type="checkbox" role="switch" id={id} checked aria-label={`Compact ${label}`} />
-  <span class="switch__box" aria-hidden="true"></span>
-  <span class="switch__text" aria-hidden="true">compact</span>
-</label>
+<input class="compact-input" type="checkbox" role="switch" id={id} checked aria-label={`Compact ${label}`} />
+<div class="section-tools">
+  <label class="switch" for={id}>
+    <span class="switch__box" aria-hidden="true"></span>
+    <span class="switch__text" aria-hidden="true">compact</span>
+  </label>
+</div>
 
 <style>
+  /* Visually hidden but still focusable; the label below draws the state and takes the clicks. */
+  .compact-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    opacity: 0;
+  }
+
+  .section-tools {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--space-6);
+  }
+
   .switch {
-    position: relative;
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -41,16 +62,7 @@ const { id, label } = Astro.props;
     color: var(--fg);
   }
 
-  /* The native checkbox stays focusable and clickable but invisible; the label draws the state. */
-  .switch__input {
-    position: absolute;
-    inset: 0;
-    margin: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .switch:has(.switch__input:focus-visible) {
+  .compact-input:focus-visible + .section-tools .switch {
     outline: var(--ring-width) solid var(--ring);
     outline-offset: 2px;
   }
@@ -59,11 +71,11 @@ const { id, label } = Astro.props;
     content: '[ ]';
   }
 
-  .switch__input:checked + .switch__box::before {
-    content: '[x]';
+  .compact-input:checked + .section-tools .switch {
+    color: var(--fg);
   }
 
-  .switch:has(.switch__input:checked) {
-    color: var(--fg);
+  .compact-input:checked + .section-tools .switch__box::before {
+    content: '[x]';
   }
 </style>
