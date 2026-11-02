@@ -1,0 +1,58 @@
+---
+// Tag pages (SPEC Stage 5 task 2, D7). Paths come from the posts this build publishes, so a tag
+// used only by drafts gets no page in production.
+import Base from '../../../layouts/Base.astro';
+import TagFilter from '../../../components/TagFilter.astro';
+import PostList from '../../../components/PostList.astro';
+import { getPosts, tagsOf, type Post } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = tagsOf(posts);
+  return tags.map((tag) => ({ params: { tag }, props: { tag, tags, posts: posts.filter((p) => p.data.tags.includes(tag)) } }));
+}
+
+interface Props {
+  tag: string;
+  tags: string[];
+  posts: Post[];
+}
+
+const { tag, tags, posts } = Astro.props;
+const count = `${posts.length} post${posts.length === 1 ? '' : 's'}`;
+---
+
+<Base title={`Posts tagged ${tag} · Jay Parekh`} description={`Jay Parekh's posts tagged ${tag}: ${count}.`} current="blog">
+  <div class="container blog">
+    <header class="blog__head">
+      <p class="label"><a href="/blog/">~/blog</a></p>
+      <h1>[{tag}]</h1>
+      <p class="muted">{count}</p>
+    </header>
+    <TagFilter tags={tags} active={tag} />
+    <PostList posts={posts} />
+  </div>
+</Base>
+
+<style>
+  .blog {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-12) var(--space-section);
+  }
+
+  .blog__head {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .blog__head a {
+    color: var(--muted);
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+    line-height: var(--lh-tight);
+    overflow-wrap: anywhere;
+  }
+</style>
