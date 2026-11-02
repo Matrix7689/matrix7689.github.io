@@ -169,3 +169,11 @@ Jay's 13 edits, applied:
 That leaves **24 cards**: Engineering 9, Gaming & community 5, Map making 4, Off the clock 6. `npm run verify` exits 0; `/` is 12.4 KB initial.
 
 Open question: the SDE I experience bullets still say "Mentored **2 engineers**" and "ran **5 peak-traffic simulations**", as the resume and LinkedIn do for that role. The new highlight totals are 3 and 6.
+
+## Highlights revision 2 (Nov 2, 2026)
+
+- **SDE I bullets** now say **6** peak-traffic simulations and **3** engineers mentored, matching Jay's updated totals. SPEC §4.2 and the Stage 3 metrics criterion are updated to match.
+- **Removed cards:** "3–4 months" (implementation effort saved) and "16 regions" (3 pipelines restored).
+- **Added card:** "**3** hackathons won at Amazon" in Engineering, after "engineers mentored". Source: Jay.
+
+That leaves **23 cards** (Engineering 8). `npm run verify` exits 0; `/` is 12.3 KB initial.

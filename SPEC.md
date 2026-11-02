@@ -566,7 +566,7 @@ Conventions for every stage:
 | One-liner | "I build and scale Amazon's shopping cart service." (approved by Jay at the Stage 4 checkpoint, list after the colon removed) |
 | Links row | `github` `linkedin` `medium` `email` `resume.pdf` (X removed at the Stage 4 checkpoint; the URL stays in `site.config.ts` for `twitter:site` and JSON-LD `sameAs`. Steam Workshop is on the level-design archive only, §4.7; Monkeytype dropped at the Stage 3 checkpoint) |
 | CommandBlock (primary visual) | Title `jay@portfolio ~ terminal`. Line: `$ curl -sLO https://matrix7689.github.io/Jay_Parekh_Resume.pdf` (URL from `SITE_URL`). Copy button. Below it, static output styled as `ls`: `blog/  projects/  about.md  resume.pdf`, each a real link (`rss.xml` removed at the Stage 4 checkpoint). Trailing `$ █` cursor (CSS blink, reduced-motion safe). |
-| 02 `~/highlights` | Placed before experience (Jay, Stage 4 checkpoint). 24 `Figure`s **without** the "Fig N." prefix and without source labels, in four groups (Engineering 9, Gaming & community 5, Map making 4, Off the clock 6). Jay's updates: 13 years programming, 6 peak simulations, 3 engineers mentored, 975 cups of coffee, Spotify minutes labelled 2025; removed: 0 customer impact, 4 h → 5 min, 3 websites, Instagram views, languages spoken. Data in `src/data/pages.ts`. |
+| 02 `~/highlights` | Placed before experience (Jay, Stage 4 checkpoint). 23 `Figure`s **without** the "Fig N." prefix and without source labels, in four groups (Engineering 8, Gaming & community 5, Map making 4, Off the clock 6). Jay's updates: 13 years programming, 6 peak simulations, 3 engineers mentored (SDE I bullets updated to match), 3 hackathons won at Amazon, 975 cups of coffee, Spotify minutes labelled 2025; removed: 0 customer impact, 4 h → 5 min, 3–4 months, 16 regions, 3 websites, Instagram views, languages spoken. Data in `src/data/pages.ts`. |
 | 02 `~/experience` | Two `ExperienceItem`s (SDE II, SDE I) per §4.2: role, team ("Shopping Cart"), dates, location, 2–4 bullets. Link: "full history → /about/". |
 | 03 `~/blog` | Latest 3–5 posts (`PostListItem`); at launch the 3 imported Medium posts. With 0 posts: `EmptyState`: `$ ls blog/` → `0 posts — first one is on the way. Subscribe: rss.xml` |
 | 04 `~/projects` | Featured software projects (all 4 by default): title, one-liner, stack tags, link. "all projects → /projects/". |
@@ -591,8 +591,8 @@ Conventions for every stage:
 - [*] Led a cross-team service migration that cut global TM99 latency by **10 ms** and reduced infrastructure cost.
 - [*] Designed translation and invocation strategies for a new service; reusing existing components saved **3–4 months** of implementation effort.
 - [*] Kept a client team's migration to the new cart version backward compatible, with tracking metrics.
-- [*] Restored **3 pipelines across 16 regions**, ran **5 peak-traffic simulations**, and built a mock-request testing framework.
-- [*] Mentored **2 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
+- [*] Restored **3 pipelines across 16 regions**, ran **6 peak-traffic simulations**, and built a mock-request testing framework.
+- [*] Mentored **3 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
 
 (Home shows the first 3 SDE I bullets; About shows all.)
 

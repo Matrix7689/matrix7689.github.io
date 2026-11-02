@@ -9,7 +9,7 @@ export const HOME = {
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
   // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or
-  // Jay directly (13 years, 6 simulations, 3 mentees, 975 coffees, Spotify 2025). No source labels on the cards.
+  // Jay directly (13 years, 6 simulations, 3 mentees, 3 hackathons, 975 coffees, Spotify 2025). No source labels on the cards.
   highlights: [
     {
       group: 'Engineering',
@@ -19,10 +19,9 @@ export const HOME = {
         { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage' },
         { value: '−15 ms', caption: 'global TM99 latency from the cart cache storage refactor' },
         { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration' },
-        { value: '3–4 months', caption: 'implementation effort saved by reusing existing components' },
-        { value: '16 regions', caption: '3 pipelines restored across them' },
         { value: '6', caption: 'peak-traffic simulations run' },
         { value: '3', caption: 'engineers mentored' },
+        { value: '3', caption: 'hackathons won at Amazon' },
       ],
     },
     {

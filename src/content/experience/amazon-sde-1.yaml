@@ -10,7 +10,7 @@ bullets:
   - Led a cross-team service migration that cut global TM99 latency by **10 ms** and reduced infrastructure cost.
   - Designed translation and invocation strategies for a new service; reusing existing components saved **3–4 months** of implementation effort.
   - Kept a client team's migration to the new cart version backward compatible, with tracking metrics.
-  - Restored **3 pipelines across 16 regions**, ran **5 peak-traffic simulations**, and built a mock-request testing framework.
-  - Mentored **2 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
+  - Restored **3 pipelines across 16 regions**, ran **6 peak-traffic simulations**, and built a mock-request testing framework.
+  - Mentored **3 engineers**; ran knowledge-transfer sessions on internal debugging and log-query tools.
 showOnHome: true
 order: 2
