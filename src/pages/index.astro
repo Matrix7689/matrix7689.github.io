@@ -302,10 +302,16 @@ const person = {
   .headshot {
     order: -1;
     width: 14rem;
-    /* Grey frame: a mat in the border grey with a hairline edge. */
+    /* Grey frame: a mat in the border grey, slightly rounded (Jay, Stage 5 follow-up). */
     padding: var(--space-2);
-    border: var(--hairline) solid var(--muted);
+    border-radius: 8px;
     background: var(--border);
+  }
+
+  /* Slightly see-through so the photo sits softer on the page; inner corners follow the frame. */
+  .headshot :global(img) {
+    border-radius: 4px;
+    opacity: 0.85;
   }
 
   @media (min-width: 48rem) {

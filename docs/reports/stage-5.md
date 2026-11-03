@@ -256,3 +256,4 @@ Jay asked for the 2015 – present timeline and suggested the template's "Concur
 - **Budgets:** `/` is 16.3 KB initial. The lazy total is now 105.3 KB of the ≤ 120 KB budget, because `check-budgets` counts the heaviest candidate of both photos; a visitor downloads only one (about 10–18 KB).
 - **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on all audited URLs; CLS on `/` is 0.001.
 - `ABOUT.headshot` (for the /about/ page, Stage 8) stays unset; its comment now points to these files.
+- **Softer frame (follow-up, Jay):** the hairline `--muted` edge is removed, leaving only the grey mat. The frame corners are rounded 8 px and the photo's 4 px. The photo is at 85 % opacity, so it sits softer on the page in both themes. This is the site's only rounded corner; DesignSpec otherwise uses square edges, and Jay asked for this one. `npm run verify` exits 0.
