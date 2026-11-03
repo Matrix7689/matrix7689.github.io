@@ -30,10 +30,12 @@ export const SITE = {
   wordmark: 'JP',
 } as const;
 
+// 00 home first (Jay, Stage 5 follow-up); the nav numbers items from 00.
 export const NAV = [
+  { id: 'home', label: 'home', href: '/' },
   { id: 'blog', label: 'blog', href: '/blog/' },
   { id: 'projects', label: 'projects', href: '/projects/' },
   { id: 'about', label: 'about', href: '/about/' },
 ] as const;
 
-export type NavId = 'home' | (typeof NAV)[number]['id'];
+export type NavId = (typeof NAV)[number]['id'];

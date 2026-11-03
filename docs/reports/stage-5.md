@@ -220,3 +220,10 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 ## Checkpoint approval (Nov 3, 2026)
 
 Jay approved Stage 5 (the blog plus the home and shared tweaks above) after it was deployed to the live site at `0b77344`. Still open and carried forward: the blog's name and nav label (default "blog"), plus inputs N9, N12, N14 and N15.
+
+## Post-approval nav tweaks (Nov 3, 2026)
+
+- **00 home:** `NAV` now starts with home, and the nav numbers items from 00: `00 home · 01 blog · 02 projects · 03 about`. "00 home" is highlighted on the home page. The brand link no longer sets `aria-current`, so the page isn't marked twice.
+- **Load stat:** "load" → `loadTime =`; the tooltip reads `startTime = …` and `endTime   = …`, each followed by the local date and time.
+- **Brand:** "> JAY PAREKH" is `--fs-body` (14 px, was 12 px).
+- **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on all audited URLs. At 375 px there's no horizontal scroll and the header stays 57 px tall.

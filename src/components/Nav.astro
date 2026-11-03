@@ -9,13 +9,13 @@ interface Props {
 }
 
 const { current } = Astro.props;
-const items = NAV.map((item, i) => ({ ...item, n: String(i + 1).padStart(2, '0') }));
+const items = NAV.map((item, i) => ({ ...item, n: String(i).padStart(2, '0') }));
 ---
 
 <header class="site-header">
   <div class="container bar">
     <div class="start">
-      <a class="brand" href="/" aria-current={current === 'home' ? 'page' : undefined}>
+      <a class="brand" href="/">
         <span class="prompt" aria-hidden="true">&gt;</span>
         <span>{SITE.name}</span>
       </a>
@@ -83,7 +83,7 @@ const items = NAV.map((item, i) => ({ ...item, n: String(i + 1).padStart(2, '0')
     align-items: center;
     gap: var(--space-2);
     min-height: var(--tap);
-    font-size: var(--fs-ui);
+    font-size: var(--fs-body);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: var(--tracking-widest);

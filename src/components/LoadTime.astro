@@ -5,7 +5,7 @@
 ---
 
 <span class="loadtime" id="loadtime" tabindex="0" aria-describedby="loadtime-tip" hidden>
-  <span class="loadtime__label">load</span>
+  <span class="loadtime__label">loadTime =</span>
   <span class="loadtime__ms"></span>
   <span class="loadtime__tip" id="loadtime-tip" role="tooltip"></span>
 </span>
@@ -24,8 +24,8 @@
       var t1 = Math.round(performance.timeOrigin + n.loadEventEnd);
       el.querySelector('.loadtime__ms').textContent = Math.round(n.loadEventEnd - n.startTime) + ' ms';
       el.querySelector('.loadtime__tip').textContent =
-        'load start ' + t0 + '\n           ' + human(t0) +
-        '\nload end   ' + t1 + '\n           ' + human(t1) +
+        'startTime = ' + t0 + '\n            ' + human(t0) +
+        '\nendTime   = ' + t1 + '\n            ' + human(t1) +
         '\n(unix ms · your local time)';
       el.hidden = false;
     }
