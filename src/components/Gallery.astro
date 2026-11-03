@@ -1,0 +1,64 @@
+---
+// Map screenshots (SPEC §5 Gallery, Stage 7 task 2): every image at the detail preset, the first eager and
+// the rest lazy. Each one links to its build-made 1920 px WebP ("view full size", same tab, no lightbox).
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+import { largeUrl } from '../lib/images';
+
+interface Props {
+  images: { src: ImageMetadata; alt: string }[];
+  title: string;
+}
+
+const { images, title } = Astro.props;
+const items = await Promise.all(images.map(async (image) => ({ ...image, large: await largeUrl(image.src) })));
+---
+
+<ul class="gallery" role="list" aria-label={`${title} screenshots`}>
+  {
+    items.map((image, i) => (
+      <li>
+        <a class="shot" href={image.large}>
+          <Img src={image.src} alt={image.alt} preset="detail" sizes="(min-width: 80rem) 76rem, 100vw" eager={i === 0} />
+          <span class="shot__label">
+            view full size <span aria-hidden="true">→</span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .gallery {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .shot {
+    display: grid;
+    gap: var(--space-2);
+    text-decoration: none;
+  }
+
+  .shot :global(img) {
+    border: var(--hairline) solid var(--border);
+  }
+
+  .shot:hover :global(img),
+  .shot:focus-visible :global(img) {
+    border-color: var(--fg);
+  }
+
+  .shot__label {
+    justify-self: end;
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .shot:hover .shot__label,
+  .shot:focus-visible .shot__label {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+</style>

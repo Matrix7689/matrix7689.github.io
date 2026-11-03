@@ -649,7 +649,7 @@ Years (Jay, Stage 3 checkpoint): Mars rover Sep 2019, Halma Nov 2019. Per projec
 
 ### 4.7 Level Design archive (`/projects/level-design/`)
 Intro (proposed): "Before software engineering, I designed custom multiplayer maps. This is the archive." (years removed at the Stage 4 checkpoint: LinkedIn shows map-making over 9 years, from at least 2015)
-Stats (from the old site, `NEEDS INPUT: confirm or refresh; numbers are as of 2024`): `Fig 1. 55 maps` · `Fig 2. 1,052,075 downloads` · `Fig 3. 12,340,926 views` (old site figures; the resume rounds them to 50+ / 1M+ / 10M+).
+Stats (from the old site, kept by Jay at Stage 3, N11): `55 maps` · `1,052,075 downloads` · `12,340,926 views` as `Figure`s without the "Fig N." prefix, matching Jay's removal of the prefix from all home cards (Stage 4 checkpoint). The resume rounds them to 50+ / 1M+ / 10M+.
 Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4). This page is the only place the Steam Workshop link appears (Jay, Stage 1 checkpoint): a visible link near the intro/stats, e.g. `Button` "Steam Workshop →". Stage 7 builds it.
 
 | Order | slug | Title | Old folder | Images |
@@ -675,7 +675,7 @@ Per map (N10): game/engine, year, description, Steam Workshop URL and per-map st
 ### 4.9 Footer (all pages)
 - Col 1: `AsciiWordmark` (`JP`, `aria-hidden`, plus visually hidden "Jay Parekh") + one muted line: "Software engineer. Writes about building things." (proposed).
 - Col 2 `CONNECT`: GitHub, LinkedIn, Medium, Email (Jay, Stage 1 checkpoint: X, RSS, Monkeytype and Steam Workshop removed from the footer; Steam Workshop lives on the level-design archive, §4.7).
-- Col 3 `SITE`: blog, projects, level design archive, about, resume.pdf; "back to top" (anchor link, no JS).
+- Col 3 `SITE`: blog, projects, level design archive (left off on the home page only, so `/` has 0 archive links per Stage 7), about, resume.pdf; "back to top" (anchor link, no JS).
 - Bottom bar: `Last updated on <Mon D, YYYY>` left (date of the latest git commit, build date as fallback, in a `<time datetime>`; Jay, Stage 1 checkpoint). The proposed "built with astro · 0 trackers" line and the footer tagline were removed (Jay, Stage 5 follow-up).
 
 ### 4.10 Old-site content disposition

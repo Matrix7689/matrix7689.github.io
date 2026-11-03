@@ -1,0 +1,64 @@
+---
+// One map in a ThumbGrid (SPEC §5 ThumbGrid / ThumbCard, DesignSpec §4 Images): a grayscale thumbnail
+// that regains colour while its link is hovered or focused (base.css), plus the name and, when known,
+// the year. The whole card is one link.
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+
+interface Props {
+  title: string;
+  year?: number | undefined;
+  href: string;
+  image: ImageMetadata;
+  /** The `sizes` attribute, from the grid that places the card. */
+  sizes: string;
+}
+
+const { title, year, href, image, sizes } = Astro.props;
+---
+
+<a class="thumb" href={href}>
+  <Img src={image} alt="" preset="thumb" sizes={sizes} grayscale />
+  <span class="thumb__text">
+    <span class="thumb__title">{title}</span>
+    {year !== undefined && <span class="thumb__year">{year}</span>}
+  </span>
+</a>
+
+<style>
+  .thumb {
+    display: grid;
+    height: 100%;
+    border: var(--hairline) solid var(--border);
+    text-decoration: none;
+  }
+
+  .thumb:hover,
+  .thumb:focus-visible {
+    border-color: var(--fg);
+  }
+
+  .thumb__text {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-top: var(--hairline) solid var(--border);
+    font-size: var(--fs-ui);
+  }
+
+  .thumb:hover .thumb__title,
+  .thumb:focus-visible .thumb__title {
+    text-decoration-line: underline;
+  }
+
+  .thumb__year {
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .thumb {
+      transition: border-color var(--duration);
+    }
+  }
+</style>

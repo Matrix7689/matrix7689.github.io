@@ -1,0 +1,92 @@
+---
+// Map page (SPEC Stage 7 task 2, §4.7): title, SpecTable of the known facts, description, the gallery
+// (each image links to its 1920 px WebP), prev/next map and a link back to the archive. Unknown fields
+// (game, year, workshop link; N10) are hidden, not marked.
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import SpecTable from '../../../components/SpecTable.astro';
+import Gallery from '../../../components/Gallery.astro';
+import PrevNext from '../../../components/PrevNext.astro';
+
+export async function getStaticPaths() {
+  const maps = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order);
+  return maps.map((map, i) => ({
+    params: { slug: map.id },
+    props: { map, prev: maps[i - 1], next: maps[i + 1] },
+  }));
+}
+
+interface Props {
+  map: CollectionEntry<'levels'>;
+  prev?: CollectionEntry<'levels'> | undefined;
+  next?: CollectionEntry<'levels'> | undefined;
+}
+
+const { map, prev, next } = Astro.props;
+const { title, game, year, description, workshopUrl, gallery } = map.data;
+
+// Alt text pattern (Stage 7 task 3) unless the content file gives one.
+const images = gallery.map((g, i) => ({ src: g.src, alt: g.alt ?? `${title} — screenshot ${i + 1} of ${gallery.length}` }));
+
+const rows = [
+  game && { label: 'Game', value: game },
+  year !== undefined && { label: 'Year', value: String(year) },
+  // "custom multiplayer maps": LEVEL_DESIGN.intro.
+  { label: 'Type', value: 'Custom multiplayer map' },
+  { label: 'Images', value: String(gallery.length) },
+  workshopUrl && { label: 'Workshop', value: 'Steam Workshop', href: workshopUrl },
+].filter((r): r is { label: string; value: string; href?: string } => Boolean(r));
+
+const link = (m: CollectionEntry<'levels'> | undefined) => m && { title: m.data.title, href: `/projects/level-design/${m.id}/` };
+---
+
+<Base title={`${title} · Level design · Jay Parekh`} description={`${title}: a custom multiplayer map by Jay Parekh, with ${gallery.length} screenshots.`} current="projects">
+  <article class="container map">
+    <header class="map__head">
+      <p class="back"><a href="/projects/level-design/">← level design archive</a></p>
+      <h1>{title}</h1>
+      {description && <p class="muted">{description}</p>}
+    </header>
+
+    <div class="map__facts">
+      <SpecTable label="Map" rows={rows} />
+    </div>
+
+    <Gallery images={images} title={title} />
+
+    <PrevNext prev={link(prev)} next={link(next)} label="More maps" prevLabel="← previous map" nextLabel="next map →" />
+  </article>
+</Base>
+
+<style>
+  .map {
+    display: grid;
+    gap: var(--space-12);
+    padding-block: var(--space-section);
+  }
+
+  .map__head {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--prose);
+  }
+
+  .back {
+    font-size: var(--fs-ui);
+  }
+
+  .back a {
+    color: var(--muted);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+    line-height: var(--lh-tight);
+  }
+
+  .map__facts {
+    max-width: 28rem;
+  }
+</style>

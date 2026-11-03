@@ -14,7 +14,6 @@ const EXTERNAL = process.argv.includes('--external');
 // Routes linked from the shell before their stage builds them. Remove each entry when its stage
 // lands; Stage 11 requires this list to be empty.
 const PENDING_ROUTES = [
-  '/projects/level-design/', // Stage 7
   '/about/', // Stage 8
 ];
 

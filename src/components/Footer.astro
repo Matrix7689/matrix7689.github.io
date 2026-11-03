@@ -3,6 +3,13 @@
 import AsciiWordmark from './AsciiWordmark.astro';
 import { SITE } from '../site.config';
 import { LAST_UPDATED } from '../lib/last-updated';
+import type { NavId } from '../site.config';
+
+interface Props {
+  current?: NavId | undefined;
+}
+
+const { current } = Astro.props;
 
 const { links } = SITE;
 const connect = [
@@ -15,7 +22,8 @@ const connect = [
 const site = [
   { label: 'blog', href: '/blog/' },
   { label: 'projects', href: '/projects/' },
-  { label: 'level design archive', href: '/projects/level-design/' },
+  // Not on the home page: level design gets no home presence (SPEC §1.2, Stage 7 acceptance).
+  ...(current === 'home' ? [] : [{ label: 'level design archive', href: '/projects/level-design/' }]),
   { label: 'about', href: '/about/' },
   { label: 'resume.pdf', href: SITE.resume },
 ];

@@ -49,6 +49,6 @@ const canonicalHref = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer current={current} />
   </body>
 </html>

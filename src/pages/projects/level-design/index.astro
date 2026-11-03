@@ -1,0 +1,90 @@
+---
+// Level-design archive (SPEC Stage 7 task 1, §4.7): secondary history. Intro, the old-site stats, the
+// Steam Workshop link (the only place it appears) and a ThumbGrid of the 12 maps in the old-site order.
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Figure from '../../../components/Figure.astro';
+import Button from '../../../components/Button.astro';
+import ThumbGrid from '../../../components/ThumbGrid.astro';
+import { LEVEL_DESIGN } from '../../../data/pages';
+import { SITE } from '../../../site.config';
+
+const maps = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order);
+const items = maps.map((m) => ({ title: m.data.title, year: m.data.year, href: `/projects/level-design/${m.id}/`, image: m.data.cover }));
+---
+
+<Base
+  title="Level design archive · Jay Parekh"
+  description="An archive of the custom multiplayer maps Jay Parekh designed before software engineering."
+  current="projects"
+>
+  <div class="container archive">
+    <header class="archive__head">
+      <p class="back"><a href="/projects/">← all projects</a></p>
+      <h1>~/level-design</h1>
+      <p class="intro">{LEVEL_DESIGN.intro}</p>
+    </header>
+
+    <section class="archive__stats" aria-label="Steam Workshop totals">
+      <div class="stats">
+        {LEVEL_DESIGN.stats.map((s) => <Figure value={s.value} caption={s.caption} />)}
+      </div>
+      {SITE.links.steamWorkshop && <Button href={SITE.links.steamWorkshop}>Steam Workshop</Button>}
+    </section>
+
+    <section aria-labelledby="maps">
+      <h2 id="maps" class="label maps__head">{maps.length} maps</h2>
+      <ThumbGrid items={items} label="Maps" />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .archive {
+    display: grid;
+    gap: var(--space-12);
+    padding-block: var(--space-section);
+  }
+
+  .archive__head {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--prose);
+  }
+
+  .back {
+    font-size: var(--fs-ui);
+  }
+
+  .back a {
+    color: var(--muted);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  h1 {
+    font-size: var(--fs-title);
+  }
+
+  .archive__stats {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+  }
+
+  .stats {
+    display: grid;
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 48rem) {
+    .stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .maps__head {
+    margin-bottom: var(--space-4);
+  }
+</style>
