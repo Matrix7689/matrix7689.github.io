@@ -68,7 +68,7 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
       i = (k + n) % n;
       if (old === s[i]) return;
       clearTimeout(f);
-      for (var j = 0; j < n; j++) s[j].className = j === i ? 'is-current' : s[j] === old ? 'is-leaving' : '';
+      for (var j = 0; j < n; j++) s[j].className = j === i ? 'is-current is-in' : s[j] === old ? 'is-leaving' : '';
       f = setTimeout(function () { old.className = ''; }, 600);
       pre();
       c.textContent = i + 1 + ' / ' + n;
@@ -131,8 +131,12 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
     display: none;
   }
 
+  /* Only slides shown by a change fade in (is-in); the first slide appears at once on load. */
   .is-slideshow .gallery > li.is-current {
     z-index: 1;
+  }
+
+  .is-slideshow .gallery > li.is-in {
     animation: ss-in var(--ss-fade, 600ms) ease-out;
   }
 

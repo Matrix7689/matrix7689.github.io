@@ -1,9 +1,11 @@
 ---
 // Label/value facts table (SPEC §5, DesignSpec §1.4 Spec table). size="lg" uses body text and more spacing.
+// A row value is plain text, one link (href) or several links (links, e.g. a map's platforms).
 interface Row {
   label: string;
   value: string;
   href?: string | undefined;
+  links?: { label: string; href: string }[] | undefined;
 }
 
 interface Props {
@@ -22,7 +24,20 @@ const { label, rows, size = 'sm' } = Astro.props;
       rows.map((row) => (
         <div class="spec__row">
           <dt>{row.label}</dt>
-          <dd>{row.href ? <a href={row.href}>{row.value}</a> : row.value}</dd>
+          <dd>
+            {row.links ? (
+              row.links.map((l, i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <a href={l.href}>{l.label}</a>
+                </>
+              ))
+            ) : row.href ? (
+              <a href={row.href}>{row.value}</a>
+            ) : (
+              row.value
+            )}
+          </dd>
         </div>
       ))
     }

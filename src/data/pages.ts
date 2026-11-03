@@ -161,12 +161,11 @@ export const CREDENTIALS = {
 export const LEVEL_DESIGN = {
   // (proposed) Years removed at the Stage 4 checkpoint: LinkedIn shows map-making from at least 2015 over 9 years.
   intro: 'Before software engineering, I designed custom multiplayer maps. This is the archive.',
-  // Old-site stats, kept as they are (N11, Jay, Stage 3 checkpoint).
-  stats: [
-    { value: '55', caption: 'maps' },
-    { value: '1,052,075', caption: 'downloads' },
-    { value: '12,340,926', caption: 'views' },
-  ],
+  // The archive's totals are computed from the levels collection (lib/levels.ts, Stage 7 revision); the
+  // old-site 55 / 1,052,075 / 12,340,926 figures are retired. Date of the data in docs/data/level-design-master.json.
+  statsAsOf: '2026-11-03',
+  statsNote:
+    'Downloads are GameBanana downloads plus Steam Workshop current subscribers; views are GameBanana views plus Steam Workshop unique visitors.',
 };
 
 export const PROJECTS_PAGE = {

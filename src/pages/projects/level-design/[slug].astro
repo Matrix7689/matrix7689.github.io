@@ -1,12 +1,14 @@
 ---
 // Map page (SPEC Stage 7 task 2, §4.7): title, SpecTable of the known facts, description, the gallery
-// (each image links to its 1920 px WebP), prev/next map and a link back to the archive. Unknown fields
-// (game, year, workshop link; N10) are hidden, not marked.
+// (each image links to its 1920 px WebP), prev/next map and a link back to the archive. Facts come from the
+// master data (Stage 7 revision): game, release date, combined downloads and views, platform links, and a
+// per-platform breakdown for maps on both. Descriptions are not in the data yet and stay hidden.
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import SpecTable from '../../../components/SpecTable.astro';
 import Gallery from '../../../components/Gallery.astro';
 import PrevNext from '../../../components/PrevNext.astro';
+import { fmt, isoDay } from '../../../lib/levels';
 
 export async function getStaticPaths() {
   const maps = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order);
@@ -23,24 +25,42 @@ interface Props {
 }
 
 const { map, prev, next } = Astro.props;
-const { title, game, year, description, workshopUrl, gallery } = map.data;
+const { title, game, released, downloads, views, platforms, stats, description, gallery } = map.data;
 
 // Alt text pattern (Stage 7 task 3) unless the content file gives one.
 const images = gallery.map((g, i) => ({ src: g.src, alt: g.alt ?? `${title} — screenshot ${i + 1} of ${gallery.length}` }));
 
+const platformLinks = [
+  platforms.gamebanana && { label: 'GameBanana', href: platforms.gamebanana },
+  platforms.steam && { label: 'Steam Workshop', href: platforms.steam },
+].filter((l): l is { label: string; href: string } => Boolean(l));
 const rows = [
-  game && { label: 'Game', value: game },
-  year !== undefined && { label: 'Year', value: String(year) },
-  // "custom multiplayer maps": LEVEL_DESIGN.intro.
-  { label: 'Type', value: 'Custom multiplayer map' },
+  { label: 'Game', value: game },
+  { label: 'Released', value: isoDay(released) },
+  { label: 'Downloads', value: fmt(downloads) },
+  { label: 'Views', value: fmt(views) },
+  { label: platformLinks.length > 1 ? 'Platforms' : 'Platform', value: '', links: platformLinks },
   { label: 'Images', value: String(gallery.length) },
-  workshopUrl && { label: 'Workshop', value: 'Steam Workshop', href: workshopUrl },
-].filter((r): r is { label: string; value: string; href?: string } => Boolean(r));
+];
+
+// Maps on both platforms also show where the combined numbers come from.
+const gb = stats?.gamebanana;
+const st = stats?.steam;
+const breakdown =
+  gb && st
+    ? [
+        { label: 'GameBanana downloads', value: fmt(gb.downloads) },
+        { label: 'GameBanana views', value: fmt(gb.views) },
+        { label: 'Steam subscribers', value: fmt(st.subscribers) },
+        { label: 'Steam unique visitors', value: fmt(st.visitors) },
+        ...(st.favorites !== undefined ? [{ label: 'Steam favorites', value: fmt(st.favorites) }] : []),
+      ]
+    : null;
 
 const link = (m: CollectionEntry<'levels'> | undefined) => m && { title: m.data.title, href: `/projects/level-design/${m.id}/` };
 ---
 
-<Base title={`${title} · Level design · Jay Parekh`} description={`${title}: a custom multiplayer map by Jay Parekh, with ${gallery.length} screenshots.`} current="projects">
+<Base title={`${title} · Level design · Jay Parekh`} description={`${title}: a ${game} map by Jay Parekh, released ${isoDay(released)}, with ${gallery.length} screenshots.`} current="projects">
   <article class="container map">
     <header class="map__head">
       <p class="back"><a href="/projects/level-design/">← level design archive</a></p>
@@ -50,6 +70,7 @@ const link = (m: CollectionEntry<'levels'> | undefined) => m && { title: m.data.
 
     <div class="map__facts">
       <SpecTable label="Map" rows={rows} />
+      {breakdown && <SpecTable label="By platform" rows={breakdown} />}
     </div>
 
     <Gallery images={images} title={title} />
@@ -87,6 +108,15 @@ const link = (m: CollectionEntry<'levels'> | undefined) => m && { title: m.data.
   }
 
   .map__facts {
+    display: grid;
+    gap: var(--space-4);
     max-width: 28rem;
+  }
+
+  @media (min-width: 64rem) {
+    .map__facts:has(> :nth-child(2)) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 56rem;
+    }
   }
 </style>

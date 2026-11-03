@@ -8,9 +8,12 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import Img from '../../components/Img.astro';
 import Button from '../../components/Button.astro';
 import { LEVEL_DESIGN, PROJECTS_PAGE } from '../../data/pages';
+import { getMaps, totals, fmt } from '../../lib/levels';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const maps = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+const allMaps = await getMaps();
+const maps = allMaps.slice(0, 3);
+const sum = totals(allMaps);
 
 const linksOf = (l: { github?: string | undefined; live?: string | undefined }) =>
   [l.github && { label: 'GitHub', href: l.github }, l.live && { label: 'Live demo', href: l.live }].filter(
@@ -51,7 +54,7 @@ const ARCHIVE = '/projects/level-design/';
       <div class="teaser">
         <div class="teaser__text">
           <p>{LEVEL_DESIGN.intro}</p>
-          <p class="teaser__stats">{LEVEL_DESIGN.stats.map((s) => `${s.value} ${s.caption}`).join(' · ')}</p>
+          <p class="teaser__stats">{`${sum.maps} maps · ${fmt(sum.downloads)} downloads · ${fmt(sum.views)} views`}</p>
           <Button href={ARCHIVE} variant="secondary">level design archive</Button>
         </div>
         <ul class="teaser__thumbs" role="list">
