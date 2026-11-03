@@ -96,11 +96,13 @@ export const ABOUT = {
     'Away from work, you’ll find me writing tech blogs, playing badminton, or lost in a video game.',
   ],
   // (proposed) Longer version for the About page (Stage 8), tightened from the LinkedIn summary;
-  // "passion" phrasing dropped per the §4 copy rules. Jay will write the final long version there.
+  // "passion" phrasing dropped per the §4 copy rules. {maps}, {downloads} and {views} are filled in at build
+  // time from the level-design data (the old 50+ / 10+ million / 1 million were ballpark, Stage 7); the
+  // eSports count is the confirmed 32 (N11). Jay approves or rewrites this at the Stage 8 checkpoint.
   longSummary: [
     "I'm a Software Development Engineer II at Amazon. I graduated from the University of Southern California with an MS in Computer Science in May 2021, and I have 13 years of programming experience. Problem-solving, decision-making and analysis draw me to projects across very different domains.",
-    "I also design 3D levels (maps) for video games. Over 9 years I've created 50+ maps, with 10+ million views and 1 million downloads on Steam Workshop.",
-    "I've organized and run technical operations for 30+ eSports tournaments in India, online and LAN, and built and managed community gaming servers hosted on AWS and in local data centers.",
+    "I also design 3D levels (maps) for video games. Over 9 years I've published {maps} maps on GameBanana and Steam Workshop, with {downloads} downloads and {views} views.",
+    "I've organized and run technical operations for 32 eSports events in India, online and LAN, and built and managed community gaming servers hosted on AWS and in local data centers.",
   ],
   // GPA hidden (Q6). High school added back at the Stage 4 checkpoint ("add everything").
   education: [
