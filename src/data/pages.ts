@@ -168,3 +168,10 @@ export const LEVEL_DESIGN = {
     { value: '12,340,926', caption: 'views' },
   ],
 };
+
+export const PROJECTS_PAGE = {
+  // (proposed) Stage 6: plain description of what the page lists; no course context (N9).
+  intro: 'Software projects first, then an archive of the multiplayer maps I designed.',
+  // Detail pages: one note for screenshots not yet supplied (N13, Jay, Stage 3 checkpoint).
+  screenshotsNote: 'Screenshots coming soon.',
+};

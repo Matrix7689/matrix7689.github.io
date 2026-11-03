@@ -1,5 +1,5 @@
 ---
-// Previous / next post links (SPEC §5 PrevNext). A missing side is not rendered.
+// Previous / next links (SPEC §5 PrevNext): posts by date, projects by order. A missing side is not rendered.
 interface Link {
   title: string;
   href: string;
@@ -7,23 +7,27 @@ interface Link {
 interface Props {
   prev?: Link | undefined;
   next?: Link | undefined;
+  /** Landmark name and side labels; defaults are for blog posts. */
+  label?: string;
+  prevLabel?: string;
+  nextLabel?: string;
 }
 
-const { prev, next } = Astro.props;
+const { prev, next, label = 'More posts', prevLabel = '← older', nextLabel = 'newer →' } = Astro.props;
 ---
 
 {
   (prev || next) && (
-    <nav class="prevnext" aria-label="More posts">
+    <nav class="prevnext" aria-label={label}>
       {prev && (
         <a class="prev" href={prev.href}>
-          <span class="label">← older</span>
+          <span class="label">{prevLabel}</span>
           <span class="t">{prev.title}</span>
         </a>
       )}
       {next && (
         <a class="next" href={next.href}>
-          <span class="label">newer →</span>
+          <span class="label">{nextLabel}</span>
           <span class="t">{next.title}</span>
         </a>
       )}

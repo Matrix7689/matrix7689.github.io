@@ -1,0 +1,199 @@
+---
+// Project detail page (SPEC Stage 6 task 2, §4.5): title, summary, SpecTable of facts, body (facts from
+// the content file only), media (demo Video or the cover at the detail preset), links, prev/next by order.
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SpecTable from '../../components/SpecTable.astro';
+import Img from '../../components/Img.astro';
+import Video from '../../components/Video.astro';
+import Button from '../../components/Button.astro';
+import PrevNext from '../../components/PrevNext.astro';
+import { PROJECTS_PAGE } from '../../data/pages';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, prev: projects[i - 1], next: projects[i + 1] },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  prev?: CollectionEntry<'projects'> | undefined;
+  next?: CollectionEntry<'projects'> | undefined;
+}
+
+const { project, prev, next } = Astro.props;
+const { title, summary, year, stack, context, links, cover, video } = project.data;
+const { Content } = await render(project);
+
+// Short link text: "Matrix7689/Halma-AI" for repositories, the bare host for live demos.
+const bare = (url: string) => url.replace(/^https?:\/\/(github\.com\/)?/, '').replace(/\/$/, '');
+const rows = [
+  { label: 'Type', value: 'Software project' },
+  year !== undefined && { label: 'Year', value: String(year) },
+  { label: 'Stack', value: stack.join(', ') },
+  context && { label: 'Context', value: context },
+  links.github && { label: 'Repository', value: bare(links.github), href: links.github },
+  links.live && { label: 'Live demo', value: bare(links.live), href: links.live },
+].filter((r): r is { label: string; value: string; href?: string } => Boolean(r));
+
+const link = (p: CollectionEntry<'projects'> | undefined) => p && { title: p.data.title, href: `/projects/${p.id}/` };
+const pageTitle = `${title} · Jay Parekh`;
+---
+
+<Base title={pageTitle} description={summary} current="projects">
+  <article class="container project">
+    <header class="project__head">
+      <p class="back"><a href="/projects/">← all projects</a></p>
+      <h1>{title}</h1>
+      <p class="lead">{summary}</p>
+    </header>
+
+    <div class="project__grid">
+      <div class="project__main">
+        <div class="prose project__body">
+          <Content />
+        </div>
+
+        <section class="media" aria-label="Media">
+          {
+            video ? (
+              <Video mp4={video.mp4} webm={video.webm} poster={video.poster} label={video.caption} name={`${title} demo`} />
+            ) : (
+              cover && <Img src={cover} alt={`${title}: screenshot`} preset="detail" sizes="(min-width: 64rem) 42rem, 100vw" class="media__img" />
+            )
+          }
+          <p class="muted media__note">{PROJECTS_PAGE.screenshotsNote}</p>
+        </section>
+
+        {
+          (links.github || links.live) && (
+            <div class="project__links">
+              {links.github && <Button href={links.github}>View on GitHub</Button>}
+              {links.live && (
+                <Button href={links.live} variant="secondary">
+                  Live demo
+                </Button>
+              )}
+            </div>
+          )
+        }
+      </div>
+
+      <aside class="project__facts">
+        <SpecTable label="Project" rows={rows} />
+      </aside>
+    </div>
+
+    <PrevNext prev={link(prev)} next={link(next)} label="More projects" prevLabel="← previous project" nextLabel="next project →" />
+  </article>
+</Base>
+
+<style>
+  .project {
+    display: grid;
+    gap: var(--space-12);
+    padding-block: var(--space-section);
+  }
+
+  .project__head {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--prose);
+  }
+
+  .back {
+    font-size: var(--fs-ui);
+  }
+
+  .back a {
+    color: var(--muted);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+    line-height: var(--lh-tight);
+  }
+
+  .lead {
+    color: var(--muted);
+  }
+
+  /* Facts beside the body on wide screens, above it on narrow ones. */
+  .project__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+
+  .project__facts {
+    order: -1;
+  }
+
+  @media (min-width: 64rem) {
+    .project__grid {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      align-items: start;
+    }
+
+    .project__facts {
+      order: 0;
+      position: sticky;
+      top: calc(3.5rem + var(--space-6));
+    }
+  }
+
+  .project__main {
+    display: grid;
+    gap: var(--space-12);
+    min-width: 0;
+  }
+
+  .project__body {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .project__body :global(ul) {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .project__body :global(li) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+  }
+
+  /* [*] bullets (DesignSpec §2.1), as on the home page roles. */
+  .project__body :global(li)::before {
+    content: '[*]' / '';
+    color: var(--muted);
+  }
+
+  .media {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 42rem;
+  }
+
+  .media :global(.media__img) {
+    border: var(--hairline) solid var(--border);
+  }
+
+  .media__note {
+    font-size: var(--fs-ui);
+  }
+
+  .project__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+</style>

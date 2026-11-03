@@ -12,14 +12,16 @@ interface Props {
   poster: ImageMetadata;
   /** Text description shown under the video. */
   label: string;
+  /** Accessible name for the player, e.g. "Halma game-playing agent demo" (SPEC Stage 6). */
+  name: string;
 }
 
-const { mp4, webm, poster, label } = Astro.props;
+const { mp4, webm, poster, label, name } = Astro.props;
 const posterSrc = await posterUrl(poster);
 ---
 
 <figure class="video">
-  <video controls preload="none" playsinline poster={posterSrc} width={poster.width} height={poster.height} data-preset="detail">
+  <video controls preload="none" playsinline aria-label={name} poster={posterSrc} width={poster.width} height={poster.height} data-preset="detail">
     <source src={mp4} type="video/mp4" />
     <source src={webm} type="video/webm" />
     <a href={mp4}>Download the video (MP4)</a>

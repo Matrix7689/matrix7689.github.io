@@ -3,7 +3,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
-      "url": ["http://localhost/", "http://localhost/blog/", "http://localhost/blog/critical-thinking-is-fading-heres-how-you-can-reclaim-it/"],
+      "url": ["http://localhost/", "http://localhost/blog/", "http://localhost/blog/critical-thinking-is-fading-heres-how-you-can-reclaim-it/", "http://localhost/projects/", "http://localhost/projects/halma-ai/"],
       "numberOfRuns": 3
     },
     "assert": {

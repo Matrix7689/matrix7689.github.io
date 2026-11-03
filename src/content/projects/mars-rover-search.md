@@ -11,6 +11,7 @@ video:
   mp4: /media/mars-rover-search/demo.mp4
   webm: /media/mars-rover-search/demo.webm
   poster: ../../assets/projects/mars-rover-search/poster.png
+  caption: "Demo recording (9 s, no audio) of the rover on a terrain grid, with the start point, end point and solution path marked."
 order: 4
 ---
 

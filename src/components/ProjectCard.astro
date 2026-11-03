@@ -1,6 +1,7 @@
 ---
 // Project card (SPEC §5 ProjectCard): text first, optional tiny grayscale thumbnail.
-// Hover/focus: border → fg, thumbnail → colour. The title link covers the whole card.
+// Hover/focus: border → fg, thumbnail → colour. The title link covers the whole card; optional outbound
+//  (e.g. GitHub, live demo, on /projects/) sit above that overlay so they stay clickable.
 import type { ImageMetadata } from 'astro';
 import Img from './Img.astro';
 import Tag from './Tag.astro';
@@ -12,9 +13,10 @@ interface Props {
   year?: number | undefined;
   href: string;
   thumb?: ImageMetadata | undefined;
+  links?: { label: string; href: string }[];
 }
 
-const { title, summary, stack, year, href, thumb } = Astro.props;
+const { title, summary, stack, year, href, thumb, links = [] } = Astro.props;
 ---
 
 <article class:list={['card', { 'card--thumb': thumb }]}>
@@ -31,6 +33,19 @@ const { title, summary, stack, year, href, thumb } = Astro.props;
       }
     </ul>
     {year && <p class="card__year">{year}</p>}
+    {
+      links.length > 0 && (
+        <ul class="card__links" role="list" aria-label={`${title} links`}>
+          {links.map((l) => (
+            <li>
+              <a href={l.href}>
+                {l.label} <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </div>
   {thumb && <Img src={thumb} alt="" preset="thumb" sizes="(min-width: 48rem) 160px, 96px" grayscale class="card__thumb" />}
 </article>
@@ -98,6 +113,23 @@ const { title, summary, stack, year, href, thumb } = Astro.props;
   .card__year {
     font-size: var(--fs-ui);
     color: var(--muted);
+  }
+
+  .card__links {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--fs-ui);
+  }
+
+  .card__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 1.5rem;
+    text-decoration-line: underline;
   }
 
   .card :global(.card__thumb) {

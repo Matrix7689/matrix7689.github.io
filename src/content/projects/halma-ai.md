@@ -11,6 +11,7 @@ video:
   mp4: /media/halma-ai/demo.mp4
   webm: /media/halma-ai/demo.webm
   poster: ../../assets/projects/halma-ai/poster.png
+  caption: "Demo recording (33 s, no audio) of a game on the 16×16 board: each side starts with its 19 pieces in opposite corners."
 order: 3
 ---
 

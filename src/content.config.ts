@@ -41,7 +41,8 @@ const projects = defineCollection({
       context: z.string().optional(),
       links: z.object({ github: z.url().optional(), live: z.url().optional() }),
       cover: image().optional(),
-      video: z.object({ mp4: z.string().startsWith('/media/'), webm: z.string().startsWith('/media/'), poster: image() }).optional(),
+      // caption: the text description shown beside the video (SPEC §6.2), describing only what the recording shows.
+      video: z.object({ mp4: z.string().startsWith('/media/'), webm: z.string().startsWith('/media/'), poster: image(), caption: z.string() }).optional(),
       featured: z.boolean().default(true),
       order: z.number().int(),
     }),

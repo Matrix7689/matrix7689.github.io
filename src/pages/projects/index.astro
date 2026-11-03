@@ -1,0 +1,139 @@
+---
+// Projects index (SPEC Stage 6 task 1, §4.5): intro line, every software project as a ProjectCard with
+// its links, then a short level-design teaser (intro, stat line, 3 grayscale map thumbs, archive link).
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Img from '../../components/Img.astro';
+import Button from '../../components/Button.astro';
+import { LEVEL_DESIGN, PROJECTS_PAGE } from '../../data/pages';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const maps = (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+
+const linksOf = (l: { github?: string | undefined; live?: string | undefined }) =>
+  [l.github && { label: 'GitHub', href: l.github }, l.live && { label: 'Live demo', href: l.live }].filter(
+    (x): x is { label: string; href: string } => Boolean(x),
+  );
+
+const ARCHIVE = '/projects/level-design/';
+---
+
+<Base title="Projects · Jay Parekh" description="Software projects by Jay Parekh, plus an archive of his level designs." current="projects">
+  <div class="container projects">
+    <header class="projects__head">
+      <h1>~/projects</h1>
+      <p class="muted">{PROJECTS_PAGE.intro}</p>
+    </header>
+
+    <section aria-labelledby="software">
+      <SectionHeader number="01" title="~/software" id="software" />
+      <div class="grid">
+        {
+          projects.map((p) => (
+            <ProjectCard
+              title={p.data.title}
+              summary={p.data.summary}
+              stack={p.data.stack}
+              year={p.data.year}
+              href={`/projects/${p.id}/`}
+              thumb={p.data.cover ?? p.data.video?.poster}
+              links={linksOf(p.data.links)}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <section aria-labelledby="level-design">
+      <SectionHeader number="02" title="~/level-design" id="level-design" />
+      <div class="teaser">
+        <div class="teaser__text">
+          <p>{LEVEL_DESIGN.intro}</p>
+          <p class="teaser__stats">{LEVEL_DESIGN.stats.map((s) => `${s.value} ${s.caption}`).join(' · ')}</p>
+          <Button href={ARCHIVE} variant="secondary">level design archive</Button>
+        </div>
+        <ul class="teaser__thumbs" role="list">
+          {
+            maps.map((m) => (
+              <li>
+                <a href={ARCHIVE} aria-label={`${m.data.title}, in the level design archive`}>
+                  <Img src={m.data.cover} alt="" preset="thumb" sizes="(min-width: 48rem) 12rem, 30vw" grayscale />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .projects {
+    display: grid;
+    gap: var(--space-section);
+    padding-block: var(--space-section);
+  }
+
+  .projects__head {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  h1 {
+    font-size: var(--fs-title);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 64rem) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .teaser {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 64rem) {
+    .teaser {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      align-items: start;
+    }
+  }
+
+  .teaser__text {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+    max-width: var(--prose);
+  }
+
+  .teaser__stats {
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .teaser__thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .teaser__thumbs a {
+    display: block;
+    border: var(--hairline) solid var(--border);
+  }
+
+  .teaser__thumbs a:hover,
+  .teaser__thumbs a:focus-visible {
+    border-color: var(--fg);
+  }
+</style>
