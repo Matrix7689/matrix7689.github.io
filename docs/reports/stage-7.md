@@ -152,3 +152,115 @@ Jay asked for a slideshow with play/pause, next and previous. That needs JavaScr
   - ArrowLeft ×2 on the focused slider: 5.0 → 4.0 s, with the slide unchanged.
   - At 375 px the bar wraps to two rows with no horizontal scroll.
 - **Checks:** `npm run verify` exits 0 (html-validate caught a `<label>` wrapping both the range and the `<output>`; the wrapper is now a `<div>`). Lighthouse is 100 / 100 / 100 / 100 on all 7 audited URLs, with CLS ≤ 0.001 and TBT 0.
+
+
+---
+
+# Stage 7 revision: 43 maps from the master data (Nov 3, 2026)
+
+Brief: expand the archive from 12 to 43 maps from `gambanana assets\master-spec-table.json`, compute stats from the data, and keep every budget and rule.
+
+## Preflight
+- Stages 0–7 reports exist, so this is a revision of Stage 7.
+- `C:\Jay Data\portfolio revamp\gambanana assets\images\` holds **437 files** in **43 map folders**, so no download was needed.
+- **Master data check:** 43 maps (21 CS:GO, 22 CS:Source; 28 GameBanana-only, 7 Steam-only, 8 on both).
+  - Every map's `dl` equals `gb_dl + st_subs`, and every `views` equals `gb_views + st_vis` (0 mismatches).
+  - All 12 original slugs are present.
+  - All release dates are `YYYY-MM-DD`.
+- `master-spec-table.json` was copied to `docs/data/level-design-master.json` and is byte-identical (`cmp`). Its values were not edited.
+
+## What changed
+- **`scripts/import-levels.mjs`** (`npm run import:levels`, Node ESM; `--dry-run` measures without writing):
+  - Generates all 43 `src/content/levels/<slug>.md` from the master copy. Titles are the raw map names (`awp_lego_asia`, `$2000$_new`, `Awp_LeetGamerz`).
+  - Each file gets game, `released`, `downloads`, `views`, `platforms {gamebanana, steam}` and per-platform `stats`. Empty fields are omitted, and no descriptions are written.
+  - **The 12 originals** keep their existing image files and gallery order and `order` 1–12.
+  - **The other 31** are ordered by game (CS:GO, then CS:Source), newest first (`order` 13–43). Each gets up to 6 screenshots: cover first, then source order, GameBanana `NN.jpg` before Steam `steam-NN.jpg`. They are resized to max 1920 px wide at JPEG q82 (mozjpeg).
+  - **Detail-cap guard:** each candidate is encoded at the site's own detail preset (largest width, every format, the same encoder options as `astro.config.mjs`). One that would exceed `budgets.json`'s 150 KB detail cap is skipped for the next source image.
+    - This caught `gg-twotowers/06.jpg` (WebP 164.5 KB, JPEG 158.8 KB) and `cs-dustyindia/02.jpg` (JPEG 152.0 KB).
+    - Neither map has a 7th source image, so both have 5 screenshots. No cap was loosened.
+- **Schema (`src/content.config.ts`):** `game`, `released` (date), `downloads`, `views`, `platforms` (at least one link) and optional `stats.gamebanana {downloads, views}` / `stats.steam {subscribers, visitors, favorites}`. `cover` and `gallery` still use `image()`, so a missing file fails the build. `year` and `workshopUrl` are removed.
+- **`src/lib/levels.ts`:** `getMaps()`, `totals()` (computed at build time), `fmt()` and `isoDay()` (UTC).
+- **Archive index:**
+  - Intro and the Steam Workshop profile link, as before.
+  - Three Figures **computed from the data**: **43 maps · 1,009,476 downloads · 1,346,104 views**. A footnote reads "As of 2026-11-03. Downloads are GameBanana downloads plus Steam Workshop current subscribers; views are GameBanana views plus Steam Workshop unique visitors."
+  - "12 featured maps": the grayscale `ThumbGrid` of the originals, now with release years.
+  - "31 more maps": two static text tables, **CS:GO (9)** and **CS:Source (22)**, newest first. Columns: Map (link), Released, Downloads, Views. No thumbnails. Each table scrolls inside its own box on narrow screens.
+- **Map pages (43):**
+  - `SpecTable` "Map": Game, Released, Downloads, Views, Platform(s) (GameBanana and/or Steam Workshop links, through a new multi-link `SpecTable` row), Images.
+  - The 8 maps on both platforms also get a "By platform" table: GameBanana downloads and views, plus Steam subscribers, unique visitors and favorites.
+  - The meta description now names the game and release date.
+  - The descriptions are hidden: "Description coming soon." is no longer shown.
+- **`/projects/` teaser:** the stat line now uses the computed totals.
+- **Slideshow fix:** the first slide no longer fades in on page load. Only slides shown by a change fade (`is-in`).
+- **`lighthouserc.json`:** added `/projects/level-design/lcz-ctf-galaxy/` and `/projects/level-design/aim-lego-ak/`; `awp-lego-asia` is kept.
+
+## Verification
+
+### `npm run verify`: exit 0
+```
+astro check   0 errors
+/projects/                  initial   7.5 KB (≤50)   total 158.9 KB (≤200)
+/projects/level-design/     initial   8.8 KB (≤60)   total 277.7 KB (≤450)
+map pages (43)              initial  27.3 KB (fy_buzzkill_css_redone) … 109.9 KB (gg_twotowers), all ≤120
+                            total   141.1 KB … 479.3 KB (lcz_ctf_galaxy), all ≤1200
+images by preset            thumb 102 files (max 29.0 KB ≤30) · detail 1431 files (max 145.8 KB ≤150)
+all budgets pass, 0 third-party references
+0 raw originals in dist/, 0 GIFs, every image ≤ 450 KB
+html-validate: no errors
+internal link check: 67 seed pages, 1920 ok, 0 broken · pending: /about/
+```
+All budgets pass at their SPEC §6.1 values; none were changed.
+
+### `npm run lhci`: all assertions pass (mobile, 3 runs per URL), 9 URLs
+| URL | Perf / A11y / BP / SEO (3 runs) |
+|---|---|
+| `/`, `/blog/`, `/blog/critical-thinking-…/`, `/projects/`, `/projects/halma-ai/` | 100 / 100 / 100 / 100 |
+| `/projects/level-design/` | 100 / 100 / 100 / 100 |
+| `/projects/level-design/lcz-ctf-galaxy/` (both platforms) | 100 / 100 / 100 / 100 |
+| `/projects/level-design/aim-lego-ak/` (Steam only) | 100 / 100 / 100 / 100 |
+| `/projects/level-design/awp-lego-asia/` | 100 / 100 / 100 / 100 |
+
+CLS ≤ 0.001 and TBT 0 everywhere. LCP on the map pages is 1.5–1.7 s.
+
+### Other done-criteria
+- `npm run check:inputs`: **7** markers, unchanged. A comment I wrote briefly contained the marker text (8); it was reworded before committing.
+- `grep -o 'href="/projects/level-design/' dist/index.html | wc -l` → **0**.
+- **360 px:** `scrollWidth` 360 on the archive, `lcz-ctf-galaxy`, `aim-lego-ak`, `2000-new` and `/projects/`.
+  - The first check found the archive at 504 px: grid items don't shrink below their tables by default. Fixed with `min-width: 0`.
+  - The tables now scroll inside their boxes (326 of 457 / 486 px visible).
+- **Browser checks:**
+  - Archive: Figures 43 / 1,009,476 / 1,346,104, the footnote, 12 cards ("awp_lego_asia 2015" …), CS:GO 9 rows (first `am_devbeach 2017-02-13 1,119 1,289`) and CS:Source 22 rows (first `awp_lego_2015_css 2015-04-09 7,916 19,502`).
+  - `lcz-ctf-galaxy`: Map table (26,053 downloads, 43,405 views, GameBanana · Steam Workshop links) and By-platform table (1,047 / 6,080 / 25,006 / 37,325 / 311).
+  - `aim-lego-ak`: "Platform: Steam Workshop" only, with no breakdown, and the first slide at opacity 1 on load.
+
+## Repo size (`npm run repo:size`, `git count-objects -vH`)
+```
+before   size-pack 55.40 MB · loose  1.73 MB
+after    size-pack 55.40 MB · loose 40.45 MB  (new commits not yet repacked)
+growth   about +38.7 MB of new objects (177 JPEG screenshots, 38.87 MB on disk; JPEG does not recompress)
+dist/    95.15 MB in 1857 files (was 31.53 MB)
+```
+The dry run predicted 179 images / 39.57 MB before anything was written, under the 50 MB guard, so the import went ahead; the cap guard then dropped 2. `dist/` is now close to the 100 MB line from Stage 2 task 7 (GitHub Pages allows 1 GB). Adding more maps or images would cross it.
+
+## Deviations from SPEC (SPEC.md updated: §4.7, §4.11 N10/N11, §6.1 audited URLs)
+1. **The archive has 43 maps, not 12.** The 12 old-site maps keep their slugs, images and order.
+2. **Titles are the raw map names** (`awp_lego_asia`), as the brief asks, instead of "AWP Lego Asia".
+3. **Stats are computed from the data** (43 · 1,009,476 · 1,346,104, as of 2026-11-03). The old-site 55 / 1,052,075 / 12,340,926 figures are retired from the archive.
+4. **Only the 12 originals get thumbnails;** the other 31 are text tables. This keeps the index inside the budget written for 12 thumbnails.
+5. **Map pages show "Platform(s)" and "By platform"** instead of the old "Workshop" row; "Type: Custom multiplayer map" is replaced by the data's Game row.
+6. **2 maps have 5 screenshots instead of 6** (the detail-cap guard above).
+7. **Descriptions are hidden:** the Stage 3 "Description coming soon." placeholder is gone.
+
+## Not changed, for Jay to decide
+- **Home page highlights** still say "55 maps · 1,052,075 downloads · 12,340,926 views" (Map making group, `HOME.highlights`). The Drag2Death role bullet still says "50 maps with 10 million views and 1 million downloads" (LinkedIn wording).
+  - The brief retires the old figures for the archive. These two are approved home copy, so they were left as they are.
+  - Should they switch to the computed totals, or stay?
+
+## Remaining NEEDS INPUT (7, unchanged)
+N9 ×4 (project course context), N12 (blog subtitle), N14 (credential details), N15 (summarization link). Per-map descriptions are hidden with no markers.
+
+## Human checkpoint
+Please review the archive (`npm run preview` → http://localhost:4321/projects/level-design/):
+1. **Approve** the 43-map archive, the computed stats and their footnote, and the text tables.
+2. **Home page highlights and the Drag2Death bullet:** keep the old figures, or switch to the computed totals?
+3. **Open questions from earlier in Stage 7:** does the detail AVIF quality look fine, and should the footer archive link stay off the home page?

@@ -649,8 +649,12 @@ Years (Jay, Stage 3 checkpoint): Mars rover Sep 2019, Halma Nov 2019. Per projec
 
 ### 4.7 Level Design archive (`/projects/level-design/`)
 Intro (proposed): "Before software engineering, I designed custom multiplayer maps. This is the archive." (years removed at the Stage 4 checkpoint: LinkedIn shows map-making over 9 years, from at least 2015)
-Stats (from the old site, kept by Jay at Stage 3, N11): `55 maps` · `1,052,075 downloads` · `12,340,926 views` as `Figure`s without the "Fig N." prefix, matching Jay's removal of the prefix from all home cards (Stage 4 checkpoint). The resume rounds them to 50+ / 1M+ / 10M+.
+**Data source (Stage 7 revision):** `docs/data/level-design-master.json`, a verbatim copy of Jay's 43-map master table (36 GameBanana + 7 Steam-only; 8 maps are on both). Never edit its values. `npm run import:levels` generates `src/content/levels/<slug>.md` from it: the raw map name as the title (e.g. `awp_lego_asia`), game, release date, downloads, views, platform links and per-platform stats. New maps get up to 6 screenshots (cover first; GameBanana before Steam; max 1920 px, JPEG q82); a screenshot whose detail outputs would exceed the 150 KB detail cap is skipped for the next one.
+Stats (computed at build time from the data, "as of 2026-11-03"): maps count · total downloads (GameBanana downloads + Steam current subscribers) · total views (GameBanana views + Steam unique visitors), as `Figure`s without the "Fig N." prefix, with a footnote explaining the Steam mapping. At the revision: **43 maps · 1,009,476 downloads · 1,346,104 views**. The old-site 55 / 1,052,075 / 12,340,926 figures are retired from the archive.
+Layout: the 12 old-site maps below as a grayscale `ThumbGrid` (budget written for 12 thumbnails), then the other 31 as static text tables (map, released, downloads, views) grouped by game (CS:GO, then CS:Source), newest first. Map pages: `SpecTable` with Game, Released, Downloads, Views, Platform(s) (GameBanana and/or Steam Workshop links), Images; a "By platform" breakdown for maps on both.
 Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (Q4). This page is the only place the Steam Workshop link appears (Jay, Stage 1 checkpoint): a visible link near the intro/stats, e.g. `Button` "Steam Workshop →". Stage 7 builds it.
+
+The 12 old-site maps keep their slugs, images and order (titles are now the raw map names):
 
 | Order | slug | Title | Old folder | Images |
 |---|---|---|---|---|
@@ -667,7 +671,7 @@ Steam Workshop link: `https://steamcommunity.com/id/MatrixIN/myworkshopfiles/` (
 | 11 | `awp-lego-z` | AWP Lego Z | `awplegoz` | 5 |
 | 12 | `awp-tridust` | AWP Tridust | `awptridust` | 5 |
 
-Per map (N10): game/engine, year, description, Steam Workshop URL and per-map stats are still to come. Jay chose placeholder text at the Stage 3 checkpoint: `description: Description coming soon.`; the other fields stay hidden.
+Per map (N10): game, release date, platform links and stats are filled from the master data (Stage 7 revision). Descriptions are not in the data; the field stays hidden (the Stage 3 placeholder "Description coming soon." is no longer shown).
 
 ### 4.8 404
 `$ cd <requested-path>` / `bash: cd: <path>: No such file or directory` / links: `~/` `blog/` `projects/`.
@@ -705,8 +709,8 @@ Per map (N10): game/engine, year, description, Steam Workshop URL and per-map st
 | N7 | Updated resume PDF | Jay replaces it himself; existing PDF until then (no marker) |
 | N8 | ~~Headshot~~ **Decided (Stage 3):** none | — |
 | N9 | Project course context (years filled at Stage 3: Mars rover Sep 2019, Halma Nov 2019; Android is Java and Kotlin) | Hidden |
-| N10 | Per-map game, year, description, workshop URL | **Stage 3:** placeholder "Description coming soon."; other fields hidden (no marker) |
-| N11 | ~~Level-design stats; eSports count~~ **Filled (Stage 3):** keep old-site stats; 32 events | — |
+| N10 | Per-map ~~game, year, workshop URL~~ **filled from the master data (Stage 7 revision)**; description still to come | Description hidden (no marker) |
+| N11 | ~~Level-design stats; eSports count~~ **Filled (Stage 3):** 32 events. Archive stats are computed from the master data since the Stage 7 revision | — |
 | N12 | Blog subtitle | Hidden |
 | N13 | Project screenshots beyond the existing covers | **Stage 3:** "Screenshots coming soon." on detail pages (no marker) |
 | N14 | Credential details: issuer and year per certification, scholarship year, venue/year/link per publication | Titles only |
@@ -768,7 +772,7 @@ All components are `.astro`, render static HTML, use tokens only (no hard-coded 
 
 Global: CSS ≤ 12 KB gzip · JS ≤ 2 KB gzip per page · fonts ≤ 60 KB total, ≤ 2 files, 1 preload · thumb ≤ 30 KB · detail ≤ 150 KB · large ≤ 450 KB · any `dist` file ≤ 500 KB (allowlist: resume PDF) · 0 third-party requests · 0 raw originals.
 
-Lighthouse (`lighthouserc.json`, mobile preset, 3 runs, median): Performance, Accessibility, Best Practices and SEO ≥ 0.95 on `/`, `/blog/`, `/projects/`, `/projects/halma-ai/`, `/projects/level-design/`, `/projects/level-design/awp-lego-asia/`, `/about/`, `/404.html`, one imported Medium post, plus one fixture post in the fixture build. Assertions: CLS ≤ 0.02, TBT ≤ 50 ms, LCP ≤ 2.0 s on `/`.
+Lighthouse (`lighthouserc.json`, mobile preset, 3 runs, median): Performance, Accessibility, Best Practices and SEO ≥ 0.95 on `/`, `/blog/`, `/projects/`, `/projects/halma-ai/`, `/projects/level-design/`, `/projects/level-design/awp-lego-asia/`, `/projects/level-design/lcz-ctf-galaxy/` (both platforms), `/projects/level-design/aim-lego-ak/` (Steam only), `/about/`, `/404.html`, one imported Medium post, plus one fixture post in the fixture build. Assertions: CLS ≤ 0.02, TBT ≤ 50 ms, LCP ≤ 2.0 s on `/`.
 
 ### 6.2 Accessibility checklist (WCAG 2.2 AA)
 - [ ] `lang="en"`, skip link to `#main` as the first focusable element, landmarks (`header`, `nav`, `main`, `footer`).
