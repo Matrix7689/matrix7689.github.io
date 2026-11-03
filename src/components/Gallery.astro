@@ -1,9 +1,15 @@
 ---
 // Map screenshots (SPEC §5 Gallery, Stage 7 task 2): every image at the detail preset, the first eager and
 // the rest lazy. Each one links to its build-made 1920 px WebP ("view full size", same tab, no lightbox).
-// Slideshow (Jay, Stage 7 checkpoint; SPEC D9d): a tiny inline script turns the list into one slide at a
-// time with previous / play-pause / next, a counter and arrow keys. It autoplays every 5 s unless the
-// visitor prefers reduced motion, and holds while hovered or focused. Without JS the list stays stacked.
+// Slideshow (Jay, Stage 7 checkpoint; SPEC D9d): a tiny inline script shows one slide at a time with
+// previous / play-pause / next, a counter, arrow keys and a 0.5–5 s duration slider (default 3 s).
+// - Crossfade: the new slide fades in on top while the old one stays underneath, then the old one is
+//   hidden. Only those two are displayed, so lazy loading still fetches just the current slide and the
+//   next one (switched to eager ahead of time). The fade is off under reduced motion (base.css).
+// - Autoplay is off under prefers-reduced-motion and holds while the slideshow is hovered or focused.
+// - Slides keep a fixed 16:9 frame (a few screenshots are square) so the controls don't jump.
+// Without JS the list stays stacked and the controls stay hidden. Comments live here, not in the
+// script, to keep the page's JS under the 2 KB gzip cap.
 import type { ImageMetadata } from 'astro';
 import Img from './Img.astro';
 import { largeUrl } from '../lib/images';
@@ -36,6 +42,11 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
     <button type="button" class="ss__btn" data-ss="prev" aria-label="Previous screenshot">←</button>
     <button type="button" class="ss__btn ss__play" data-ss="play" aria-label="Pause slideshow">pause</button>
     <button type="button" class="ss__btn" data-ss="next" aria-label="Next screenshot">→</button>
+    <div class="ss__speed">
+      <span aria-hidden="true">every</span>
+      <input type="range" min="0.5" max="5" step="0.5" value="3" aria-label="Seconds per screenshot" />
+      <output>3.0 s</output>
+    </div>
     <span class="ss__count" aria-live="polite">1 / {items.length}</span>
   </div>
 </section>
@@ -44,35 +55,45 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
     var g = document.querySelector('[data-slideshow]');
     var s = g && g.querySelectorAll('.gallery > li');
     if (!s || s.length < 2) return;
-    var n = s.length, i = 0, hold = false, t;
-    var c = g.querySelector('.ss__count'), p = g.querySelector('.ss__play');
+    var n = s.length, i = 0, hold = false, t, f;
+    var q = function (x) { return g.querySelector(x); };
+    var c = q('.ss__count'), p = q('.ss__play'), r = q('input'), o = q('output');
     var play = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ms = function () { return r.value * 1000; };
+    function pre() {
+      [1, 2].forEach(function (d) { var m = s[(i + d) % n].querySelector('img'); if (m) m.loading = 'eager'; });
+    }
     function show(k) {
+      var old = s[i];
       i = (k + n) % n;
-      for (var j = 0; j < n; j++) s[j].classList.toggle('is-current', j === i);
-      // Load the next slide before it is shown (it is lazy and display:none until then).
-      var next = s[(i + 1) % n].querySelector('img');
-      if (next) next.loading = 'eager';
+      if (old === s[i]) return;
+      clearTimeout(f);
+      for (var j = 0; j < n; j++) s[j].className = j === i ? 'is-current' : s[j] === old ? 'is-leaving' : '';
+      f = setTimeout(function () { old.className = ''; }, 600);
+      pre();
       c.textContent = i + 1 + ' / ' + n;
     }
     function timer() {
       clearInterval(t);
-      t = setInterval(function () {
-        if (play && !hold) show(i + 1);
-      }, 5000);
+      t = setInterval(function () { if (play && !hold) show(i + 1); }, ms());
     }
     function set(on) {
       play = on;
       p.textContent = on ? 'pause' : 'play';
       p.setAttribute('aria-label', (on ? 'Pause' : 'Play') + ' slideshow');
-      // Announce the counter only when the visitor moves; autoplay ticks stay quiet.
       c.setAttribute('aria-live', on ? 'off' : 'polite');
     }
+    function speed() {
+      o.textContent = (+r.value).toFixed(1) + ' s';
+      r.setAttribute('aria-valuetext', r.value + ' seconds');
+      g.style.setProperty('--ss-fade', Math.min(600, ms() * 0.6) + 'ms');
+      timer();
+    }
     g.classList.add('is-slideshow');
-    g.querySelector('.ss__bar').hidden = false;
+    q('.ss__bar').hidden = false;
     set(play);
-    show(0);
-    timer();
+    pre();
+    speed();
     g.addEventListener('click', function (e) {
       var b = e.target.closest('[data-ss]');
       if (!b) return;
@@ -80,8 +101,9 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
       else show(i + (b.dataset.ss === 'next' ? 1 : -1));
       timer();
     });
+    r.addEventListener('input', speed);
     g.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      if (e.target === r || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
       e.preventDefault();
       show(i + (e.key === 'ArrowRight' ? 1 : -1));
       timer();
@@ -99,9 +121,32 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
     gap: var(--space-8);
   }
 
-  /* Slideshow (set by the script): one slide at a time, controls under it. */
-  .is-slideshow .gallery > li:not(.is-current) {
+  /* Slideshow (set by the script): slides share one grid cell; only the current one and, during the
+     crossfade, the leaving one are displayed. The current slide fades in on top. */
+  .is-slideshow .gallery > li {
+    grid-area: 1 / 1;
+  }
+
+  .is-slideshow .gallery > li:not(.is-current, .is-leaving) {
     display: none;
+  }
+
+  .is-slideshow .gallery > li.is-current {
+    z-index: 1;
+    animation: ss-in var(--ss-fade, 600ms) ease-out;
+  }
+
+  @keyframes ss-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .is-slideshow .shot :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: var(--card);
   }
 
   .shot {
@@ -125,6 +170,11 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
     color: var(--muted);
   }
 
+  /* The current slide's background covers the leaving one, so its label doesn't show through. */
+  .is-slideshow .shot__label {
+    background: var(--bg);
+  }
+
   .shot:hover .shot__label,
   .shot:focus-visible .shot__label {
     color: var(--fg);
@@ -133,6 +183,7 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
 
   .ss__bar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     margin-top: var(--space-3);
@@ -163,6 +214,28 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
 
   .ss__play {
     min-width: 5.5rem;
+  }
+
+  .ss__speed {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .ss__speed input {
+    width: 7rem;
+    accent-color: var(--fg);
+    cursor: pointer;
+  }
+
+  .ss__speed output {
+    min-width: 3.5em;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
   }
 
   .ss__count {

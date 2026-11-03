@@ -133,3 +133,22 @@ Jay asked for a slideshow with play/pause, next and previous. That needs JavaScr
 - **Checks:**
   - `npm run verify` exits 0. Map pages carry 1.7 KB gzip of JS (cap 2 KB); `awp-lego-asia` is 86.1 KB initial and `lcz-ctf-galaxy` 107.9 KB (≤ 120).
   - Lighthouse on `/projects/level-design/awp-lego-asia/`: 100 / 100 / 100 / 100 in two runs and 98 / 100 / 100 / 100 in one (median 100). CLS is 0.000 and TBT 0 on every audited URL; every other URL is still 100 ×4.
+
+### Crossfade and duration slider (follow-up, Jay)
+
+- **Crossfade instead of a hard cut:**
+  - In slideshow mode the slides share one grid cell. The new slide fades in on top (`@keyframes ss-in`, opacity 0 → 1, ease-out) while the previous slide stays displayed underneath; the previous one is hidden once the fade is done.
+  - Only those two slides are ever displayed, so lazy loading still fetches just what is viewed. The next 2 slides are switched to `eager` ahead of time, so fast speeds don't show blank frames.
+  - The fade lasts `min(600 ms, 60 % of the duration)`: 300 ms at 0.5 s.
+  - `base.css` turns all animation off under `prefers-reduced-motion: reduce`, so those visitors get an instant swap (and no autoplay).
+- **Fixed 16:9 frame:** 5 of the 62 screenshots are square (1024×1024, 1083×1080), so slides use `aspect-ratio: 16 / 9; object-fit: contain` on the card background. The controls don't jump between slides.
+- **Duration slider:** `every [——●——] 3.0 s`, a native `<input type="range">` from 0.5 to 5 s in 0.5 s steps, default 3 s (was a fixed 5 s).
+  - It has the accessible name "Seconds per screenshot" and an `aria-valuetext` like "3 seconds"; an `<output>` shows the value.
+  - Changing it restarts the timer. The arrow keys adjust the slider when it has focus, instead of changing the slide.
+- **Size:** script comments moved to the component's frontmatter, so the page's JS stays at **1.9 KB gzip** (cap 2 KB).
+- **Tested in the built-in browser:**
+  - The pane was hidden, which freezes CSS animation clocks, so the fade was checked by stepping the animation: 0 / 150 / 300 / 450 / 600 ms → opacity 0.00 / 0.38 / 0.68 / 0.91 / 1.00. The leaving slide stayed displayed beneath (z-index 1 for the current slide).
+  - Slider: at 0.5 s, 2.1 s of autoplay moved 4 slides (5 → 2 via wrap); the output read "0.5 s", `aria-valuetext` "0.5 seconds" and the fade 300 ms. At 5 s the fade is 600 ms.
+  - ArrowLeft ×2 on the focused slider: 5.0 → 4.0 s, with the slide unchanged.
+  - At 375 px the bar wraps to two rows with no horizontal scroll.
+- **Checks:** `npm run verify` exits 0 (html-validate caught a `<label>` wrapping both the range and the `<output>`; the wrapper is now a `<div>`). Lighthouse is 100 / 100 / 100 / 100 on all 7 audited URLs, with CLS ≤ 0.001 and TBT 0.
