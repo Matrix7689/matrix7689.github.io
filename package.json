@@ -25,7 +25,8 @@
     "icons": "node scripts/favicons.mjs",
     "media:gifs": "node scripts/convert-gifs.mjs",
     "inventory": "node scripts/inventory.mjs",
-    "repo:size": "node scripts/repo-size.mjs"
+    "repo:size": "node scripts/repo-size.mjs",
+    "import:levels": "node scripts/import-levels.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
