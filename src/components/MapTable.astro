@@ -1,0 +1,97 @@
+---
+// List view of maps (Jay, Stage 7 checkpoint): a static table with Map, Game, Released, Downloads and Views.
+// Unreleased maps show their date marked "unreleased" and no numbers. The table scrolls inside its box
+// on narrow screens, so the page never scrolls sideways.
+import { fmt, isoDay, type MapEntry } from '../lib/levels';
+
+interface Props {
+  maps: MapEntry[];
+  /** Accessible name of the scroll region, e.g. "Featured maps". */
+  label: string;
+}
+
+const { maps, label } = Astro.props;
+const SHORT: Record<string, string> = { 'Counter-Strike: Global Offensive': 'CS:GO', 'Counter-Strike: Source': 'CS:Source' };
+---
+
+<section class="table-wrap" aria-label={label} tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Map</th>
+        <th scope="col">Game</th>
+        <th scope="col">Released</th>
+        <th scope="col" class="num">Downloads</th>
+        <th scope="col" class="num">Views</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        maps.map((m) => (
+          <tr>
+            <th scope="row">
+              <a href={`/projects/level-design/${m.id}/`}>{m.data.title}</a>
+            </th>
+            <td>{SHORT[m.data.game] ?? m.data.game}</td>
+            <td>
+              <time datetime={isoDay(m.data.released)}>{isoDay(m.data.released)}</time>
+              {m.data.unreleased && <span class="muted"> · unreleased</span>}
+            </td>
+            <td class="num">{m.data.downloads !== undefined ? fmt(m.data.downloads) : '—'}</td>
+            <td class="num">{m.data.views !== undefined ? fmt(m.data.views) : '—'}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .table-wrap {
+    overflow-x: auto;
+    border: var(--hairline) solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-ui);
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding: 0.625rem var(--space-4);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  tbody tr + tr {
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  tbody tr:hover {
+    background: var(--card);
+  }
+
+  tbody th {
+    font-weight: 700;
+  }
+
+  tbody th a {
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  .num {
+    text-align: right;
+  }
+</style>

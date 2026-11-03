@@ -1,6 +1,7 @@
 ---
 // Grid of ThumbCards (SPEC §5 ThumbGrid): 2 columns from 360 px, 3 from 768 px, 4 from 1200 px.
-// size="sm" (the archive's secondary CS:GO maps): 3 / 4 / 6 columns and 400 px thumbnails only.
+// size="sm" (the archive's other maps): 3 / 4 / 6 columns. Both sizes serve the 400 px thumbnail only
+// (Jay, Stage 7 checkpoint), which keeps the archive with 41 thumbnails inside its 450 KB total budget.
 import type { ImageMetadata } from 'astro';
 import ThumbCard from './ThumbCard.astro';
 
@@ -21,7 +22,7 @@ interface Props {
 const { items, label, size = 'md' } = Astro.props;
 // Column widths match the breakpoints below, within the 80rem container.
 const SIZES = size === 'sm' ? '(min-width: 75rem) 12rem, (min-width: 48rem) 23vw, 31vw' : '(min-width: 75rem) 18rem, (min-width: 48rem) 31vw, 46vw';
-const maxWidth = size === 'sm' ? 400 : undefined;
+const maxWidth = 400;
 ---
 
 <ul class:list={['grid', `grid--${size}`]} role="list" aria-label={label}>

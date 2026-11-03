@@ -1,0 +1,75 @@
+---
+// Grid / list switch for a section of maps (Jay, Stage 7 checkpoint). CSS only, no JS: two native radios
+// (grid checked by default) placed *before* the section's `.view--grid` and `.view--list` blocks, so a
+// plain sibling selector in base.css hides the other view. Arrow keys move between the radios natively.
+// Place it directly inside the same parent as the two view blocks.
+interface Props {
+  /** Unique radio-group name, e.g. "view-featured". */
+  name: string;
+  /** What the views show, for the accessible names, e.g. "featured maps". */
+  label: string;
+}
+
+const { name, label } = Astro.props;
+---
+
+<input class="view-in view-in--grid" type="radio" name={name} id={`${name}-grid`} checked aria-label={`Show ${label} as a grid`} />
+<input class="view-in view-in--list" type="radio" name={name} id={`${name}-list`} aria-label={`Show ${label} as a list`} />
+<div class="view-tools" aria-hidden="true">
+  <label class="view-btn view-btn--grid" for={`${name}-grid`}>grid</label>
+  <label class="view-btn view-btn--list" for={`${name}-list`}>list</label>
+</div>
+
+<style>
+  /* Visually hidden but focusable; the labels draw the state and take the clicks. */
+  .view-in {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    opacity: 0;
+  }
+
+  .view-tools {
+    display: inline-flex;
+    margin-bottom: var(--space-4);
+    border: var(--hairline) solid var(--border);
+  }
+
+  .view-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--space-4);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .view-btn + .view-btn {
+    border-left: var(--hairline) solid var(--border);
+  }
+
+  .view-btn:hover {
+    color: var(--fg);
+  }
+
+  /* Selected view: inverted, like an active nav link. */
+  .view-in--grid:checked ~ .view-tools .view-btn--grid,
+  .view-in--list:checked ~ .view-tools .view-btn--list {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .view-in--grid:focus-visible ~ .view-tools .view-btn--grid,
+  .view-in--list:focus-visible ~ .view-tools .view-btn--list {
+    outline: var(--ring-width) solid var(--ring);
+    outline-offset: 2px;
+  }
+</style>

@@ -1,37 +1,35 @@
 ---
-// Level-design archive (SPEC Stage 7, §4.7; revised Stage 7 with the 43-map master data): secondary
-// history. Intro, totals and per-game map counts computed from the data, the Steam Workshop and
-// GameBanana links (the only place they appear), a grayscale ThumbGrid of the 12 old-site maps, then the
-// other maps grouped by game, newest first, as static text tables. The CS:GO group also gets a small
-// grid (400 px thumbnails only) so the page stays inside its 450 KB total budget (SPEC §6.1).
+// Level-design archive (SPEC Stage 7, §4.7; revised Stage 7 with the master data): secondary history.
+// Intro, totals and per-game map counts computed from the data, the Steam Workshop and GameBanana links
+// (the only place they appear), then two sections, each with a CSS-only grid / list switch (ViewSwitch,
+// grid by default; Jay, Stage 7 checkpoint):
+// - featured maps (the 12 old-site maps + extra maps such as the unreleased awp_taj_mahal): large
+//   cards, or the list table;
+// - the other maps, grouped by game (CS:GO, then CS:Source), newest first: small cards, or the list table.
+// Every thumbnail is the 400 px image (ThumbGrid), so the page stays inside its 450 KB total budget.
 import Base from '../../../layouts/Base.astro';
 import Figure from '../../../components/Figure.astro';
 import Button from '../../../components/Button.astro';
 import ThumbGrid from '../../../components/ThumbGrid.astro';
+import ViewSwitch from '../../../components/ViewSwitch.astro';
+import MapTable from '../../../components/MapTable.astro';
 import { LEVEL_DESIGN } from '../../../data/pages';
 import { SITE } from '../../../site.config';
-import { getMaps, totals, fmt, isoDay, type MapEntry } from '../../../lib/levels';
+import { getMaps, totals, fmt, type MapEntry } from '../../../lib/levels';
 
-const GRID = 12;
 const maps = await getMaps();
 const sum = totals(maps);
-const href = (m: MapEntry) => `/projects/level-design/${m.id}/`;
-const card = (m: MapEntry) => ({ title: m.data.title, year: m.data.released.getUTCFullYear(), href: href(m), image: m.data.cover });
-const featured = maps.slice(0, GRID).map(card);
+const card = (m: MapEntry) => ({ title: m.data.title, year: m.data.released.getUTCFullYear(), href: `/projects/level-design/${m.id}/`, image: m.data.cover });
+const featured = maps.filter((m) => m.data.featured);
 
 // The rest by game (CS:GO, then CS:Source), newest release first.
 const GAMES = ['Counter-Strike: Global Offensive', 'Counter-Strike: Source'];
-const rest = maps.slice(GRID);
-// Short names for the per-game counts.
 const SHORT: Record<string, string> = { 'Counter-Strike: Global Offensive': 'CS:GO', 'Counter-Strike: Source': 'CS:Source' };
+const byGame = (a: MapEntry, b: MapEntry) =>
+  GAMES.indexOf(a.data.game) - GAMES.indexOf(b.data.game) || b.data.released.getTime() - a.data.released.getTime();
+const rest = maps.filter((m) => !m.data.featured).sort(byGame);
 const perGame = GAMES.map((game) => ({ game, count: maps.filter((m) => m.data.game === game).length }));
-const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => !GAMES.includes(g)))]
-  .map((game) => ({
-    game,
-    id: `maps-${game.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-    maps: rest.filter((m) => m.data.game === game).sort((a, b) => b.data.released.getTime() - a.data.released.getTime()),
-  }))
-  .filter((g) => g.maps.length > 0);
+const groups = GAMES.map((game) => ({ game, maps: rest.filter((m) => m.data.game === game) })).filter((g) => g.maps.length > 0);
 ---
 
 <Base
@@ -59,53 +57,35 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
       </div>
     </section>
 
-    <section aria-labelledby="maps">
-      <h2 id="maps" class="label maps__head">{GRID} featured maps</h2>
-      <ThumbGrid items={featured} label="Featured maps" />
+    <section class="maps" aria-labelledby="featured">
+      <h2 id="featured" class="label maps__head">{featured.length} featured maps</h2>
+      <ViewSwitch name="view-featured" label="featured maps" />
+      <div class="view view--grid">
+        <ThumbGrid items={featured.map(card)} label="Featured maps" />
+      </div>
+      <div class="view view--list">
+        <MapTable maps={featured} label="Featured maps" />
+      </div>
     </section>
 
-    <section class="more" aria-labelledby="more">
+    <section class="maps" aria-labelledby="more">
       <h2 id="more" class="label maps__head">{rest.length} more maps</h2>
-      {
-        groups.map((g) => (
-          <div class="group">
-            <h3 id={g.id} class="group__title">
-              {g.game} <span class="muted">({g.maps.length})</span>
-            </h3>
-            {g.game === GAMES[0] && (
-              <div class="group__grid">
-                <ThumbGrid items={g.maps.map(card)} label={`${g.game} maps`} size="sm" />
-              </div>
-            )}
-            <section class="table-wrap" aria-labelledby={g.id} tabindex="0">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Map</th>
-                    <th scope="col">Released</th>
-                    <th scope="col" class="num">Downloads</th>
-                    <th scope="col" class="num">Views</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {g.maps.map((m) => (
-                    <tr>
-                      <th scope="row">
-                        <a href={href(m)}>{m.data.title}</a>
-                      </th>
-                      <td>
-                        <time datetime={isoDay(m.data.released)}>{isoDay(m.data.released)}</time>
-                      </td>
-                      <td class="num">{fmt(m.data.downloads)}</td>
-                      <td class="num">{fmt(m.data.views)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </section>
-          </div>
-        ))
-      }
+      <ViewSwitch name="view-more" label="more maps" />
+      <div class="view view--grid">
+        {
+          groups.map((g) => (
+            <div class="group">
+              <h3 class="group__title">
+                {g.game} <span class="muted">({g.maps.length})</span>
+              </h3>
+              <ThumbGrid items={g.maps.map(card)} label={`${g.game} maps`} size="sm" />
+            </div>
+          ))
+        }
+      </div>
+      <div class="view view--list">
+        <MapTable maps={rest} label="More maps" />
+      </div>
     </section>
   </div>
 </Base>
@@ -171,6 +151,13 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
     margin-top: var(--space-2);
   }
 
+  /* min-width: 0 lets these shrink below a wide table, so the table scrolls in its box instead. */
+  .maps,
+  .view,
+  .group {
+    min-width: 0;
+  }
+
   .maps__head {
     margin-bottom: var(--space-4);
     font-size: var(--fs-body);
@@ -178,75 +165,12 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
     color: var(--fg);
   }
 
-  .group__grid {
-    margin-bottom: var(--space-4);
-  }
-
-  .more {
-    display: grid;
-    gap: var(--space-8);
-  }
-
-  .more .maps__head {
-    margin-bottom: 0;
-  }
-
-  /* min-width: 0 lets a grid item shrink below its table, so the table scrolls in its box instead. */
-  .group {
-    min-width: 0;
+  .group + .group {
+    margin-top: var(--space-8);
   }
 
   .group__title {
     margin-bottom: var(--space-3);
     font-size: var(--fs-body);
-  }
-
-  /* Wide tables scroll inside their box on narrow screens; the page itself never scrolls sideways. */
-  .table-wrap {
-    overflow-x: auto;
-    border: var(--hairline) solid var(--border);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--fs-ui);
-    font-variant-numeric: tabular-nums;
-  }
-
-  th,
-  td {
-    padding: 0.625rem var(--space-4);
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  thead th {
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
-    color: var(--muted);
-    border-bottom: var(--hairline) solid var(--border);
-  }
-
-  tbody tr + tr {
-    border-top: var(--hairline) solid var(--border);
-  }
-
-  tbody tr:hover {
-    background: var(--card);
-  }
-
-  tbody th {
-    font-weight: 700;
-  }
-
-  tbody th a {
-    text-decoration-line: underline;
-    text-underline-offset: 3px;
-  }
-
-  .num {
-    text-align: right;
   }
 </style>

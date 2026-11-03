@@ -124,6 +124,12 @@ ol[role='list'] {
   display: none !important;
 }
 
+/* Grid / list view (ViewSwitch): the unchecked view among the following siblings is hidden. */
+.view-in--grid:checked ~ .view--list,
+.view-in--list:checked ~ .view--grid {
+  display: none;
+}
+
 pre,
 code,
 kbd,

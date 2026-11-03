@@ -25,21 +25,28 @@ interface Props {
 }
 
 const { map, prev, next } = Astro.props;
-const { title, game, released, downloads, views, platforms, stats, description, gallery } = map.data;
+const { title, game, released, unreleased, downloads, views, platforms, stats, description, gallery } = map.data;
 
 // Alt text pattern (Stage 7 task 3) unless the content file gives one.
 const images = gallery.map((g, i) => ({ src: g.src, alt: g.alt ?? `${title} — screenshot ${i + 1} of ${gallery.length}` }));
 
 const platformLinks = [
-  platforms.gamebanana && { label: 'GameBanana', href: platforms.gamebanana },
-  platforms.steam && { label: 'Steam Workshop', href: platforms.steam },
+  platforms?.gamebanana && { label: 'GameBanana', href: platforms.gamebanana },
+  platforms?.steam && { label: 'Steam Workshop', href: platforms.steam },
 ].filter((l): l is { label: string; href: string } => Boolean(l));
-const rows = [
+// Unreleased maps (e.g. awp_taj_mahal) have a date and no downloads, views or platform links.
+type Row = { label: string; value: string; links?: { label: string; href: string }[] };
+const rows: Row[] = [
   { label: 'Game', value: game },
-  { label: 'Released', value: isoDay(released) },
-  { label: 'Downloads', value: fmt(downloads) },
-  { label: 'Views', value: fmt(views) },
-  { label: platformLinks.length > 1 ? 'Platforms' : 'Platform', value: '', links: platformLinks },
+  ...(unreleased
+    ? [
+        { label: 'Status', value: 'Unreleased' },
+        { label: 'Date', value: isoDay(released) },
+      ]
+    : [{ label: 'Released', value: isoDay(released) }]),
+  ...(downloads !== undefined ? [{ label: 'Downloads', value: fmt(downloads) }] : []),
+  ...(views !== undefined ? [{ label: 'Views', value: fmt(views) }] : []),
+  ...(platformLinks.length > 0 ? [{ label: platformLinks.length > 1 ? 'Platforms' : 'Platform', value: '', links: platformLinks }] : []),
   { label: 'Images', value: String(gallery.length) },
 ];
 
@@ -60,7 +67,7 @@ const breakdown =
 const link = (m: CollectionEntry<'levels'> | undefined) => m && { title: m.data.title, href: `/projects/level-design/${m.id}/` };
 ---
 
-<Base title={`${title} · Level design · Jay Parekh`} description={`${title}: a ${game} map by Jay Parekh, released ${isoDay(released)}, with ${gallery.length} screenshots.`} current="projects">
+<Base title={`${title} · Level design · Jay Parekh`} description={`${title}: a ${game} map by Jay Parekh, ${unreleased ? "unreleased, dated" : "released"} ${isoDay(released)}, with ${gallery.length} screenshots.`} current="projects">
   <article class="container map">
     <header class="map__head">
       <p class="back"><a href="/projects/level-design/">← level design archive</a></p>
