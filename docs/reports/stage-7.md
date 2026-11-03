@@ -345,3 +345,7 @@ Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; th
   - Real click on featured "LIST" showed 13 rows with the five columns.
   - ArrowRight on the focused "more maps" radio switched to list, with a focus ring and 28 rows (first `am_devbeach … CS:GO … 2017-02-13`, last `awp_lego_2012 … CS:Source … 2011-11-17`).
   - Grid is shown by default in both sections, and the three removed maps appear nowhere on the page.
+
+## Checkpoint approval (Nov 4, 2026)
+
+Jay approved Stage 7: the level design archive (41 maps from the master data plus `awp_taj_mahal`, with the three republished maps excluded), the computed totals on the archive and home, the grid / list views, the map pages with the slideshow, and the detail AVIF quality. Carried forward: per-map descriptions (not in the data; hidden), and the Drag2Death bullet wording ("50 maps / 10 million views / 1 million downloads", left as written).
