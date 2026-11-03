@@ -13,9 +13,7 @@ const EXTERNAL = process.argv.includes('--external');
 
 // Routes linked from the shell before their stage builds them. Remove each entry when its stage
 // lands; Stage 11 requires this list to be empty.
-const PENDING_ROUTES = [
-  '/about/', // Stage 8
-];
+const PENDING_ROUTES = [];
 
 if (!existsSync(DIST)) {
   console.error('dist/ not found: run a build first');
@@ -35,7 +33,10 @@ const pages = walk(DIST)
 // linkinator serves dist/ on a loopback address (127.0.0.1 in v8, not "localhost").
 const LOCAL = String.raw`^http://(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?`;
 const isLocal = (url) => new RegExp(`${LOCAL}/`).test(url);
-const pendingRe = new RegExp(`${LOCAL}(?:${PENDING_ROUTES.map((r) => r.replace(/[.]/g, '\\.')).join('|')})`);
+// With no pending routes the pattern must match nothing: an empty group would match every local URL.
+const pendingRe = PENDING_ROUTES.length
+  ? new RegExp(`${LOCAL}(?:${PENDING_ROUTES.map((r) => r.replace(/[.]/g, '\\.')).join('|')})`)
+  : /(?!)/;
 
 const pendingSeen = new Set();
 const checker = new LinkChecker();
