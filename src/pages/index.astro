@@ -243,10 +243,20 @@ const person = {
 <style>
   /* One column at every width: name + tags, the one-liner, then the terminal across the full
      container width (Jay, Stage 5 checkpoint). */
+  /* One column as wide as the name (Jay, Stage 7 follow-up): the h1 sets the track width, and the tags,
+     one-liner and terminal (width: 0, so they never widen it) then fill it (min-width: 100%). */
   .intro {
     display: grid;
+    grid-template-columns: fit-content(100%);
     gap: var(--space-8);
     padding-block: var(--space-section);
+  }
+
+  .intro__tags,
+  .intro__text,
+  .intro__term {
+    width: 0;
+    min-width: 100%;
   }
 
   .intro__head,

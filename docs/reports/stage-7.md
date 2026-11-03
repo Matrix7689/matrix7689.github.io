@@ -303,3 +303,9 @@ Checks:
 Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; then Stage 7 approval.
 
 - **GameBanana Submissions URL** (Jay): `https://gamebanana.com/members/submissions/mods/1281978`. It is set in `SITE.links.gamebanana`, so the button now shows beside "Steam Workshop" and the URL joins the home JSON-LD `sameAs` list (structured data only, no visible link). `npm run verify` exits 0.
+
+### Home terminal width (follow-up, Jay)
+- The intro is one `fit-content(100%)` grid column sized by the `h1`. The tags, one-liner and terminal use `width: 0; min-width: 100%`, so they fill that column without widening it.
+- The terminal now equals the name's width at every size: 274 / 438 / 547 / 725 px at 360 / 768 / 1024 / 1440 px windows, measured against the h1 text box. There is no horizontal scroll.
+- At ~1024 px the curl command wraps onto 2 lines inside the narrower box.
+- `npm run verify` exits 0; `/` is 16.1 KB initial.
