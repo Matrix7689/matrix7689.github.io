@@ -9,12 +9,14 @@ export async function getMaps(): Promise<MapEntry[]> {
   return (await getCollection('levels')).sort((a, b) => a.data.order - b.data.order);
 }
 
-/** Totals for the archive Figures: downloads and views already combine both platforms per map. */
+/** Totals for the archive Figures: downloads and views already combine both platforms per map.
+ *  `maps` counts every map in the archive; `published` leaves out unreleased ones (no stats). */
 export function totals(maps: MapEntry[]) {
   return {
     maps: maps.length,
-    downloads: maps.reduce((sum, m) => sum + m.data.downloads, 0),
-    views: maps.reduce((sum, m) => sum + m.data.views, 0),
+    published: maps.filter((m) => !m.data.unreleased).length,
+    downloads: maps.reduce((sum, m) => sum + (m.data.downloads ?? 0), 0),
+    views: maps.reduce((sum, m) => sum + (m.data.views ?? 0), 0),
   };
 }
 
