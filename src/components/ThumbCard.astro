@@ -12,13 +12,14 @@ interface Props {
   image: ImageMetadata;
   /** The `sizes` attribute, from the grid that places the card. */
   sizes: string;
+  maxWidth?: number | undefined;
 }
 
-const { title, year, href, image, sizes } = Astro.props;
+const { title, year, href, image, sizes, maxWidth } = Astro.props;
 ---
 
 <a class="thumb" href={href}>
-  <Img src={image} alt="" preset="thumb" sizes={sizes} grayscale />
+  <Img src={image} alt="" preset="thumb" sizes={sizes} maxWidth={maxWidth} grayscale />
   <span class="thumb__text">
     <span class="thumb__title">{title}</span>
     {year !== undefined && <span class="thumb__year">{year}</span>}
@@ -45,6 +46,11 @@ const { title, year, href, image, sizes } = Astro.props;
     padding: var(--space-3);
     border-top: var(--hairline) solid var(--border);
     font-size: var(--fs-ui);
+  }
+
+  .thumb__title {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .thumb:hover .thumb__title,

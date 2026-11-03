@@ -1,5 +1,6 @@
 ---
 // Grid of ThumbCards (SPEC §5 ThumbGrid): 2 columns from 360 px, 3 from 768 px, 4 from 1200 px.
+// size="sm" (the archive's secondary CS:GO maps): 3 / 4 / 6 columns and 400 px thumbnails only.
 import type { ImageMetadata } from 'astro';
 import ThumbCard from './ThumbCard.astro';
 
@@ -14,18 +15,20 @@ interface Props {
   items: Item[];
   /** Accessible name for the list, e.g. "Maps". */
   label: string;
+  size?: 'md' | 'sm';
 }
 
-const { items, label } = Astro.props;
+const { items, label, size = 'md' } = Astro.props;
 // Column widths match the breakpoints below, within the 80rem container.
-const SIZES = '(min-width: 75rem) 18rem, (min-width: 48rem) 31vw, 46vw';
+const SIZES = size === 'sm' ? '(min-width: 75rem) 12rem, (min-width: 48rem) 23vw, 31vw' : '(min-width: 75rem) 18rem, (min-width: 48rem) 31vw, 46vw';
+const maxWidth = size === 'sm' ? 400 : undefined;
 ---
 
-<ul class="grid" role="list" aria-label={label}>
+<ul class:list={['grid', `grid--${size}`]} role="list" aria-label={label}>
   {
     items.map((item) => (
       <li>
-        <ThumbCard {...item} sizes={SIZES} />
+        <ThumbCard {...item} sizes={SIZES} maxWidth={maxWidth} />
       </li>
     ))
   }
@@ -48,6 +51,24 @@ const SIZES = '(min-width: 75rem) 18rem, (min-width: 48rem) 31vw, 46vw';
   @media (min-width: 75rem) {
     .grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .grid--sm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 48rem) {
+    .grid--sm {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .grid--sm {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
   }
 </style>

@@ -52,9 +52,11 @@ export const HOME = {
       group: 'Map making',
       items: [
         { value: '9 years', caption: 'designing 3D levels (maps) for video games' },
-        { value: '55', caption: 'custom multiplayer maps published on Steam Workshop' },
-        { value: '1,052,075', caption: 'map downloads' },
-        { value: '12,340,926', caption: 'map views' },
+        // Computed from the level-design master data at build time (lib/levels.ts; Jay, Stage 7 revision:
+        // the old 55 / 1,052,075 / 12,340,926 were ballpark figures).
+        { stat: 'maps' as const, caption: 'custom multiplayer maps published on GameBanana and Steam Workshop' },
+        { stat: 'downloads' as const, caption: 'map downloads' },
+        { stat: 'views' as const, caption: 'map views' },
       ],
     },
     {
@@ -161,11 +163,9 @@ export const CREDENTIALS = {
 export const LEVEL_DESIGN = {
   // (proposed) Years removed at the Stage 4 checkpoint: LinkedIn shows map-making from at least 2015 over 9 years.
   intro: 'Before software engineering, I designed custom multiplayer maps. This is the archive.',
-  // The archive's totals are computed from the levels collection (lib/levels.ts, Stage 7 revision); the
-  // old-site 55 / 1,052,075 / 12,340,926 figures are retired. Date of the data in docs/data/level-design-master.json.
-  statsAsOf: '2026-11-03',
-  statsNote:
-    'Downloads are GameBanana downloads plus Steam Workshop current subscribers; views are GameBanana views plus Steam Workshop unique visitors.',
+  // Totals are computed from the levels collection (lib/levels.ts, Stage 7 revision): downloads = GameBanana
+  // downloads + Steam current subscribers, views = GameBanana views + Steam unique visitors (data as of 2026-11-03).
+  // Jay removed the on-page footnote saying so.
 };
 
 export const PROJECTS_PAGE = {

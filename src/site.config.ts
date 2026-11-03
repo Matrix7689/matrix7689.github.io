@@ -7,6 +7,8 @@ export interface SiteLinks {
   x: string | null;
   medium: string | null;
   steamWorkshop: string | null;
+  /** GameBanana submissions page; the archive button is hidden while null. */
+  gamebanana: string | null;
 }
 
 export const SITE = {
@@ -22,6 +24,8 @@ export const SITE = {
     x: 'https://x.com/jayp_or_jp',
     medium: 'https://medium.com/@jay.parekh7689',
     steamWorkshop: 'https://steamcommunity.com/id/MatrixIN/myworkshopfiles/',
+    // Jay asked for a "GameBanana Submissions" button (Stage 7 revision); the URL isn't in the data yet.
+    gamebanana: null,
   } satisfies SiteLinks,
   // SPEC D6: canonical of a cross-post points to Medium unless the post overrides it.
   preferMediumCanonical: true,

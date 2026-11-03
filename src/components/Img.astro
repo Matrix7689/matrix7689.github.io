@@ -15,12 +15,14 @@ interface Props {
   eager?: boolean;
   /** Grayscale until the enclosing link is hovered or focused (CSS filter, see base.css). */
   grayscale?: boolean;
+  /** Drop preset widths above this (e.g. 400 for the small map grid, which never shows a thumb wider than that). */
+  maxWidth?: number | undefined;
   class?: string;
 }
 
-const { src, alt, preset, sizes, eager = false, grayscale = false, class: className } = Astro.props;
+const { src, alt, preset, sizes, eager = false, grayscale = false, maxWidth, class: className } = Astro.props;
 const spec = PRESETS[preset];
-const widths = widthsFor(src, spec.widths);
+const widths = widthsFor(src, maxWidth ? spec.widths.filter((w) => w <= maxWidth) : spec.widths);
 const sets = await Promise.all(spec.formats.map(({ format, quality }) => srcsetFor(src, widths, format, quality)));
 const toSrcset = (set: { url: string; width: number }[]) => set.map((s) => `${s.url} ${s.width}w`).join(', ');
 const fallback = sets.at(-1)!;

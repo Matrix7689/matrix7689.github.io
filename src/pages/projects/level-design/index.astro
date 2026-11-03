@@ -1,9 +1,9 @@
 ---
 // Level-design archive (SPEC Stage 7, §4.7; revised Stage 7 with the 43-map master data): secondary
-// history. Intro, totals computed from the data (with how the Steam numbers are mapped), the Steam
-// Workshop link (the only place it appears), a grayscale ThumbGrid of the 12 old-site maps, then the
-// other maps as static text tables grouped by game, newest first. No thumbnails beyond the first 12
-// keeps the page inside the budget written for 12 maps (SPEC §6.1).
+// history. Intro, totals and per-game map counts computed from the data, the Steam Workshop and
+// GameBanana links (the only place they appear), a grayscale ThumbGrid of the 12 old-site maps, then the
+// other maps grouped by game, newest first, as static text tables. The CS:GO group also gets a small
+// grid (400 px thumbnails only) so the page stays inside its 450 KB total budget (SPEC §6.1).
 import Base from '../../../layouts/Base.astro';
 import Figure from '../../../components/Figure.astro';
 import Button from '../../../components/Button.astro';
@@ -16,11 +16,15 @@ const GRID = 12;
 const maps = await getMaps();
 const sum = totals(maps);
 const href = (m: MapEntry) => `/projects/level-design/${m.id}/`;
-const featured = maps.slice(0, GRID).map((m) => ({ title: m.data.title, year: m.data.released.getUTCFullYear(), href: href(m), image: m.data.cover }));
+const card = (m: MapEntry) => ({ title: m.data.title, year: m.data.released.getUTCFullYear(), href: href(m), image: m.data.cover });
+const featured = maps.slice(0, GRID).map(card);
 
 // The rest by game (CS:GO, then CS:Source), newest release first.
 const GAMES = ['Counter-Strike: Global Offensive', 'Counter-Strike: Source'];
 const rest = maps.slice(GRID);
+// Short names for the per-game counts.
+const SHORT: Record<string, string> = { 'Counter-Strike: Global Offensive': 'CS:GO', 'Counter-Strike: Source': 'CS:Source' };
+const perGame = GAMES.map((game) => ({ game, count: maps.filter((m) => m.data.game === game).length }));
 const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => !GAMES.includes(g)))]
   .map((game) => ({
     game,
@@ -47,11 +51,12 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
         <Figure value={String(sum.maps)} caption="maps" />
         <Figure value={fmt(sum.downloads)} caption="downloads" />
         <Figure value={fmt(sum.views)} caption="views" />
+        {perGame.map((g) => <Figure value={String(g.count)} caption={`${SHORT[g.game] ?? g.game} maps`} />)}
       </div>
-      <p class="note">
-        As of <time datetime={LEVEL_DESIGN.statsAsOf}>{LEVEL_DESIGN.statsAsOf}</time>. {LEVEL_DESIGN.statsNote}
-      </p>
-      {SITE.links.steamWorkshop && <Button href={SITE.links.steamWorkshop}>Steam Workshop</Button>}
+      <div class="links">
+        {SITE.links.steamWorkshop && <Button href={SITE.links.steamWorkshop}>Steam Workshop</Button>}
+        {SITE.links.gamebanana && <Button href={SITE.links.gamebanana}>GameBanana Submissions</Button>}
+      </div>
     </section>
 
     <section aria-labelledby="maps">
@@ -67,6 +72,11 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
             <h3 id={g.id} class="group__title">
               {g.game} <span class="muted">({g.maps.length})</span>
             </h3>
+            {g.game === GAMES[0] && (
+              <div class="group__grid">
+                <ThumbGrid items={g.maps.map(card)} label={`${g.game} maps`} size="sm" />
+              </div>
+            )}
             <section class="table-wrap" aria-labelledby={g.id} tabindex="0">
               <table>
                 <thead>
@@ -139,20 +149,36 @@ const groups = [...GAMES, ...new Set(rest.map((m) => m.data.game).filter((g) => 
     gap: var(--space-3);
   }
 
+  /* Totals on the first row (3 across), the per-game counts on the second (2 across). */
   @media (min-width: 48rem) {
     .stats {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .stats > :global(*) {
+      grid-column: span 2;
+    }
+
+    .stats > :global(:nth-child(n + 4)) {
+      grid-column: span 3;
     }
   }
 
-  .note {
-    max-width: var(--prose);
-    margin-bottom: var(--space-2);
-    font-size: var(--fs-ui);
-    color: var(--muted);
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
   }
 
   .maps__head {
+    margin-bottom: var(--space-4);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .group__grid {
     margin-bottom: var(--space-4);
   }
 

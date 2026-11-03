@@ -264,3 +264,40 @@ Please review the archive (`npm run preview` → http://localhost:4321/projects/
 1. **Approve** the 43-map archive, the computed stats and their footnote, and the text tables.
 2. **Home page highlights and the Drag2Death bullet:** keep the old figures, or switch to the computed totals?
 3. **Open questions from earlier in Stage 7:** does the detail AVIF quality look fine, and should the footer archive link stay off the home page?
+
+
+## Checkpoint follow-up (Nov 3, 2026)
+
+Jay's answers:
+1. **Home highlights:** switch to the computed totals ("those were ballpark figures").
+2. **Detail AVIF quality:** looks fine.
+
+Further changes he requested, all made:
+- **Home "Map making" highlights** now come from the level-design data at build time (`stat` keys in `HOME.highlights`, resolved in `index.astro` through `lib/levels.ts`): **43** maps, **1,009,476** downloads, **1,346,104** views, replacing 55 / 1,052,075 / 12,340,926.
+  - The maps caption is now "custom multiplayer maps published on GameBanana and Steam Workshop" (was "…on Steam Workshop"), because 28 of the 43 are GameBanana-only.
+  - "9 years" is unchanged.
+  - The home page still has 0 links to the archive.
+  - The Drag2Death role bullet ("Created **50** maps with **10 million** views and **1 million** downloads on Steam Workshop") is **not** changed. It describes that role, and its maps were on Steam Workshop, while the computed totals cover 2011–2019 on both platforms, so substituting them would misstate the bullet. Left for Jay.
+- **"GameBanana Submissions" button** beside "Steam Workshop", from `SITE.links.gamebanana`.
+  - The URL is **not in any source file**: the master data, CSVs and manifests only have per-map `gamebanana.com/mods/…` links. So it is `null` and the button stays hidden until Jay supplies it.
+  - No NEEDS INPUT marker was added (the count is still 7).
+- **Footnote removed:** "As of 2026-11-03. Downloads are …" is gone from the page. The mapping and date are kept as comments in `src/data/pages.ts` and `lib/levels.ts`.
+- **Section labels** "12 FEATURED MAPS" and "31 MORE MAPS": 10 px → 14 px (`--fs-body`), bold, in the foreground colour.
+- **Small CS:GO grid:** the 9 CS:GO maps in "31 more maps" now have a smaller grayscale grid above their table.
+  - `ThumbGrid size="sm"`: 3 / 4 / 6 columns at 360 / 768 / 1200 px, against 2 / 3 / 4 for the featured grid.
+  - It serves only the 400 px thumbnail, via a new `Img maxWidth` prop, which stays inside CLAUDE.md's "thumbs 400–600 px".
+  - Card titles break anywhere, so long names (`gg_lego2011_csgo_v2`) don't overflow.
+  - The table is kept for the numbers. The CS:Source maps remain table-only.
+- **Two more Figures:** **21 CS:GO maps** and **22 CS:Source maps**, computed from the data. The totals run 3 across on the first row and the per-game counts 2 across on the second (from 48rem).
+
+Checks:
+- `npm run verify` exits 0.
+  - `/projects/level-design/` is **9.4 KB initial (≤ 60), 348.2 KB total (≤ 450)**; it was 277.7 KB before the 9 small thumbnails.
+  - `/` is 16.0 KB initial and 105.0 KB total (≤ 120).
+  - 129 thumb outputs, max 29.0 KB.
+  - 0 raw originals, 0 broken internal links.
+- `npm run lhci`: 100 / 100 / 100 / 100 on all 9 audited URLs (3 runs each), CLS ≤ 0.001.
+- `npm run check:inputs`: 7, unchanged. The home page has 0 archive links (checked in the browser).
+- At 360 px there is no horizontal scroll on `/` or the archive.
+
+Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; then Stage 7 approval.
