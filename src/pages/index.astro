@@ -41,8 +41,8 @@ const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
 
-// Headshot width: 16rem beside the text from 48rem, 14rem stacked above it on phones (see .headshot).
-const HEADSHOT_SIZES = '(min-width: 48rem) 16rem, 14rem';
+// Headshot width: 13rem beside the text from 48rem, 12rem stacked above it on phones (see .headshot).
+const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
 
 // Vertical "on this page" rail (Jay, Stage 5 checkpoint); ids match the SectionHeaders below.
 // 00 is back to the top (#top is on <body>, see Base).
@@ -301,29 +301,31 @@ const person = {
 
   .headshot {
     order: -1;
-    width: 14rem;
+    width: 12rem;
     /* Grey frame: a mat in the border grey, slightly rounded (Jay, Stage 5 follow-up). */
-    padding: var(--space-2);
-    border-radius: 8px;
+    padding: 5px;
+    border-radius: 7px;
     background: var(--border);
   }
 
   /* Slightly see-through so the photo sits softer on the page; inner corners follow the frame. */
   .headshot :global(img) {
     border-radius: 4px;
-    opacity: 0.85;
+    opacity: 0.75;
   }
 
   @media (min-width: 48rem) {
     .about {
-      grid-template-columns: minmax(0, 1fr) 16rem;
+      /* Text column capped at the prose width so the photo sits right beside it, not at the far edge. */
+      grid-template-columns: minmax(0, var(--prose)) 13rem;
+      justify-content: start;
       gap: var(--space-12);
       align-items: start;
     }
 
     .headshot {
       order: 0;
-      width: 16rem;
+      width: 13rem;
     }
   }
 
