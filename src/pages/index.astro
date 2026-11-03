@@ -12,6 +12,9 @@ import ExperienceItem from '../components/ExperienceItem.astro';
 import SpecTable from '../components/SpecTable.astro';
 import CompactToggle from '../components/CompactToggle.astro';
 import SectionRail from '../components/SectionRail.astro';
+import Img from '../components/Img.astro';
+import headshotLight from '../assets/about/headshot-light.jpg';
+import headshotDark from '../assets/about/headshot-dark.jpg';
 import CareerTimeline from '../components/CareerTimeline.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
@@ -37,6 +40,9 @@ const terminalLinks = [
 const roles = (await getCollection('experience', (r) => r.data.showOnHome)).sort((a, b) => a.data.order - b.data.order);
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
+
+// Headshot width: 16rem beside the text from 48rem, 14rem stacked above it on phones (see .headshot).
+const HEADSHOT_SIZES = '(min-width: 48rem) 16rem, 14rem';
 
 // Vertical "on this page" rail (Jay, Stage 5 checkpoint); ids match the SectionHeaders below.
 // 00 is back to the top (#top is on <body>, see Base).
@@ -116,11 +122,20 @@ const person = {
   <section class="band" aria-labelledby="about">
     <div class="container">
       <SectionHeader number="01" title="~/about" id="about" />
-      <div class="prose summary">
-        {ABOUT.summary.map((p) => <p>{p}</p>)}
-      </div>
-      <div class="about-more">
-        <Button href="/about/" variant="secondary">more about me</Button>
+      <div class="about">
+        <div class="about__text">
+          <div class="prose summary">
+            {ABOUT.summary.map((p) => <p>{p}</p>)}
+          </div>
+          <div class="about-more">
+            <Button href="/about/" variant="secondary">more about me</Button>
+          </div>
+        </div>
+        {/* One photo per theme (Jay, Stage 5 follow-up); the other is display:none, so lazy loading never fetches it. */}
+        <figure class="headshot">
+          <Img src={headshotLight} alt="Portrait of Jay Parekh" preset="thumb" sizes={HEADSHOT_SIZES} class="headshot--light" />
+          <Img src={headshotDark} alt="Portrait of Jay Parekh" preset="thumb" sizes={HEADSHOT_SIZES} class="headshot--dark" />
+        </figure>
       </div>
     </div>
   </section>
@@ -276,6 +291,40 @@ const person = {
 
   .about-more {
     margin-top: var(--space-8);
+  }
+
+  /* Photo above the text on phones, on the right from 48rem. */
+  .about {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .headshot {
+    order: -1;
+    width: 14rem;
+    /* Grey frame: a mat in the border grey with a hairline edge. */
+    padding: var(--space-2);
+    border: var(--hairline) solid var(--muted);
+    background: var(--border);
+  }
+
+  @media (min-width: 48rem) {
+    .about {
+      grid-template-columns: minmax(0, 1fr) 16rem;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    .headshot {
+      order: 0;
+      width: 16rem;
+    }
+  }
+
+  /* Show the photo shot for the current theme. */
+  :global([data-theme='light']) .headshot :global(.headshot--dark),
+  :global([data-theme='dark']) .headshot :global(.headshot--light) {
+    display: none;
   }
 
   .stack-lg {

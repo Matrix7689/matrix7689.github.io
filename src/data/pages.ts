@@ -140,7 +140,8 @@ export const ABOUT = {
   ],
   // N7: Jay replaces public/Jay_Parekh_Resume.pdf himself; update the size in this label when he does.
   resumeLabel: 'Download resume (PDF, 217 KB)',
-  // No headshot (N8, Jay, Stage 3 checkpoint).
+  // N8 was "no headshot" (Stage 3). Jay later supplied two (Stage 5 follow-up): src/assets/about/headshot-{light,dark}.jpg,
+  // shown in the home about section. This field is for the /about/ page (Stage 8), still unset.
   headshot: null as string | null,
 };
 

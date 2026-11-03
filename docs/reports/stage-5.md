@@ -246,3 +246,13 @@ Jay asked for the 2015 – present timeline and suggested the template's "Concur
   - **Checks:** `npm run verify` exits 0; `/` is 15.9 KB initial. Lighthouse is 100/100/100/100 on all audited URLs.
 - **Duration (follow-up, Jay):** the card's `dates = …` line is now `time  = …`, the length in years and months, counting both the first and last month (`duration()` in `lib/timeline.ts`). "Present" counts up to the build month. Values at this build: Intern 4 months; SDE I 2 years 6 months; SDE II 3 years; Bigshine 1 year 8 months; Drag2Death 2 years 2 months; USC 1 year 10 months; DJSCE 3 years 10 months. The exact dates still appear on each role entry below the timeline. `npm run verify` exits 0.
 - **Compact switch placement (follow-up, Jay):** the experience compact switch now sits directly below the career profiler (16 px gap), with 48 px before the first role. It is still a preceding sibling of the roles, so the CSS-only hide rule is unchanged. Tested with real clicks: 12 ↔ 27 bullets. `npm run verify` exits 0.
+
+## Headshot in the home about section (Nov 3, 2026)
+
+- **Sources:** Jay's two Gemini edits (light background, measured `#EFEFEF`; dark background, measured `#121212`; 1493×2000 JPEG, ~300 KB each). They were downscaled to 1200 px wide as `src/assets/about/headshot-{light,dark}.jpg` (129 KB and 136 KB). Like all originals, they never ship (`check:originals` passes). The backgrounds were not recoloured: the grey frame separates the photo from the page, and recolouring risked damaging the hair edges.
+- **Output:** the `thumb` preset (400/600 px; AVIF, WebP, JPEG) through `Img`. Files are 6–18 KB each, all under the 30 KB thumb cap.
+- **One photo per theme, CSS only:** both `<picture>`s are in the HTML, and `[data-theme]` hides the other theme's `<img>` with `display: none`. Lazy loading then never fetches the hidden one. Measured: light mode loaded only `headshot-light` (AVIF, 9.7 KB transferred); switching to dark with the toggle loaded `headshot-dark`.
+- **Layout:** beside the about text from 48rem (a 16rem column on the right); above the text on phones (14rem). The frame is an 8 px mat in `--border` grey with a hairline `--muted` edge, so it follows the theme (light #d9d9d9, dark #262626). No horizontal scroll at 375 px.
+- **Budgets:** `/` is 16.3 KB initial. The lazy total is now 105.3 KB of the ≤ 120 KB budget, because `check-budgets` counts the heaviest candidate of both photos; a visitor downloads only one (about 10–18 KB).
+- **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on all audited URLs; CLS on `/` is 0.001.
+- `ABOUT.headshot` (for the /about/ page, Stage 8) stays unset; its comment now points to these files.
