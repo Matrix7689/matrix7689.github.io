@@ -12,6 +12,7 @@ import ExperienceItem from '../components/ExperienceItem.astro';
 import SpecTable from '../components/SpecTable.astro';
 import CompactToggle from '../components/CompactToggle.astro';
 import SectionRail from '../components/SectionRail.astro';
+import CareerTimeline, { type Segment } from '../components/CareerTimeline.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -46,6 +47,13 @@ const sections = [
     name: `~/${id}`,
   })),
 ];
+
+// Timeline bars from the roles and university entries (HOME.timeline lists the lanes, in order).
+const segments: Segment[] = [
+  ...roles.map(({ data: r }) => ({ title: r.title, org: r.company, start: r.start, end: r.end, kind: /intern/i.test(r.title) ? ('internship' as const) : ('work' as const) })),
+  ...ABOUT.education.filter((e) => e.level === 'university').map((e) => ({ title: e.degree, org: e.school, start: e.start, end: e.end, kind: 'study' as const })),
+];
+const timelineLanes = HOME.timeline.lanes.map((l) => ({ label: l.label, segments: segments.filter((s) => s.org === l.org) }));
 
 // Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
 const courses = new Intl.ListFormat('en', { type: 'conjunction' });
@@ -135,11 +143,7 @@ const person = {
     <div class="container">
       <SectionHeader number="03" title="~/experience" id="experience" />
       <CompactToggle id="compact-experience" label="experience" />
-      <!-- Reserved for a horizontal timeline, 2015 – present (Jay, Stage 5 checkpoint). Placeholder text until then. -->
-      <div class="timeline-slot">
-        <p>// timeline: 2015 → present</p>
-        <p class="muted">coming soon</p>
-      </div>
+      <CareerTimeline from={HOME.timeline.from} lanes={timelineLanes} />
       <div class="stack-lg">
         {
           roles.map(({ data: r }) => (
@@ -266,18 +270,6 @@ const person = {
 
   .about-more {
     margin-top: var(--space-8);
-  }
-
-  /* Empty on purpose: space for the planned 2015 – present timeline. */
-  .timeline-slot {
-    display: grid;
-    place-content: center;
-    gap: var(--space-1);
-    min-height: 8rem;
-    margin-bottom: var(--space-12);
-    border: var(--hairline) dashed var(--border);
-    font-size: var(--fs-ui);
-    text-align: center;
   }
 
   .stack-lg {

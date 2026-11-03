@@ -1,0 +1,226 @@
+---
+// Horizontal career timeline (Jay, Stage 5 follow-up), a static port of the template's "Thread Profiler"
+// (section 07, Concurrency Models): one lane per organisation, bars placed by month along a year scale.
+// No JS and no motion. Bars and year labels are SVG with percentage x/width (html-validate forbids inline
+// styles), so positions need no generated CSS. Hovering a bar shows its <title>; screen readers get a
+// visually hidden list per lane instead of the decorative SVG.
+import { roleRange } from '../lib/dates';
+
+export type Segment = { title: string; org: string; start: string; end?: string | undefined; kind: 'work' | 'internship' | 'study' };
+
+interface Props {
+  /** First month on the scale, YYYY-MM (January of a year). */
+  from: string;
+  lanes: { label: string; segments: Segment[] }[];
+}
+
+const { from, lanes } = Astro.props;
+
+// Months since `from`; the scale ends with the build month ("present").
+const ym = (s: string) => {
+  const [y, m] = s.split('-').map(Number);
+  return y! * 12 + (m! - 1);
+};
+const now = new Date();
+const origin = ym(from);
+const nowMonth = now.getFullYear() * 12 + now.getMonth();
+const total = nowMonth + 1 - origin;
+const pct = (months: number) => `${((Math.max(0, months) / total) * 100).toFixed(3)}%`;
+
+const firstYear = Number(from.slice(0, 4));
+const years = Array.from({ length: now.getFullYear() - firstYear + 1 }, (_, i) => ({ year: i + firstYear, x: pct(i * 12), odd: i % 2 === 1 }));
+
+const rows = lanes.map((lane) => ({
+  ...lane,
+  studyOnly: lane.segments.every((s) => s.kind === 'study'),
+  bars: lane.segments
+    .map((s) => {
+      const start = Math.max(0, ym(s.start) - origin);
+      const end = (s.end ? ym(s.end) : nowMonth) + 1 - origin;
+      return { ...s, x: pct(start), w: pct(end - start), range: roleRange(s.start, s.end) };
+    })
+    .sort((a, b) => a.start.localeCompare(b.start)),
+}));
+---
+
+<figure class="tl" aria-labelledby="tl-title">
+  <div class="tl__bar">
+    <p class="tl__name" id="tl-title"><span class="tl__dot" aria-hidden="true"></span>Career profiler</p>
+    <p>{firstYear} — present</p>
+  </div>
+
+  <div class="tl__row tl__scale" aria-hidden="true">
+    <span class="tl__label"></span>
+    <svg class="tl__svg tl__svg--scale" width="100%" height="28" focusable="false">
+      {years.map((y) => <text class:list={{ 'tl__odd': y.odd }} x={y.x} y="18">{y.year}</text>)}
+    </svg>
+  </div>
+
+  <ul class="tl__lanes" role="list">
+    {
+      rows.map((lane) => (
+        <li class="tl__row">
+          <span class="tl__label">
+            <span class:list={['tl__sq', { 'tl__sq--muted': lane.studyOnly }]} aria-hidden="true"></span>
+            {lane.label}
+          </span>
+          <svg class="tl__svg" width="100%" height="16" aria-hidden="true" focusable="false">
+            <rect class="tl__lane" width="100%" height="100%" />
+            {years.map((y) => <line class="tl__tick" x1={y.x} x2={y.x} y1="0" y2="100%" />)}
+            {lane.bars.map((b) => (
+              <rect class={`tl__seg--${b.kind}`} x={b.x} width={b.w} height="100%">
+                <title>{`${b.title} · ${b.org} · ${b.range}`}</title>
+              </rect>
+            ))}
+          </svg>
+          <ul class="visually-hidden" role="list">
+            {lane.bars.map((b) => <li>{`${b.title}, ${b.org}, ${b.range}`}</li>)}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+
+  <figcaption class="tl__legend">
+    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--work" width="16" height="8" /></svg>Work</span>
+    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--internship" width="16" height="8" /></svg>Internship</span>
+    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--study" width="16" height="8" /></svg>Study</span>
+  </figcaption>
+</figure>
+
+<style>
+  .tl {
+    margin-bottom: var(--space-12);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-micro);
+    color: var(--muted);
+  }
+
+  .tl__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  .tl__name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+  }
+
+  .tl__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--fg);
+  }
+
+  .tl__row {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: center;
+    padding-inline: var(--space-4);
+    border-bottom: var(--hairline) solid var(--border);
+  }
+
+  @media (min-width: 48rem) {
+    .tl__row {
+      grid-template-columns: 7rem minmax(0, 1fr);
+    }
+  }
+
+  .tl__lanes > .tl__row:last-child {
+    border-bottom: 0;
+  }
+
+  .tl__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+    font-size: var(--fs-ui);
+  }
+
+  .tl__sq {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    background: var(--fg);
+  }
+
+  .tl__sq--muted {
+    background: var(--muted);
+  }
+
+  /* overflow visible: the last year label may run just past the track's right edge. */
+  .tl__svg {
+    display: block;
+    overflow: visible;
+  }
+
+  .tl__svg text {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    fill: var(--muted);
+  }
+
+  /* Every other year on narrow screens, where twelve labels don't fit. */
+  @media (max-width: 47.99rem) {
+    .tl__odd {
+      display: none;
+    }
+  }
+
+  .tl__lane {
+    fill: color-mix(in srgb, var(--border) 30%, transparent);
+  }
+
+  .tl__tick {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  /* A background-coloured edge keeps back-to-back roles apart (SDE I → SDE II). */
+  [class^='tl__seg--'] {
+    stroke: var(--bg);
+    stroke-width: 2;
+  }
+
+  .tl__seg--work {
+    fill: var(--fg);
+  }
+
+  .tl__seg--internship {
+    fill: var(--muted);
+  }
+
+  .tl__seg--study {
+    fill: color-mix(in srgb, var(--fg) 32%, transparent);
+  }
+
+  .tl__svg rect[class^='tl__seg--']:hover {
+    stroke: var(--fg);
+  }
+
+  .tl__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    padding: var(--space-2) var(--space-4);
+    border-top: var(--hairline) solid var(--border);
+  }
+
+  .tl__legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .tl__legend [class^='tl__seg--'] {
+    stroke: none;
+  }
+</style>

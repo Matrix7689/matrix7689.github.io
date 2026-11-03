@@ -227,3 +227,14 @@ Jay approved Stage 5 (the blog plus the home and shared tweaks above) after it w
 - **Load stat:** "load" → `loadTime =`; the tooltip reads `startTime = …` and `endTime   = …`, each followed by the local date and time.
 - **Brand:** "> JAY PAREKH" is `--fs-body` (14 px, was 12 px).
 - **Checks:** `npm run verify` exits 0. Lighthouse is 100/100/100/100 on all audited URLs. At 375 px there's no horizontal scroll and the header stays 57 px tall.
+
+## Experience timeline (Nov 3, 2026)
+
+Jay asked for the 2015 – present timeline and suggested the template's "Concurrency Models" style. It's built from that section's **Thread Profiler** (`monochrome-ascii-hub-template/components/ascii-hub/sections/section-concurrency.tsx`): a bordered card with a header bar, a year scale, one lane per organisation and a legend.
+
+- **`CareerTimeline.astro`** (new) replaces the placeholder. Header "■ CAREER PROFILER" / "2015 — present"; years 2015 to the build year; five lanes, top to bottom: amazon, bigshine, drag2death, usc, djsce (`HOME.timeline` in `src/data/pages.ts`).
+- **Bars come from the existing data:** the experience YAML dates (roles) and `ABOUT.education` (university entries only, so Jai Hind College, 2013–2015, is left out). Each bar spans its start month to end month inclusive; "present" runs to the build month. Kinds and fills follow the template's legend: Work solid, Internship muted, Study faint. A 2 px background-coloured edge separates SDE I and SDE II, which meet in Dec 2023.
+- **Static port:** no framer-motion, no random lanes, no pulsing dot. Bars and year labels are SVG with percentage `x`/`width`, because html-validate's `no-inline-style` rejected positioned `style` attributes. Year hairlines are SVG lines.
+- **Hover and accessibility:** each bar has an SVG `<title>`, e.g. "Software Development Engineer II · Amazon · Dec 2023 – present", which the browser shows on hover. The SVGs are `aria-hidden`; each lane has a visually hidden list with the same text for screen readers.
+- **Responsive:** under 48rem only every other year is labelled (6 labels, no overlap at 375 px); no horizontal scroll at 375 px. Checked in light and dark themes (dark-mode study fill raised to 32 %).
+- **Checks:** `npm run verify` exits 0; `/` is 15.7 KB initial (< 50). Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post.

@@ -6,6 +6,18 @@
 export const HOME = {
   // Tags under the name (Jay, Stage 5 checkpoint); they replace the eyebrow badge and the role line.
   tags: ['Software Engineer', 'Amazon', 'Seattle'],
+  // Experience timeline (Jay, Stage 5 follow-up; the template's "Thread Profiler"). One lane per organisation,
+  // top to bottom; `org` matches an experience `company` or an education `school`. Bars come from their dates.
+  timeline: {
+    from: '2015-01',
+    lanes: [
+      { label: 'amazon', org: 'Amazon' },
+      { label: 'bigshine', org: 'Bigshine Media & Entertainment' },
+      { label: 'drag2death', org: 'Drag2Death' },
+      { label: 'usc', org: 'University of Southern California' },
+      { label: 'djsce', org: 'Dwarkadas J. Sanghvi College of Engineering' },
+    ],
+  },
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
   // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or
