@@ -117,3 +117,7 @@ Please review `/projects/` and the 5 detail pages (`npm run preview` → http://
 
 ## Checkpoint decisions (Nov 3, 2026)
 - **NewsApp React live link: keep** (Jay). `http://hw8react.appspot.com/` stays on the card and on the detail page (Live demo row and button).
+
+## Checkpoint approval (Nov 3, 2026)
+
+Jay approved Stage 6 (the `/projects/` index and the 5 project detail pages) with the copy as written. Still open and carried forward: N9 (course context) and N15 (summarization GitHub link and publication).
