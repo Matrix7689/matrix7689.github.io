@@ -114,3 +114,6 @@ Please review `/projects/` and the 5 detail pages (`npm run preview` → http://
 2. **NewsApp React live link:** `http://hw8react.appspot.com/` returns 200 today. It is plain `http://` (no HTTPS), and the app's page title is "CSCI 571 NewsApp". Keep it or drop it?
 3. **Optional:** course context for N9, and N15 (summarization GitHub link and publication).
 4. **Optional:** the broken kiro.dev link in "How to work better with AI": fix it to a current URL, or leave it as published on Medium.
+
+## Checkpoint decisions (Nov 3, 2026)
+- **NewsApp React live link: keep** (Jay). `http://hw8react.appspot.com/` stays on the card and on the detail page (Live demo row and button).

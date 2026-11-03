@@ -7,7 +7,7 @@ stack: [React, Node.js]
 # NEEDS INPUT (N9): role/course context. The live app's page title reads "CSCI 571 NewsApp"; not stated until confirmed.
 links:
   github: https://github.com/Matrix7689/NewsApp-React
-  # Returned 200 in the Stage 0 link check.
+  # Returned 200 in the Stage 0 and Stage 6 link checks; kept by Jay at the Stage 6 checkpoint.
   live: http://hw8react.appspot.com/
 cover: ../../assets/projects/newsapp-react/cover.png
 # Screenshots beyond the cover: Stage 6 shows "Screenshots coming soon." (N13, Jay, Stage 3 checkpoint).
