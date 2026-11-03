@@ -112,3 +112,24 @@ Please review the archive (`npm run preview` → http://localhost:4321/projects/
 2. **Image quality:** open a map page and a "view full size" link to check that the slightly lower AVIF quality looks fine.
 3. **Footer on the home page:** keep the archive link hidden there, or show it everywhere?
 4. **Approve the archive.**
+
+## Slideshow on map pages (checkpoint feedback, Nov 3, 2026)
+
+Jay asked for a slideshow with play/pause, next and previous. That needs JavaScript, which the hard rules and Stage 7's "out of scope: carousel, any JS" excluded. Jay chose the small-script option, now recorded as **SPEC D9(d)** and in CLAUDE.md's allowed-JS list.
+
+- **`Gallery.astro`:**
+  - The markup is unchanged: a stacked list of screenshots, each linking to its 1920 px WebP. Without JS, visitors get exactly that.
+  - A ~1 KB gzip inline script adds `.is-slideshow`, which shows one slide at a time, and reveals the hidden control bar: `←` (previous), `pause`/`play`, `→` (next), and an `N / M` counter. Buttons are 44 px targets with accessible names ("Previous screenshot", "Pause slideshow" / "Play slideshow", "Next screenshot").
+  - **Autoplay** advances every 5 s. It is **off when `prefers-reduced-motion: reduce`** (the button then starts as "play"), and it holds while the slideshow is hovered or has focus. A manual move restarts the 5 s timer.
+  - **Keyboard:** ← / → keys move between slides when focus is inside the slideshow.
+  - **Screen readers:** the counter is `aria-live="polite"` while paused and `off` while playing, so autoplay ticks aren't announced.
+  - **Loading:** slides stay `loading="lazy"`. The script switches the next slide to `eager` just before it is needed, so a visitor downloads only what they view, plus one ahead.
+- **Tested with real clicks in the built-in browser** (`awp-lego-asia`):
+  - The page loaded at 1 / 7 and autoplay reached 2 / 7 on its own.
+  - Next → 5 / 7 (autoplay had reached 4).
+  - Pause → the label became "play", `aria-label` became "Play slideshow" and the counter became `aria-live="polite"`.
+  - Previous ×3 → 2 / 7; ArrowRight → 3 / 7. It stayed at 3 / 7 after 6 s while paused.
+  - At 375 px the bar fits (no horizontal scroll) with 44 px buttons.
+- **Checks:**
+  - `npm run verify` exits 0. Map pages carry 1.7 KB gzip of JS (cap 2 KB); `awp-lego-asia` is 86.1 KB initial and `lcz-ctf-galaxy` 107.9 KB (≤ 120).
+  - Lighthouse on `/projects/level-design/awp-lego-asia/`: 100 / 100 / 100 / 100 in two runs and 98 / 100 / 100 / 100 in one (median 100). CLS is 0.000 and TBT 0 on every audited URL; every other URL is still 100 ×4.

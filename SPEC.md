@@ -111,7 +111,7 @@ matrix7689.github.io/
 | D6 | **Canonical rule:** `canonical = post.canonicalUrl ?? (SITE.preferMediumCanonical && post.mediumUrl) ?? selfUrl`. `preferMediumCanonical` defaults to `true` in `site.config.ts`. Flip it site-wide there, or per post with `canonicalUrl`. |
 | D7 | **Blog filtering without JS:** the filter row links to static tag pages `/blog/tags/<tag>/`. |
 | D8 | **Mobile nav without JS:** `<details><summary>` disclosure. |
-| D9 | **Allowed JS (3 islands, inline, ≤ 2 KB gzip total):** (a) theme init in `<head>` plus the toggle handler, with `localStorage` wrapped in try/catch; (b) copy-to-clipboard button for code and command blocks, as progressive enhancement; (c) the nav page-load stat (`LoadTime.astro`, added by Jay at the Stage 5 checkpoint): reads the Navigation Timing entry after `load`, shows the load time in ms and the start/end Unix timestamps on hover/focus; hidden without JS. Nothing else. |
+| D9 | **Allowed JS (4 islands, inline, ≤ 2 KB gzip total):** (a) theme init in `<head>` plus the toggle handler, with `localStorage` wrapped in try/catch; (b) copy-to-clipboard button for code and command blocks, as progressive enhancement; (c) the nav page-load stat (`LoadTime.astro`, added by Jay at the Stage 5 checkpoint): reads the Navigation Timing entry after `load`, shows the load time in ms and the start/end Unix timestamps on hover/focus; hidden without JS; (d) the map-page screenshot slideshow (`Gallery.astro`, added by Jay at the Stage 7 checkpoint): one slide at a time with previous / play-pause / next, a counter and arrow keys, autoplay every 5 s unless `prefers-reduced-motion: reduce`, held while hovered or focused; without JS the screenshots stay a stacked list. Nothing else. |
 | D10 | **GIF demos** (`halma.gif` 2.9 MB, `bfs.gif` 0.8 MB): convert once to MP4 (H.264) + WebM with `ffmpeg-static`, ≤ 400 KB each, committed to `public/media/`. Rendered as `<video controls preload="none" playsinline poster=…>` with no autoplay. The poster is the first frame through the image pipeline. GIFs never ship. |
 | D11 | **Old URLs:** `/Jay_Parekh_Resume.pdf` is kept at the same path. `/works-2.html` becomes a static redirect stub (meta refresh + canonical + link) to `/projects/level-design/`. Old `/images/...` URLs and `/Matrix_Completed_Games.txt` are allowed to 404. |
 | D12 | **OG image:** one static default `public/og/default.png` (1200×630, ≤ 60 KB) for all pages in v1. Per-post generated OG images go to the backlog. |
@@ -422,7 +422,7 @@ Conventions for every stage:
 
 **Verification:** `npm run verify`; `npm run lhci`; keyboard walkthrough.
 
-**Out of scope:** lightbox, carousel, any JS.
+**Out of scope:** lightbox and any other JS. (A slideshow was added at the Stage 7 checkpoint at Jay's request; see D9d.)
 
 **Human checkpoint:** Jay fills per-map game, year and description where known, and approves the archive.
 

@@ -1,6 +1,9 @@
 ---
 // Map screenshots (SPEC §5 Gallery, Stage 7 task 2): every image at the detail preset, the first eager and
 // the rest lazy. Each one links to its build-made 1920 px WebP ("view full size", same tab, no lightbox).
+// Slideshow (Jay, Stage 7 checkpoint; SPEC D9d): a tiny inline script turns the list into one slide at a
+// time with previous / play-pause / next, a counter and arrow keys. It autoplays every 5 s unless the
+// visitor prefers reduced motion, and holds while hovered or focused. Without JS the list stays stacked.
 import type { ImageMetadata } from 'astro';
 import Img from './Img.astro';
 import { largeUrl } from '../lib/images';
@@ -14,25 +17,91 @@ const { images, title } = Astro.props;
 const items = await Promise.all(images.map(async (image) => ({ ...image, large: await largeUrl(image.src) })));
 ---
 
-<ul class="gallery" role="list" aria-label={`${title} screenshots`}>
-  {
-    items.map((image, i) => (
-      <li>
-        <a class="shot" href={image.large}>
-          <Img src={image.src} alt={image.alt} preset="detail" sizes="(min-width: 80rem) 76rem, 100vw" eager={i === 0} />
-          <span class="shot__label">
-            view full size <span aria-hidden="true">→</span>
-          </span>
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<section class="ss" aria-label={`${title} screenshots`} data-slideshow>
+  <ul class="gallery" role="list">
+    {
+      items.map((image, i) => (
+        <li class:list={{ 'is-current': i === 0 }}>
+          <a class="shot" href={image.large}>
+            <Img src={image.src} alt={image.alt} preset="detail" sizes="(min-width: 80rem) 76rem, 100vw" eager={i === 0} />
+            <span class="shot__label">
+              view full size <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="ss__bar" hidden>
+    <button type="button" class="ss__btn" data-ss="prev" aria-label="Previous screenshot">←</button>
+    <button type="button" class="ss__btn ss__play" data-ss="play" aria-label="Pause slideshow">pause</button>
+    <button type="button" class="ss__btn" data-ss="next" aria-label="Next screenshot">→</button>
+    <span class="ss__count" aria-live="polite">1 / {items.length}</span>
+  </div>
+</section>
+<script is:inline>
+  (function () {
+    var g = document.querySelector('[data-slideshow]');
+    var s = g && g.querySelectorAll('.gallery > li');
+    if (!s || s.length < 2) return;
+    var n = s.length, i = 0, hold = false, t;
+    var c = g.querySelector('.ss__count'), p = g.querySelector('.ss__play');
+    var play = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(k) {
+      i = (k + n) % n;
+      for (var j = 0; j < n; j++) s[j].classList.toggle('is-current', j === i);
+      // Load the next slide before it is shown (it is lazy and display:none until then).
+      var next = s[(i + 1) % n].querySelector('img');
+      if (next) next.loading = 'eager';
+      c.textContent = i + 1 + ' / ' + n;
+    }
+    function timer() {
+      clearInterval(t);
+      t = setInterval(function () {
+        if (play && !hold) show(i + 1);
+      }, 5000);
+    }
+    function set(on) {
+      play = on;
+      p.textContent = on ? 'pause' : 'play';
+      p.setAttribute('aria-label', (on ? 'Pause' : 'Play') + ' slideshow');
+      // Announce the counter only when the visitor moves; autoplay ticks stay quiet.
+      c.setAttribute('aria-live', on ? 'off' : 'polite');
+    }
+    g.classList.add('is-slideshow');
+    g.querySelector('.ss__bar').hidden = false;
+    set(play);
+    show(0);
+    timer();
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ss]');
+      if (!b) return;
+      if (b.dataset.ss === 'play') set(!play);
+      else show(i + (b.dataset.ss === 'next' ? 1 : -1));
+      timer();
+    });
+    g.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      show(i + (e.key === 'ArrowRight' ? 1 : -1));
+      timer();
+    });
+    g.addEventListener('mouseenter', function () { hold = true; });
+    g.addEventListener('mouseleave', function () { hold = false; });
+    g.addEventListener('focusin', function () { hold = true; });
+    g.addEventListener('focusout', function () { hold = false; });
+  })();
+</script>
 
 <style>
   .gallery {
     display: grid;
     gap: var(--space-8);
+  }
+
+  /* Slideshow (set by the script): one slide at a time, controls under it. */
+  .is-slideshow .gallery > li:not(.is-current) {
+    display: none;
   }
 
   .shot {
@@ -60,5 +129,53 @@ const items = await Promise.all(images.map(async (image) => ({ ...image, large: 
   .shot:focus-visible .shot__label {
     color: var(--fg);
     text-decoration-line: underline;
+  }
+
+  .ss__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .ss__bar[hidden] {
+    display: none;
+  }
+
+  .ss__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap);
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    border: var(--hairline) solid var(--border);
+    font-size: var(--fs-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--muted);
+  }
+
+  .ss__btn:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+
+  .ss__play {
+    min-width: 5.5rem;
+  }
+
+  .ss__count {
+    margin-left: auto;
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ss__btn {
+      transition:
+        border-color var(--duration),
+        color var(--duration);
+    }
   }
 </style>
