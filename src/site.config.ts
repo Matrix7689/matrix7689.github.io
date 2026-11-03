@@ -24,8 +24,8 @@ export const SITE = {
     x: 'https://x.com/jayp_or_jp',
     medium: 'https://medium.com/@jay.parekh7689',
     steamWorkshop: 'https://steamcommunity.com/id/MatrixIN/myworkshopfiles/',
-    // Jay asked for a "GameBanana Submissions" button (Stage 7 revision); the URL isn't in the data yet.
-    gamebanana: null,
+    // "GameBanana Submissions" button on the archive (Jay, Stage 7 revision).
+    gamebanana: 'https://gamebanana.com/members/submissions/mods/1281978',
   } satisfies SiteLinks,
   // SPEC D6: canonical of a cross-post points to Medium unless the post overrides it.
   preferMediumCanonical: true,

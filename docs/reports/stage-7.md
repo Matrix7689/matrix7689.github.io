@@ -301,3 +301,5 @@ Checks:
 - At 360 px there is no horizontal scroll on `/` or the archive.
 
 Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; then Stage 7 approval.
+
+- **GameBanana Submissions URL** (Jay): `https://gamebanana.com/members/submissions/mods/1281978`. It is set in `SITE.links.gamebanana`, so the button now shows beside "Steam Workshop" and the URL joins the home JSON-LD `sameAs` list (structured data only, no visible link). `npm run verify` exits 0.
