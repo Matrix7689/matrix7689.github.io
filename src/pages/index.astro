@@ -47,7 +47,7 @@ const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
 
 // Map-making highlights computed from the level-design data (no link to the archive from home).
 const mapTotals = totals(await getMaps());
-const stat = { maps: String(mapTotals.maps), downloads: fmt(mapTotals.downloads), views: fmt(mapTotals.views) };
+const stat = { maps: String(mapTotals.published), downloads: fmt(mapTotals.downloads), views: fmt(mapTotals.views) };
 
 // Vertical "on this page" rail (Jay, Stage 5 checkpoint); ids match the SectionHeaders below.
 // 00 is back to the top (#top is on <body>, see Base).
@@ -243,20 +243,15 @@ const person = {
 <style>
   /* One column at every width: name + tags, the one-liner, then the terminal across the full
      container width (Jay, Stage 5 checkpoint). */
-  /* One column as wide as the name (Jay, Stage 7 follow-up): the h1 sets the track width, and the tags,
-     one-liner and terminal (width: 0, so they never widen it) then fill it (min-width: 100%). */
+  /* One column as wide as the name (Jay, Stage 7 follow-up). The width comes from the font's metrics, not
+     from the rendered h1, so it doesn't change when the web font swaps in (CLS): "Jay Parekh" is 10 Geist
+     Mono characters at 0.6em advance with -0.03em tracking = 5.7em of --fs-hero. Update 5.7 if the name
+     changes. The h1 never wraps, so a wider fallback font only overflows briefly instead of reflowing. */
   .intro {
     display: grid;
-    grid-template-columns: fit-content(100%);
+    grid-template-columns: minmax(0, min(100%, calc(var(--fs-hero) * 5.7)));
     gap: var(--space-8);
     padding-block: var(--space-section);
-  }
-
-  .intro__tags,
-  .intro__text,
-  .intro__term {
-    width: 0;
-    min-width: 100%;
   }
 
   .intro__head,
@@ -270,7 +265,7 @@ const person = {
     font-size: var(--fs-hero);
     line-height: var(--lh-tight);
     letter-spacing: -0.03em;
-    text-wrap: balance;
+    white-space: nowrap;
   }
 
   .intro__tags {
