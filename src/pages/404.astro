@@ -1,0 +1,70 @@
+---
+// 404 (SPEC Stage 8 task 2, §4.8): terminal-style "No such file or directory" with links home, to the blog
+// and to projects. noindex. GitHub Pages serves dist/404.html for any missing path; the static page can't
+// know which path was asked for without JS, so the terminal shows a generic one.
+import Base from '../layouts/Base.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+
+const PATH = './requested-page';
+const links = [
+  { label: '~/', href: '/' },
+  { label: 'blog/', href: '/blog/' },
+  { label: 'projects/', href: '/projects/' },
+];
+---
+
+<Base title="Page not found · Jay Parekh" description="This page doesn't exist. Go to Jay Parekh's home page, blog or projects." noindex>
+  <div class="container page">
+    <h1>404 · page not found</h1>
+    <TerminalCard title="jay@portfolio ~ terminal">
+      <p><span class="muted" aria-hidden="true">$ </span>cd {PATH}</p>
+      <p class="muted">bash: cd: {PATH}: No such file or directory</p>
+      <p><span class="muted" aria-hidden="true">$ </span>ls</p>
+      <ul class="out" role="list" aria-label="Go to">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="cursor-line" aria-hidden="true">$ <span class="cursor">█</span></p>
+    </TerminalCard>
+  </div>
+</Base>
+
+<style>
+  /* Left-aligned like every other page; only the content is capped. */
+  .page {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-section);
+  }
+
+  .page > :global(*) {
+    max-width: 48rem;
+  }
+
+  h1 {
+    font-size: var(--fs-title);
+  }
+
+  .out {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+  }
+
+  .out a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cursor-line {
+    margin-top: var(--space-2);
+  }
+</style>

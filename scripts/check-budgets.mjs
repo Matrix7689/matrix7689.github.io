@@ -252,7 +252,9 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
   if (total > budget.totalKB * KB) fail(`${route}: total ${kb(total)} > ${budget.totalKB} KB`);
   if (cssGz > G.cssKB * KB) fail(`${route}: CSS ${kb(cssGz)} > ${G.cssKB} KB`);
   if (jsGz > jsCap * KB) fail(`${route}: JS ${kb(jsGz)} > ${jsCap} KB`);
-  if (fontPreloads !== G.fontPreloads) fail(`${route}: ${fontPreloads} font preloads, expected ${G.fontPreloads}`);
+  // A route may set its own count (the works-2.html redirect stub loads no fonts at all).
+  const preloadsExpected = budget.fontPreloads ?? G.fontPreloads;
+  if (fontPreloads !== preloadsExpected) fail(`${route}: ${fontPreloads} font preloads, expected ${preloadsExpected}`);
 
   rows.push({ route, html: htmlGz, css: cssGz, js: jsGz, eager, lazy, initial, total, fonts: fontsOnPage, budget });
 }
