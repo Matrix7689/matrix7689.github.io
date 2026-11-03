@@ -1,0 +1,41 @@
+---
+// Jay's portrait (Stage 5 follow-up; shared by the home and About pages since Stage 8): one photo per theme
+// in a slightly rounded grey frame. The other theme's <img> is display:none, so lazy loading never fetches
+// it. The parent sets the width (on this figure's wrapper).
+import Img from './Img.astro';
+import headshotLight from '../assets/about/headshot-light.jpg';
+import headshotDark from '../assets/about/headshot-dark.jpg';
+
+interface Props {
+  /** The `sizes` attribute, matching the width the parent gives the wrapper. */
+  sizes: string;
+}
+
+const { sizes } = Astro.props;
+---
+
+<figure class="headshot">
+  <Img src={headshotLight} alt="Portrait of Jay Parekh" preset="thumb" sizes={sizes} class="headshot--light" />
+  <Img src={headshotDark} alt="Portrait of Jay Parekh" preset="thumb" sizes={sizes} class="headshot--dark" />
+</figure>
+
+<style>
+  /* Grey frame: a mat in the border grey, slightly rounded (Jay, Stage 5 follow-up). */
+  .headshot {
+    padding: 5px;
+    border-radius: 7px;
+    background: var(--border);
+  }
+
+  /* Slightly see-through so the photo sits softer on the page; inner corners follow the frame. */
+  .headshot :global(img) {
+    border-radius: 4px;
+    opacity: 0.85;
+  }
+
+  /* Show the photo shot for the current theme. */
+  :global([data-theme='light']) .headshot :global(.headshot--dark),
+  :global([data-theme='dark']) .headshot :global(.headshot--light) {
+    display: none;
+  }
+</style>

@@ -12,9 +12,7 @@ import ExperienceItem from '../components/ExperienceItem.astro';
 import SpecTable from '../components/SpecTable.astro';
 import CompactToggle from '../components/CompactToggle.astro';
 import SectionRail from '../components/SectionRail.astro';
-import Img from '../components/Img.astro';
-import headshotLight from '../assets/about/headshot-light.jpg';
-import headshotDark from '../assets/about/headshot-dark.jpg';
+import Headshot from '../components/Headshot.astro';
 import CareerTimeline from '../components/CareerTimeline.astro';
 import Figure from '../components/Figure.astro';
 import { getMaps, totals, fmt } from '../lib/levels';
@@ -24,7 +22,7 @@ import EmptyState from '../components/EmptyState.astro';
 import { SITE } from '../site.config';
 import { HOME, ABOUT, CREDENTIALS } from '../data/pages';
 import { getPosts, postSlug } from '../lib/posts';
-import { buildTimeline, type Segment } from '../lib/timeline';
+import { careerTimeline } from '../lib/career';
 
 const site = Astro.site!.origin;
 
@@ -60,15 +58,8 @@ const sections = [
   })),
 ];
 
-// Timeline bars from the roles and university entries (HOME.timeline lists the lanes, in order).
-const segments: Segment[] = [
-  ...roles.map(({ data: r }) => ({ title: r.title, org: r.company, start: r.start, end: r.end, kind: /intern/i.test(r.title) ? ('internship' as const) : ('work' as const) })),
-  ...ABOUT.education.filter((e) => e.level === 'university').map((e) => ({ title: e.degree, org: e.school, start: e.start, end: e.end, kind: 'study' as const })),
-];
-const timeline = buildTimeline(
-  HOME.timeline.from,
-  HOME.timeline.lanes.map((l) => ({ label: l.label, segments: segments.filter((s) => s.org === l.org) })),
-);
+// Timeline bars from the roles and university entries (lib/career.ts, shared with /about/).
+const timeline = await careerTimeline();
 
 // Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
 const courses = new Intl.ListFormat('en', { type: 'conjunction' });
@@ -137,10 +128,9 @@ const person = {
           </div>
         </div>
         {/* One photo per theme (Jay, Stage 5 follow-up); the other is display:none, so lazy loading never fetches it. */}
-        <figure class="headshot">
-          <Img src={headshotLight} alt="Portrait of Jay Parekh" preset="thumb" sizes={HEADSHOT_SIZES} class="headshot--light" />
-          <Img src={headshotDark} alt="Portrait of Jay Parekh" preset="thumb" sizes={HEADSHOT_SIZES} class="headshot--dark" />
-        </figure>
+        <div class="headshot">
+          <Headshot sizes={HEADSHOT_SIZES} />
+        </div>
       </div>
     </div>
   </section>
@@ -314,16 +304,6 @@ const person = {
   .headshot {
     order: -1;
     width: 12rem;
-    /* Grey frame: a mat in the border grey, slightly rounded (Jay, Stage 5 follow-up). */
-    padding: 5px;
-    border-radius: 7px;
-    background: var(--border);
-  }
-
-  /* Slightly see-through so the photo sits softer on the page; inner corners follow the frame. */
-  .headshot :global(img) {
-    border-radius: 4px;
-    opacity: 0.85;
   }
 
   @media (min-width: 48rem) {
@@ -339,12 +319,6 @@ const person = {
       order: 0;
       width: 13rem;
     }
-  }
-
-  /* Show the photo shot for the current theme. */
-  :global([data-theme='light']) .headshot :global(.headshot--dark),
-  :global([data-theme='dark']) .headshot :global(.headshot--light) {
-    display: none;
   }
 
   .stack-lg {
