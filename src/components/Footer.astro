@@ -25,7 +25,6 @@ const site = [
   <div class="container cols">
     <div>
       <AsciiWordmark text={SITE.wordmark} label={SITE.name} />
-      <p class="muted tagline">{SITE.tagline}</p>
     </div>
     <div>
       <h2 class="label">Connect</h2>
@@ -65,7 +64,6 @@ const site = [
   </div>
   <div class="container bottom">
     <span>Last updated on <time datetime={LAST_UPDATED.iso}>{LAST_UPDATED.label}</time></span>
-    <span>built with astro · 0 trackers</span>
   </div>
 </footer>
 
@@ -84,11 +82,6 @@ const site = [
     .cols {
       grid-template-columns: 2fr 1fr 1fr;
     }
-  }
-
-  .tagline {
-    margin-top: var(--space-4);
-    font-size: var(--fs-ui);
   }
 
   h2 {

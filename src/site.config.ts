@@ -13,7 +13,6 @@ export const SITE = {
   name: 'Jay Parekh',
   role: 'Software Development Engineer II @ Amazon',
   // SPEC §4.9 (proposed footer line).
-  tagline: 'Software engineer. Writes about building things.',
   // Public (N2 confirmed by Jay, Stage 3 checkpoint).
   email: 'jay.parekh7689@gmail.com',
   resume: '/Jay_Parekh_Resume.pdf',

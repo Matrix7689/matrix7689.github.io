@@ -284,9 +284,11 @@ const person = {
     border-top: var(--hairline) solid var(--border);
   }
 
+  /* The about grid's 52rem column sets the width here, not .prose's 72ch. */
   .summary {
     display: grid;
     gap: var(--space-4);
+    max-width: none;
   }
 
   .about-more {
@@ -311,13 +313,13 @@ const person = {
   /* Slightly see-through so the photo sits softer on the page; inner corners follow the frame. */
   .headshot :global(img) {
     border-radius: 4px;
-    opacity: 0.75;
+    opacity: 0.85;
   }
 
   @media (min-width: 48rem) {
     .about {
-      /* Text column capped at the prose width so the photo sits right beside it, not at the far edge. */
-      grid-template-columns: minmax(0, var(--prose)) 13rem;
+      /* Text column capped at 52rem (wider than --prose) so the photo sits right beside it, not at the far edge. */
+      grid-template-columns: minmax(0, 52rem) 13rem;
       justify-content: start;
       gap: var(--space-12);
       align-items: start;
