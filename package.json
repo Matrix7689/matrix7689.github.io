@@ -32,7 +32,7 @@
     "@astrojs/check": "0.9.12",
     "@astrojs/markdown-satteri": "0.4.6",
     "@astrojs/rss": "4.0.19",
-    "@lhci/cli": "0.15.1",
+    "@lhci/cli": "0.16.0",
     "@types/node": "24.19.2",
     "astro": "7.4.4",
     "cross-env": "10.1.0",
