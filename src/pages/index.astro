@@ -12,7 +12,7 @@ import ExperienceItem from '../components/ExperienceItem.astro';
 import SpecTable from '../components/SpecTable.astro';
 import CompactToggle from '../components/CompactToggle.astro';
 import SectionRail from '../components/SectionRail.astro';
-import CareerTimeline, { type Segment } from '../components/CareerTimeline.astro';
+import CareerTimeline from '../components/CareerTimeline.astro';
 import Figure from '../components/Figure.astro';
 import PostListItem from '../components/PostListItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -20,6 +20,7 @@ import EmptyState from '../components/EmptyState.astro';
 import { SITE } from '../site.config';
 import { HOME, ABOUT, CREDENTIALS } from '../data/pages';
 import { getPosts, postSlug } from '../lib/posts';
+import { buildTimeline, type Segment } from '../lib/timeline';
 
 const site = Astro.site!.origin;
 
@@ -53,7 +54,10 @@ const segments: Segment[] = [
   ...roles.map(({ data: r }) => ({ title: r.title, org: r.company, start: r.start, end: r.end, kind: /intern/i.test(r.title) ? ('internship' as const) : ('work' as const) })),
   ...ABOUT.education.filter((e) => e.level === 'university').map((e) => ({ title: e.degree, org: e.school, start: e.start, end: e.end, kind: 'study' as const })),
 ];
-const timelineLanes = HOME.timeline.lanes.map((l) => ({ label: l.label, segments: segments.filter((s) => s.org === l.org) }));
+const timeline = buildTimeline(
+  HOME.timeline.from,
+  HOME.timeline.lanes.map((l) => ({ label: l.label, segments: segments.filter((s) => s.org === l.org) })),
+);
 
 // Education reads like experience (Jay, Stage 5 checkpoint): degree as the title, one coursework sentence.
 const courses = new Intl.ListFormat('en', { type: 'conjunction' });
@@ -75,6 +79,8 @@ const person = {
 
 <Base title="Jay Parekh · Software Engineer" description="Portfolio and blog of Jay Parekh, software engineer." current="home">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
+  {/* Career timeline bar positions (lib/timeline.ts); inline style attributes are not allowed. */}
+  <Fragment slot="head"><style is:inline set:html={timeline.css} /></Fragment>
   <SectionRail sections={sections} />
 
   <section class="container intro" aria-labelledby="intro-title">
@@ -143,7 +149,7 @@ const person = {
     <div class="container">
       <SectionHeader number="03" title="~/experience" id="experience" />
       <CompactToggle id="compact-experience" label="experience" />
-      <CareerTimeline from={HOME.timeline.from} lanes={timelineLanes} />
+      <CareerTimeline timeline={timeline} />
       <div class="stack-lg">
         {
           roles.map(({ data: r }) => (

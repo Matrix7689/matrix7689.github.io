@@ -1,58 +1,28 @@
 ---
 // Horizontal career timeline (Jay, Stage 5 follow-up), a static port of the template's "Thread Profiler"
 // (section 07, Concurrency Models): one lane per organisation, bars placed by month along a year scale.
-// No JS and no motion. Bars and year labels are SVG with percentage x/width (html-validate forbids inline
-// styles), so positions need no generated CSS. Hovering a bar shows its <title>; screen readers get a
-// visually hidden list per lane instead of the decorative SVG.
-import { roleRange } from '../lib/dates';
-
-export type Segment = { title: string; org: string; start: string; end?: string | undefined; kind: 'work' | 'internship' | 'study' };
+// No JS and no motion. Geometry comes from lib/timeline.ts; the page puts its `css` (bar positions) in
+// <head>. Each bar is focusable and opens a card like the nav's loadTime card on hover or focus; the card
+// text is always in the DOM, so screen readers read it.
+import type { Timeline } from '../lib/timeline';
 
 interface Props {
-  /** First month on the scale, YYYY-MM (January of a year). */
-  from: string;
-  lanes: { label: string; segments: Segment[] }[];
+  timeline: Timeline;
 }
 
-const { from, lanes } = Astro.props;
-
-// Months since `from`; the scale ends with the build month ("present").
-const ym = (s: string) => {
-  const [y, m] = s.split('-').map(Number);
-  return y! * 12 + (m! - 1);
-};
-const now = new Date();
-const origin = ym(from);
-const nowMonth = now.getFullYear() * 12 + now.getMonth();
-const total = nowMonth + 1 - origin;
-const pct = (months: number) => `${((Math.max(0, months) / total) * 100).toFixed(3)}%`;
-
-const firstYear = Number(from.slice(0, 4));
-const years = Array.from({ length: now.getFullYear() - firstYear + 1 }, (_, i) => ({ year: i + firstYear, x: pct(i * 12), odd: i % 2 === 1 }));
-
-const rows = lanes.map((lane) => ({
-  ...lane,
-  studyOnly: lane.segments.every((s) => s.kind === 'study'),
-  bars: lane.segments
-    .map((s) => {
-      const start = Math.max(0, ym(s.start) - origin);
-      const end = (s.end ? ym(s.end) : nowMonth) + 1 - origin;
-      return { ...s, x: pct(start), w: pct(end - start), range: roleRange(s.start, s.end) };
-    })
-    .sort((a, b) => a.start.localeCompare(b.start)),
-}));
+const { firstYear, years, rows } = Astro.props.timeline;
 ---
 
 <figure class="tl" aria-labelledby="tl-title">
-  <div class="tl__bar">
+  <div class="tl__head">
     <p class="tl__name" id="tl-title"><span class="tl__dot" aria-hidden="true"></span>Career profiler</p>
     <p>{firstYear} — present</p>
   </div>
 
   <div class="tl__row tl__scale" aria-hidden="true">
     <span class="tl__label"></span>
-    <svg class="tl__svg tl__svg--scale" width="100%" height="28" focusable="false">
-      {years.map((y) => <text class:list={{ 'tl__odd': y.odd }} x={y.x} y="18">{y.year}</text>)}
+    <svg class="tl__svg" width="100%" height="28" focusable="false">
+      {years.map((y) => <text class:list={{ tl__odd: y.odd }} x={y.x} y="18">{y.year}</text>)}
     </svg>
   </div>
 
@@ -64,27 +34,38 @@ const rows = lanes.map((lane) => ({
             <span class:list={['tl__sq', { 'tl__sq--muted': lane.studyOnly }]} aria-hidden="true"></span>
             {lane.label}
           </span>
-          <svg class="tl__svg" width="100%" height="16" aria-hidden="true" focusable="false">
-            <rect class="tl__lane" width="100%" height="100%" />
-            {years.map((y) => <line class="tl__tick" x1={y.x} x2={y.x} y1="0" y2="100%" />)}
-            {lane.bars.map((b) => (
-              <rect class={`tl__seg--${b.kind}`} x={b.x} width={b.w} height="100%">
-                <title>{`${b.title} · ${b.org} · ${b.range}`}</title>
-              </rect>
-            ))}
-          </svg>
-          <ul class="visually-hidden" role="list">
-            {lane.bars.map((b) => <li>{`${b.title}, ${b.org}, ${b.range}`}</li>)}
-          </ul>
+          <div class="tl__track">
+            <svg class="tl__svg" width="100%" height="100%" aria-hidden="true" focusable="false">
+              <rect class="tl__lane" width="100%" height="100%" />
+              {years.map((y) => <line class="tl__tick" x1={y.x} x2={y.x} y1="0" y2="100%" />)}
+            </svg>
+            <ul role="list">
+              {lane.bars.map((b) => (
+                <li class:list={['tl__seg', `tl__seg--${b.kind}`, b.cls, { 'tl__seg--flip': b.flip }]} tabindex="0">
+                  <span class="tl__card">
+                    <span>
+                      {'role  = '}<span class="tl__v">{b.title}</span>
+                    </span>
+                    <span>
+                      {'org   = '}<span class="tl__v">{b.org}</span>
+                    </span>
+                    <span>
+                      {'dates = '}<span class="tl__v">{b.range}</span>
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </li>
       ))
     }
   </ul>
 
   <figcaption class="tl__legend">
-    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--work" width="16" height="8" /></svg>Work</span>
-    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--internship" width="16" height="8" /></svg>Internship</span>
-    <span><svg width="16" height="8" aria-hidden="true" focusable="false"><rect class="tl__seg--study" width="16" height="8" /></svg>Study</span>
+    <span><span class="tl__key tl__seg--work" aria-hidden="true"></span>Work</span>
+    <span><span class="tl__key tl__seg--internship" aria-hidden="true"></span>Internship</span>
+    <span><span class="tl__key tl__seg--study" aria-hidden="true"></span>Study</span>
   </figcaption>
 </figure>
 
@@ -96,7 +77,7 @@ const rows = lanes.map((lane) => ({
     color: var(--muted);
   }
 
-  .tl__bar {
+  .tl__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -162,6 +143,15 @@ const rows = lanes.map((lane) => ({
     overflow: visible;
   }
 
+  /* Explicit heights: base.css sets svg { height: auto }, which would make these 150 px tall. */
+  .tl__scale .tl__svg {
+    height: 1.75rem;
+  }
+
+  .tl__track .tl__svg {
+    height: 100%;
+  }
+
   .tl__svg text {
     font-family: var(--font-mono);
     font-size: var(--fs-micro);
@@ -175,6 +165,11 @@ const rows = lanes.map((lane) => ({
     }
   }
 
+  .tl__track {
+    position: relative;
+    height: 1rem;
+  }
+
   .tl__lane {
     fill: color-mix(in srgb, var(--border) 30%, transparent);
   }
@@ -184,26 +179,89 @@ const rows = lanes.map((lane) => ({
     stroke-width: 1;
   }
 
-  /* A background-coloured edge keeps back-to-back roles apart (SDE I → SDE II). */
-  [class^='tl__seg--'] {
-    stroke: var(--bg);
-    stroke-width: 2;
+  /* Bars: left/width come from the page's generated .tl-bN rules. */
+  .tl__seg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* A background-coloured edge keeps back-to-back roles apart (SDE I → SDE II). */
+    box-shadow: -2px 0 0 var(--bg);
+    cursor: default;
   }
 
   .tl__seg--work {
-    fill: var(--fg);
+    background: var(--fg);
   }
 
   .tl__seg--internship {
-    fill: var(--muted);
+    background: var(--muted);
   }
 
   .tl__seg--study {
-    fill: color-mix(in srgb, var(--fg) 32%, transparent);
+    background: color-mix(in srgb, var(--fg) 32%, transparent);
   }
 
-  .tl__svg rect[class^='tl__seg--']:hover {
-    stroke: var(--fg);
+  .tl__seg:hover,
+  .tl__seg:focus-visible {
+    z-index: 2;
+    outline: var(--ring-width) solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* The card (same look as the nav's loadTime card): visually hidden until hover or focus. */
+  .tl__card {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    display: grid;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: pre;
+  }
+
+  .tl__seg--flip .tl__card {
+    right: 0;
+    left: auto;
+  }
+
+  .tl__seg:hover .tl__card,
+  .tl__seg:focus-visible .tl__card {
+    width: auto;
+    height: auto;
+    padding: var(--space-2) var(--space-3);
+    clip: auto;
+    border: var(--hairline) solid var(--fg);
+    background: var(--bg);
+    color: var(--muted);
+    font-size: var(--fs-ui);
+    line-height: 1.6;
+  }
+
+  /* Narrow screens: a bar's card can be wider than the screen, so it docks to the bottom of the viewport
+     and wraps. :focus (not only :focus-visible) so a tap opens it too. */
+  @media (max-width: 47.99rem) {
+    .tl__seg:focus .tl__card,
+    .tl__seg:hover .tl__card {
+      position: fixed;
+      inset: auto var(--gutter) var(--gutter);
+      z-index: 20;
+      width: auto;
+      height: auto;
+      padding: var(--space-2) var(--space-3);
+      clip: auto;
+      border: var(--hairline) solid var(--fg);
+      background: var(--bg);
+      color: var(--muted);
+      font-size: var(--fs-ui);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+  }
+
+  .tl__v {
+    color: var(--fg);
   }
 
   .tl__legend {
@@ -220,7 +278,9 @@ const rows = lanes.map((lane) => ({
     gap: var(--space-2);
   }
 
-  .tl__legend [class^='tl__seg--'] {
-    stroke: none;
+  .tl__key {
+    display: inline-block;
+    width: 1rem;
+    height: 0.5rem;
   }
 </style>
