@@ -216,3 +216,7 @@ Jay asked for a compact on/off toggle on experience and education (on by default
 - **Load stat (all pages):** new `LoadTime.astro` in the nav after the name, e.g. "load 113 ms". After `load`, a tiny inline script reads the Navigation Timing entry (`loadEventEnd − startTime`). Hover or keyboard focus shows a tooltip with load start and end as Unix ms timestamps (`timeOrigin + startTime` / `+ loadEventEnd`). It stays hidden without JS and on screens under 40rem (no room beside the menu). This is a new JS allowance, recorded as SPEC D9(c) and in CLAUDE.md's hard rules. JS per page is 0.8 KB (cap 2 KB).
 - **Checks:** `npm run verify` exits 0; `/` is 14.1 KB initial. Lighthouse is 100/100/100/100 on `/`, `/blog/` and the imported post, with CLS ≤ 0.001. No horizontal scroll at 375 px.
 - **Follow-up (Jay):** the tooltip now also shows each timestamp in readable local time, e.g. `1793647262312` / `2026-11-03 00:51:02.312`, with the note "(unix ms · your local time)". The formatter is one line (an ISO string shifted by the zone offset), which keeps `/` under its 1 KB JS budget (budgets.json). A longer first version measured 1.0 KB and failed it. `npm run verify` exits 0; Lighthouse is still 100/100/100/100 on all audited URLs.
+
+## Checkpoint approval (Nov 3, 2026)
+
+Jay approved Stage 5 (the blog plus the home and shared tweaks above) after it was deployed to the live site at `0b77344`. Still open and carried forward: the blog's name and nav label (default "blog"), plus inputs N9, N12, N14 and N15.
