@@ -309,3 +309,39 @@ Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; th
 - The terminal now equals the name's width at every size: 274 / 438 / 547 / 725 px at 360 / 768 / 1024 / 1440 px windows, measured against the h1 text box. There is no horizontal scroll.
 - At ~1024 px the curl command wraps onto 2 lines inside the narrower box.
 - `npm run verify` exits 0; `/` is 16.1 KB initial.
+
+
+### Republished maps removed, awp_taj_mahal, grid / list views (Jay, Stage 7 checkpoint)
+
+- **Removed: `awp_abyss`, `aim_lavadeathmatch`, `Awp_LeetGamerz`.** These were republished on GameBanana, not designed by Jay.
+  - They stay in the master copy, which is unedited. The importer skips them (`EXCLUDE` in `scripts/import-levels.mjs`) and deletes their generated content and images.
+  - All three were CS:GO maps in the "more" section, so CS:GO drops from 21 to 19 (including the new map below).
+  - Their pages are no longer built. Nothing links to them (`check:links` 0 broken).
+- **Added `awp_taj_mahal`:** an unreleased CS:GO map dated 2015-05-15, from Jay. It is a featured map, the 13th card after the 12 old-site maps.
+  - **Name:** written as the raw-name convention `awp_taj_mahal`, from Jay's "Awp Taj Mahal".
+  - **Images:** the 8 images from https://imgur.com/a/rlCybxe (1920×1080 JPEGs, 3.3 MB) were downloaded to `gambanana assets/images/awp-taj-mahal/01–08.jpg`. The importer kept the first 6 (1.7 MB in `src/assets/level-design/awp-taj-mahal/`).
+  - **Data:** a new `docs/data/level-design-extra.json`, rather than editing the master table.
+  - **Schema:** levels gain `featured` and `unreleased`. `downloads`, `views` and `platforms` are optional for unreleased maps.
+  - **Map page:** Game, "Status: Unreleased", "Date: 2015-05-15" and Images. No downloads, views or platform rows.
+- **Totals:** **41 maps · 1,003,620 downloads · 1,327,140 views · 19 CS:GO · 22 CS:Source.** The home "Map making" highlight counts **40** published maps, because its caption says "published on GameBanana and Steam Workshop".
+- **Grid / list switches** on both sections ("13 featured maps", "28 more maps"):
+  - `ViewSwitch.astro`: two native radios before the views. A `base.css` sibling rule hides the other view, so it needs no JS; grid is the default, and arrow keys switch between the two.
+  - The labels "GRID" and "LIST" are inverted when selected, with a focus ring on keyboard focus.
+  - Grid view: large cards for the featured maps; small cards (3 / 4 / 6 columns) for all 28 others, grouped by game.
+  - List view: `MapTable.astro`, with Map, Game (CS:GO / CS:Source), Released, Downloads, Views. Unreleased maps read "2015-05-15 · unreleased" and "—". It scrolls inside its box on narrow screens.
+- **Budget decision:**
+  - The first build was **548.5 KB** total against the archive's ≤ 450 KB. The 13 featured thumbnails at 600 px were 294.1 KB (149.1 KB at 400 px), and the 28 small ones 242.8 KB.
+  - Jay was offered three fixes: list view by default for "more maps" (305.7 KB), smaller featured images (403.5 KB), or raising the budget to 600 KB. He chose **smaller featured images**, so every card now uses the 400 px thumbnail.
+  - Result: **403.2 KB**, with no budget changed. The featured cards keep their on-screen size and look slightly soft on high-DPR screens.
+- **CLS fix on `/`:**
+  - Lighthouse found **CLS 0.137** on the home page, introduced by the earlier "terminal width = name width" change. That column followed the rendered `h1`, so it resized when Geist Mono swapped in.
+  - The column is now `min(100%, 5.7 × --fs-hero)`, from the font's metrics: 10 characters × (0.6 em advance − 0.03 em tracking). The `h1` no longer wraps.
+  - Widths are unchanged (274 / 438 / 547 / 725 px at 360 / 768 / 1024 / 1440), and home CLS is now 0.007–0.008 (≤ 0.02).
+- **Checks:**
+  - `npm run verify` exits 0. `/projects/level-design/` is 11.3 KB initial (≤ 60) and **403.2 KB** total (≤ 450). `/projects/level-design/awp-taj-mahal/` is 88.1 KB initial (≤ 120). `/` is 16.1 KB initial. 0 raw originals, 0 broken links.
+  - `npm run lhci`: 100 / 100 / 100 / 100 on all **10** audited URLs (3 runs each; `awp-taj-mahal` added). CLS ≤ 0.008.
+  - `npm run check:inputs`: 7, unchanged. The home page has 0 archive links. At 360 px there is no horizontal scroll on `/`, the archive (in both views; tables scroll in their boxes, 316 of 583 px) or the Taj Mahal page.
+- **Tested in the browser:**
+  - Real click on featured "LIST" showed 13 rows with the five columns.
+  - ArrowRight on the focused "more maps" radio switched to list, with a focus ring and 28 rows (first `am_devbeach … CS:GO … 2017-02-13`, last `awp_lego_2012 … CS:Source … 2011-11-17`).
+  - Grid is shown by default in both sections, and the three removed maps appear nowhere on the page.
