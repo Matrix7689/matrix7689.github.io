@@ -24,7 +24,9 @@ export const PRESETS: Record<Preset, PresetSpec> = {
   detail: {
     widths: [800, 1280],
     formats: [
-      { format: 'avif', quality: 55 },
+      // 52 (was 55, Stage 7): keeps a map page's eager first screenshot (1280 px AVIF) inside the
+      // 120 KB initial budget with headroom; LCZ CTF Galaxy measured 113.6 KB → 100.4 KB.
+      { format: 'avif', quality: 52 },
       { format: 'webp', quality: 50 },
       { format: 'jpg', quality: 65 },
     ],

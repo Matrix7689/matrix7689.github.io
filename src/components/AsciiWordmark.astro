@@ -27,8 +27,10 @@ const art = Array.from({ length: 6 }, (_, row) => letters.map((g) => g[row]).joi
 </div>
 
 <style>
+  /* 12 px, Lighthouse's legibility floor (was 11 px): on text-light pages (the map archive) the
+     wordmark's characters were most of the page's text and failed "legible font sizes". */
   pre {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.15;
     opacity: var(--opacity-wordmark);
     overflow: hidden;
