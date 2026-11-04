@@ -114,3 +114,7 @@ Jay's request: the About page shows only his text and his photo, with logos besi
   - `lighthouserc.json` is back to one set of assertions for every URL; the per-URL SEO audit list is removed.
   - `/404.html` now scores **100 / 100 / 100 / 100**, and deviation 1 above no longer applies.
   - `npm run verify` exits 0, and `npm run lhci` passes on all 12 URLs (3 runs each). Two single runs dipped to 98–99 Performance; medians are 100.
+
+## Checkpoint approval (Nov 4, 2026)
+
+Jay approved Stage 8: `/about/` (his own text and photo, with section logos), the 404 page (without noindex), the `/works-2.html` redirect, and the resume served at its old URL. Carried forward: an updated resume PDF (N7, from Jay later) and optional CS:GO and CS:Source logos.
