@@ -110,12 +110,13 @@ export const ABOUT = {
       heading: null,
       logos: [],
       paragraphs: [
-        'I’m a Software Development Engineer II on Amazon’s Shopping Cart team in Seattle. I’ve been programming for {years} years, {proYears} of them professionally. I started with Java, C, C++ and Python, and Java is where I’m strongest. But my path here started somewhere else: games.',
+        // (proposed) Reworded at Jay's request, opening with his own first sentence.
+        'I’m a software engineer on Amazon’s Shopping Cart team. I’ve been programming for {years} years, the last {proYears} professionally. I started with Java, C, C++ and Python, and Java is still my strongest language. Before any of that, though, there were games.',
       ],
     },
     {
       heading: 'Games first',
-      logos: ['counterstrike', 'csgo', 'cs-source', 'hammer'],
+      logos: ['counterstrike', 'csgo', 'cs-source'],
       paragraphs: [
         'From 2011 to 2019, I designed 3D levels and ran game servers for Counter-Strike: Global Offensive and Counter-Strike: Source. It began as a side project next to school and college, and I learned to balance both. I picked up level design from YouTube series, blogs, and veteran map designers. My early maps were rough, but they got better with practice. Over time, 40 of them went up on GameBanana and Steam Workshop and collected over 1 million downloads and 1.3 million views. I built the Taj Mahal from scratch, which took a month. My Lego-themed and sci-fi maps went viral and were featured on the Steam front page. I later hosted a YouTube series of map-making workshops, with 500 to 1,000 viewers per live stream.',
         'The technical side taught me just as much. I configured and maintained game servers on AWS and in local data centers, handled DDoS attacks, and worked with data centers to keep latency low for players. The same skills carried over to running technical operations for 32 eSports events in India, both online and LAN. Keeping a live service up while real people depend on it was my first lesson in operations, long before my first engineering job.',
@@ -142,7 +143,7 @@ export const ABOUT = {
       logos: [],
       paragraphs: [
         'I listen to a lot of music. According to Spotify, I listen to 15 different genres. I love exploring new cuisines and traveling. I also play badminton, which is a great stress buster, and I can get competitive. Okay, I’m always competitive. After a long day of thinking, a game or a quiet evening does more for me than pushing through. I save the deep thinking for the big decisions and keep the small ones, like where to eat, easy.',
-        'Whenever there’s a chance to write, I do. Lately that means tech blogs for software engineers, on working with AI, avoiding burnout, and thinking critically.',
+        'Whenever there’s a chance to write, I do. Lately that means tech blogs for software engineers.',
       ],
     },
   ] as { heading: string | null; logos: string[]; paragraphs: string[] }[],
