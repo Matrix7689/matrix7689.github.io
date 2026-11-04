@@ -84,3 +84,25 @@ Please review `/about/` and the 404 page (`npm run preview` → http://localhost
 2. **Resume:** supply an updated PDF, or keep the current one (217 KB)?
 3. **Headshot:** it reuses the home page's light and dark photos. Keep it?
 4. **404 `noindex`:** keep it (SEO 63 on that page only), or drop it?
+
+
+## Checkpoint follow-up: About is Jay's text and photo (Nov 4, 2026)
+
+Jay's request: the About page shows only his text and his photo, with logos beside the section headings. He also has **15 years** of programming experience, having started learning Java in 8th grade in 2011.
+
+- **`/about/`** is now `ABOUT.story`, Jay's text verbatim, plus `Headshot`.
+  - It opens with an untitled intro, then **Games first**, **Engineering**, **How I work** and **Outside work** as h2s.
+  - The photo is on the right from 64rem and sticks while the text scrolls; below 64rem it sits above the text.
+  - **Removed at Jay's request:** the career timeline and roles, education tables, the elsewhere list and the resume button. The resume is still on the home page ("Preview resume") and in the footer (`resume.pdf`). `ABOUT.longSummary` and `ABOUT.elsewhere` were deleted.
+- **Years are computed, not typed:** `CAREER = { programmingSince: 2011, professionalSince: 2021 }` and `yearsSince()` in `src/data/pages.ts`.
+  - The About intro reads "programming for **15** years, **five** of them professionally". Small counts are spelled out, as in Jay's text.
+  - The home "Engineering" highlight now reads **15 years** of programming experience (it was a hard-coded 13).
+  - Both update each year on the next build.
+- **Logos (`SectionLogos.astro`):**
+  - Monochrome SVGs are inlined from `src/assets/logos/` and coloured with `currentColor` (muted grey in both themes), so the page makes no extra or third-party request. They are decorative (`aria-hidden`).
+  - With Jay's OK, two were downloaded from **Simple Icons 13.21.0** (CC0): `amazon.svg` (2.1 KB), shown on **Engineering**, and `counterstrike.svg` (3.1 KB), shown on **Games first**.
+  - **Waiting on Jay:** Simple Icons has no Hammer World Editor logo and no separate CS:GO or CS:Source logos. "Games first" already lists `csgo`, `cs-source` and `hammer`, so dropping `csgo.svg`, `cs-source.svg` or `hammer.svg` into `src/assets/logos/` makes them appear. A single-colour SVG suits the theme best.
+- **Checks:**
+  - `npm run verify` exits 0. `/about/` is **10.1 KB** initial (≤ 40) and **43.5 KB** total with the photo (≤ 100). `/` is 16.1 KB.
+  - Lighthouse is 100 / 100 / 100 / 100 on `/about/` and `/`, with all 12 URLs passing their assertions (`/404.html` SEO 63 as before, from the intended noindex).
+  - At 360 px there is no horizontal scroll on `/about/` or `/`. `npm run check:inputs` is still 7.

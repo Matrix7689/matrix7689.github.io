@@ -21,12 +21,13 @@ export const HOME = {
   // Approved by Jay with the list after the colon removed (N3, Stage 4 checkpoint).
   oneLiner: "I build and scale Amazon's shopping cart service.",
   // Highlights (Jay, Stage 4 checkpoint). Numbers come from §4.2, the resume, the old site, LinkedIn or
-  // Jay directly (13 years, 6 simulations, 3 mentees, 3 hackathons, 975 coffees, Spotify 2025). No source labels on the cards.
+  // Jay directly (programming since 2011, 6 simulations, 3 mentees, 3 hackathons, 975 coffees, Spotify 2025). No source labels on the cards.
   highlights: [
     {
       group: 'Engineering',
       items: [
-        { value: '13 years', caption: 'of programming experience' },
+        // Computed from CAREER.programmingSince (Jay: 15 years in 2026, since 8th-grade Java in 2011).
+        { stat: 'programming' as const, caption: 'of programming experience' },
         { value: '>99.99%', caption: 'success on a major service migration' },
         { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage' },
         { value: '−15 ms', caption: 'global TM99 latency from the cart cache storage refactor' },
@@ -87,6 +88,11 @@ export const BLOG_INDEX = {
   subtitle: null as string | null,
 };
 
+// Years of programming (Jay: started 8th-grade Java in 2011) and of professional work (Amazon SDE I, 2021).
+export const CAREER = { programmingSince: 2011, professionalSince: 2021 };
+/** Whole years since a year, as of the build. */
+export const yearsSince = (year: number) => new Date().getFullYear() - year;
+
 export const ABOUT = {
   // Approved by Jay with the last clause removed (N4, Stage 3 checkpoint).
   bio: "I'm a software engineer on Amazon's Shopping Cart team in Seattle. Before Amazon I studied CS at USC, and before that I spent years designing 3D game levels and running gaming servers.",
@@ -95,15 +101,51 @@ export const ABOUT = {
     'I’m a software engineer on Amazon’s Shopping Cart team, building the backend behind every cart for billions of customers in the US, Japan, Europe, and India. Anyone can build a cart. The hard part is keeping it fast, always available, and accurate, even through migrations, traffic spikes, and bot attacks.',
     'Away from work, you’ll find me writing tech blogs, playing badminton, or lost in a video game.',
   ],
-  // (proposed) Longer version for the About page (Stage 8), tightened from the LinkedIn summary;
-  // "passion" phrasing dropped per the §4 copy rules. {maps}, {downloads} and {views} are filled in at build
-  // time from the level-design data (the old 50+ / 10+ million / 1 million were ballpark, Stage 7); the
-  // eSports count is the confirmed 32 (N11). Jay approves or rewrites this at the Stage 8 checkpoint.
-  longSummary: [
-    "I'm a Software Development Engineer II at Amazon. I graduated from the University of Southern California with an MS in Computer Science in May 2021, and I have 13 years of programming experience. Problem-solving, decision-making and analysis draw me to projects across very different domains.",
-    "I also design 3D levels (maps) for video games. Over 9 years I've published {maps} maps on GameBanana and Steam Workshop, with {downloads} downloads and {views} views.",
-    "I've organized and run technical operations for 32 eSports events in India, online and LAN, and built and managed community gaming servers hosted on AWS and in local data centers.",
-  ],
+  // The About page: Jay's own text, verbatim (Stage 8 checkpoint), shown with his photo and nothing else.
+  // {years} and {proYears} are filled in at build time from CAREER (Jay: programming since 2011, 8th
+  // grade Java), so they stay right each year. `logos` name SVGs in src/assets/logos/ (missing ones are
+  // skipped, so a file Jay adds later just appears).
+  story: [
+    {
+      heading: null,
+      logos: [],
+      paragraphs: [
+        'I’m a Software Development Engineer II on Amazon’s Shopping Cart team in Seattle. I’ve been programming for {years} years, {proYears} of them professionally. I started with Java, C, C++ and Python, and Java is where I’m strongest. But my path here started somewhere else: games.',
+      ],
+    },
+    {
+      heading: 'Games first',
+      logos: ['counterstrike', 'csgo', 'cs-source', 'hammer'],
+      paragraphs: [
+        'From 2011 to 2019, I designed 3D levels and ran game servers for Counter-Strike: Global Offensive and Counter-Strike: Source. It began as a side project next to school and college, and I learned to balance both. I picked up level design from YouTube series, blogs, and veteran map designers. My early maps were rough, but they got better with practice. Over time, 40 of them went up on GameBanana and Steam Workshop and collected over 1 million downloads and 1.3 million views. I built the Taj Mahal from scratch, which took a month. My Lego-themed and sci-fi maps went viral and were featured on the Steam front page. I later hosted a YouTube series of map-making workshops, with 500 to 1,000 viewers per live stream.',
+        'The technical side taught me just as much. I configured and maintained game servers on AWS and in local data centers, handled DDoS attacks, and worked with data centers to keep latency low for players. The same skills carried over to running technical operations for 32 eSports events in India, both online and LAN. Keeping a live service up while real people depend on it was my first lesson in operations, long before my first engineering job.',
+      ],
+    },
+    {
+      heading: 'Engineering',
+      logos: ['amazon'],
+      paragraphs: [
+        'Gaming is a hobby now. What stayed with me was the pull of complex problems. That led to an MS in Computer Science at the University of Southern California, and then to Amazon.',
+        'Working on a large service changed what I thought the job was. At first, coding felt like the whole thing. It isn’t. Software engineering is design documents, unit tests, launch dashboards, documentation, deployments, and then the code. The hard part was never typing the code. It was knowing what to type. That’s why I write down the problem and sketch a simple solution before I open an AI tool. AI makes code easy to produce, but it doesn’t make a system simple. I’d rather ship something I can still understand six months later.',
+        'What matters most comes after the code: deploying, testing, and making sure customers in prod see the correct results. Watching a change move from source through the pipeline, from beta to prod, is my favorite part of the work.',
+      ],
+    },
+    {
+      heading: 'How I work',
+      logos: [],
+      paragraphs: [
+        'Good mentors, peers, and managers shaped how I approach it. They taught me to stay calm when things get difficult, to keep a level head on-call, and to mitigate first and find the root cause afterward. They pushed me to look past the problem as stated and ask whether the solution holds up long-term. They also taught me to ask better questions: do the research first, then bring what I tried and what I think. When I’m stuck, I talk to someone early instead of grinding alone. A fresh perspective often saves days. In short, they taught me to be solution-oriented.',
+      ],
+    },
+    {
+      heading: 'Outside work',
+      logos: [],
+      paragraphs: [
+        'I listen to a lot of music. According to Spotify, I listen to 15 different genres. I love exploring new cuisines and traveling. I also play badminton, which is a great stress buster, and I can get competitive. Okay, I’m always competitive. After a long day of thinking, a game or a quiet evening does more for me than pushing through. I save the deep thinking for the big decisions and keep the small ones, like where to eat, easy.',
+        'Whenever there’s a chance to write, I do. Lately that means tech blogs for software engineers, on working with AI, avoiding burnout, and thinking critically.',
+      ],
+    },
+  ] as { heading: string | null; logos: string[]; paragraphs: string[] }[],
   // GPA hidden (Q6). High school added back at the Stage 4 checkpoint ("add everything").
   education: [
     {
@@ -135,13 +177,6 @@ export const ABOUT = {
       coursework: ['C++', 'Operating Systems', 'Data Structures', 'HTML', 'CSS', '8085 Microprocessors', 'Networking Technology', 'Microcontrollers', 'Assembly Language'],
     },
   ] as { level: 'university' | 'school'; school: string; affiliation?: string; degree: string; start: string; end: string; location: string; coursework: string[] }[],
-  // Secondary history. The level-design archive link is added by the template.
-  // eSports count: 32 (old-site figure, confirmed by Jay; N11, Stage 3 checkpoint).
-  elsewhere: [
-    'Led a 7-week online 3D-modelling workshop for 500+ students.',
-    'Head of technical operations for 24+ gaming servers serving 100,000+ users.',
-    'Organised 32 eSports events.',
-  ],
   // N7: Jay replaces public/Jay_Parekh_Resume.pdf himself; update the size in this label when he does.
   resumeLabel: 'Download resume (PDF, 217 KB)',
   // N8 was "no headshot" (Stage 3). Jay later supplied two (Stage 5 follow-up): src/assets/about/headshot-{light,dark}.jpg,

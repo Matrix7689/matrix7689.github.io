@@ -1,137 +1,81 @@
 ---
-// About (SPEC Stage 8 task 1, §4.6): the longer "about me" (ABOUT.longSummary, proposed, with the map
-// figures filled in from the level-design data) beside the headshot, the resume download, then
-// ~/experience (the career timeline and every role with all its bullets; no level-design role),
-// ~/education (a SpecTable per school) and ~/elsewhere (community facts and the archive link).
-import { statSync } from 'node:fs';
-import { join } from 'node:path';
+// About (SPEC Stage 8, §4.6; Stage 8 checkpoint): only Jay's own text and his photo. The text is
+// ABOUT.story, verbatim, with the years filled in at build time from CAREER. Each heading can carry
+// monochrome logos (SectionLogos). The experience, education, elsewhere and resume blocks were removed
+// at Jay's request; the resume stays on the home page and in the footer.
 import Base from '../layouts/Base.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import ExperienceItem from '../components/ExperienceItem.astro';
-import CareerTimeline from '../components/CareerTimeline.astro';
-import SpecTable from '../components/SpecTable.astro';
-import Button from '../components/Button.astro';
 import Headshot from '../components/Headshot.astro';
-import { ABOUT } from '../data/pages';
-import { SITE } from '../site.config';
-import { careerTimeline, getRoles } from '../lib/career';
-import { getMaps, totals, fmt } from '../lib/levels';
-import { roleRange } from '../lib/dates';
+import SectionLogos from '../components/SectionLogos.astro';
+import { ABOUT, CAREER, yearsSince } from '../data/pages';
 
-const roles = await getRoles();
-const timeline = await careerTimeline();
+const fill = (p: string) =>
+  p.replace('{years}', String(yearsSince(CAREER.programmingSince))).replace('{proYears}', numberWord(yearsSince(CAREER.professionalSince)));
+// Jay writes small counts as words ("five of them professionally").
+function numberWord(n: number) {
+  return ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][n] ?? String(n);
+}
+const story = ABOUT.story.map((s) => ({ ...s, paragraphs: s.paragraphs.map(fill) }));
 
-const maps = totals(await getMaps());
-const fill = (p: string) => p.replace('{maps}', String(maps.published)).replace('{downloads}', fmt(maps.downloads)).replace('{views}', fmt(maps.views));
-const summary = ABOUT.longSummary.map(fill);
-
-// The label states the real file size, so it stays right when Jay replaces the PDF (N7).
-const resumeKB = Math.round(statSync(join(process.cwd(), 'public', SITE.resume)).size / 1024);
-
-// Headshot width: 13rem beside the text from 48rem, 12rem above it on phones (see .about__photo).
-const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
+// Photo width: 13rem beside the text from 64rem, 12rem above it below that (see .about__photo).
+const HEADSHOT_SIZES = '(min-width: 64rem) 13rem, 12rem';
 ---
 
-<Base title="About · Jay Parekh" description="About Jay Parekh: software engineer on Amazon's Shopping Cart team, with his experience, education and resume." current="about">
-  {/* Career timeline bar positions (lib/timeline.ts); inline style attributes are not allowed. */}
-  <Fragment slot="head"><style is:inline set:html={timeline.css} /></Fragment>
-
-  <div class="container page">
-    <section class="about" aria-labelledby="about-title">
-      <div class="about__text">
-        <h1 id="about-title">~/about</h1>
-        <div class="prose summary">
-          {summary.map((p) => <p>{p}</p>)}
-        </div>
-        <div class="resume">
-          <Button href={SITE.resume} download>{`Download resume (PDF, ${resumeKB} KB)`}</Button>
-        </div>
-      </div>
-      <div class="about__photo">
-        <Headshot sizes={HEADSHOT_SIZES} />
-      </div>
-    </section>
-
-    <section aria-labelledby="experience">
-      <SectionHeader number="01" title="~/experience" id="experience" />
-      <CareerTimeline timeline={timeline} />
-      <div class="stack-lg">
-        {
-          roles.map(({ data: r }) => (
-            <ExperienceItem company={r.company} title={r.title} start={r.start} end={r.end} location={r.location} bullets={r.bullets} />
-          ))
-        }
-      </div>
-    </section>
-
-    <section aria-labelledby="education">
-      <SectionHeader number="02" title="~/education" id="education" />
-      <div class="schools">
-        {
-          ABOUT.education.map((e) => (
-            <SpecTable
-              label={e.school}
-              rows={[
-                { label: 'Degree', value: e.degree },
-                { label: 'Dates', value: roleRange(e.start, e.end) },
-                { label: 'Location', value: e.location },
-                { label: 'Coursework', value: e.coursework.join(', ') },
-              ]}
-            />
-          ))
-        }
-      </div>
-    </section>
-
-    <section aria-labelledby="elsewhere">
-      <SectionHeader number="03" title="~/elsewhere" id="elsewhere" />
-      <ul class="elsewhere" role="list">
-        {
-          ABOUT.elsewhere.map((item) => (
-            <li>
-              <span>{item}</span>
-            </li>
-          ))
-        }
-        {/* (proposed) Stage 8: the archive link §4.6 asks for, worded from the archive's own intro. */}
-        <li>
-          <span>Designed custom multiplayer maps for Counter-Strike: see the <a href="/projects/level-design/">level design archive</a>.</span>
-        </li>
-      </ul>
-    </section>
+<Base title="About · Jay Parekh" description="About Jay Parekh: software engineer on Amazon's Shopping Cart team, and before that a Counter-Strike level designer." current="about">
+  <div class="container about">
+    <article class="about__text">
+      <h1>~/about</h1>
+      {
+        story.map((s) => (
+          <section class="part" aria-label={s.heading ?? 'Introduction'}>
+            {s.heading && (
+              <h2 class="part__head">
+                <span>{s.heading}</span>
+                <SectionLogos names={s.logos} />
+              </h2>
+            )}
+            {s.paragraphs.map((p) => (
+              <p>{p}</p>
+            ))}
+          </section>
+        ))
+      }
+    </article>
+    <div class="about__photo">
+      <Headshot sizes={HEADSHOT_SIZES} />
+    </div>
   </div>
 </Base>
 
 <style>
-  .page {
-    display: grid;
-    gap: var(--space-section);
-    padding-block: var(--space-section);
-  }
-
-  /* Photo above the text on phones, on the right from 48rem (as on the home page). */
+  /* Text on the left at reading width, the photo on the right (sticky) from 64rem; above the text below. */
   .about {
     display: grid;
     gap: var(--space-8);
+    padding-block: var(--space-section);
   }
 
   .about__text {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-12);
+    max-width: var(--prose);
   }
 
   h1 {
     font-size: var(--fs-title);
+    margin-bottom: calc(-1 * var(--space-6));
   }
 
-  .summary {
+  .part {
     display: grid;
     gap: var(--space-4);
-    max-width: none;
   }
 
-  .resume {
-    margin-top: var(--space-2);
+  .part__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    font-size: var(--fs-title);
   }
 
   .about__photo {
@@ -139,9 +83,9 @@ const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
     width: 12rem;
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 64rem) {
     .about {
-      grid-template-columns: minmax(0, 52rem) 13rem;
+      grid-template-columns: minmax(0, var(--prose)) 13rem;
       justify-content: start;
       gap: var(--space-12);
       align-items: start;
@@ -150,46 +94,8 @@ const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
     .about__photo {
       order: 0;
       width: 13rem;
+      position: sticky;
+      top: calc(3.5rem + var(--space-8));
     }
-  }
-
-  .stack-lg {
-    display: grid;
-    gap: var(--space-12);
-  }
-
-  .schools {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  @media (min-width: 64rem) {
-    .schools {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      align-items: start;
-    }
-  }
-
-  .elsewhere {
-    display: grid;
-    gap: var(--space-3);
-    max-width: var(--prose);
-  }
-
-  .elsewhere li {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-3);
-  }
-
-  /* [*] marker (DesignSpec §2.1), as in the role bullets. */
-  .elsewhere li::before {
-    content: '[*]' / '';
-    color: var(--muted);
-  }
-
-  .elsewhere a {
-    text-decoration-line: underline;
-    text-underline-offset: 3px;
   }
 </style>
