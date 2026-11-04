@@ -438,7 +438,7 @@ Conventions for every stage:
 
 **Tasks:**
 1. `/about/`: bio, `~/education` (USC, Mumbai) as `SpecTable`s, `~/experience` (full timeline incl. intern + CTO; no level-design role), `~/elsewhere` (community and extra-curricular facts from §4.6), resume download button (`Button` primary, `download` attr, size and "PDF" label), optional headshot (only if provided).
-2. `404.astro`: terminal-style `$ cd <path>: No such file or directory` with links to home, blog and projects. `noindex`.
+2. `404.astro`: terminal-style `$ cd <path>: No such file or directory` with links to home, blog and projects. (`noindex` was dropped at the Stage 8 checkpoint: GitHub Pages already serves it with an HTTP 404 status.)
 3. `public/works-2.html` redirect stub (D11).
 4. Confirm `/Jay_Parekh_Resume.pdf` is served at the old URL.
 

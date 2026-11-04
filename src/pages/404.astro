@@ -1,7 +1,8 @@
 ---
 // 404 (SPEC Stage 8 task 2, §4.8): terminal-style "No such file or directory" with links home, to the blog
-// and to projects. noindex. GitHub Pages serves dist/404.html for any missing path; the static page can't
-// know which path was asked for without JS, so the terminal shows a generic one.
+// and to projects. GitHub Pages serves dist/404.html for any missing path with an HTTP 404 status, so it
+// isn't indexed; noindex was dropped at the Stage 8 checkpoint (Jay). Without JS the static page can't
+// know which path was asked for, so the terminal shows a generic one.
 import Base from '../layouts/Base.astro';
 import TerminalCard from '../components/TerminalCard.astro';
 
@@ -13,7 +14,7 @@ const links = [
 ];
 ---
 
-<Base title="Page not found · Jay Parekh" description="This page doesn't exist. Go to Jay Parekh's home page, blog or projects." noindex>
+<Base title="Page not found · Jay Parekh" description="This page doesn't exist. Go to Jay Parekh's home page, blog or projects.">
   <div class="container page">
     <h1>404 · page not found</h1>
     <TerminalCard title="jay@portfolio ~ terminal">

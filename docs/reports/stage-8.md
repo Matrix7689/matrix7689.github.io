@@ -107,3 +107,10 @@ Jay's request: the About page shows only his text and his photo, with logos besi
   - Lighthouse is 100 / 100 / 100 / 100 on `/about/` and `/`, with all 12 URLs passing their assertions (`/404.html` SEO 63 as before, from the intended noindex).
   - At 360 px there is no horizontal scroll on `/about/` or `/`. `npm run check:inputs` is still 7.
 - **Wording follow-up (Jay):** the intro now opens with Jay's own sentence. Proposed wording: "I’m a software engineer on Amazon’s Shopping Cart team. I’ve been programming for 15 years, the last five professionally. I started with Java, C, C++ and Python, and Java is still my strongest language. Before any of that, though, there were games." The last line is trimmed to "Lately that means tech blogs for software engineers." The Hammer logo is dropped from "Games first" (Jay: skip it); `csgo` and `cs-source` still appear if their SVGs are added. `npm run verify` exits 0.
+
+## Checkpoint decisions (Nov 4, 2026)
+- **Resume (N7):** Jay will update the PDF later. The current `Jay_Parekh_Resume.pdf` (217 KB) ships until then.
+- **404 `noindex`: dropped** (Jay). GitHub Pages serves `404.html` with an HTTP 404 status, so search engines don't index it anyway.
+  - `lighthouserc.json` is back to one set of assertions for every URL; the per-URL SEO audit list is removed.
+  - `/404.html` now scores **100 / 100 / 100 / 100**, and deviation 1 above no longer applies.
+  - `npm run verify` exits 0, and `npm run lhci` passes on all 12 URLs (3 runs each). Two single runs dipped to 98–99 Performance; medians are 100.
