@@ -28,13 +28,12 @@ export const HOME = {
       items: [
         // Computed from CAREER.programmingSince (Jay: 15 years in 2026, since 8th-grade Java in 2011).
         { stat: 'programming' as const, caption: 'of programming experience' },
-        { value: '>99.99%', caption: 'success on a major service migration' },
         { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage' },
         { value: '−15 ms', caption: 'global TM99 latency from the cart cache storage refactor' },
-        { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration' },
+        { value: '3', caption: 'hackathons won at Amazon' },
         { value: '6', caption: 'peak-traffic simulations run' },
         { value: '3', caption: 'engineers mentored' },
-        { value: '3', caption: 'hackathons won at Amazon' },
+        { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration' },
       ],
     },
     {
@@ -42,22 +41,21 @@ export const HOME = {
       items: [
         // Old-site total, confirmed by Jay (N11); LinkedIn's summary says "over 30 eSports tournaments in India".
         { value: '32', caption: 'eSports tournaments organised in India, online and LAN' },
-        { value: '24+', caption: 'gaming servers built and configured' },
+        { value: '24+', caption: 'custom gaming servers built, configured, and maintained' },
         { value: '100,000+', caption: 'users served by those servers' },
         { value: '500+', caption: 'students in a 7-week online 3D level design workshop' },
-        { value: '4', caption: 'subsidiaries led as CTO, including Mammoth Gaming' },
       ],
     },
     {
-      // Map counts are the old site's figures as of 2024 (N11, kept by Jay); "9 years" is from LinkedIn.
+      // Views, downloads and maps are computed from the level-design data at build time (lib/levels.ts; the old
+      // 55 / 1,052,075 / 12,340,926 were ballpark figures). Maps counts the whole archive, including the unreleased
+      // awp_taj_mahal (Jay). "9 years" is from LinkedIn.
       group: 'Map making',
       items: [
-        { value: '9 years', caption: 'designing 3D levels (maps) for video games' },
-        // Computed from the level-design master data at build time (lib/levels.ts; Jay, Stage 7 revision:
-        // the old 55 / 1,052,075 / 12,340,926 were ballpark figures).
-        { stat: 'maps' as const, caption: 'custom multiplayer maps published on GameBanana and Steam Workshop' },
-        { stat: 'downloads' as const, caption: 'map downloads' },
         { stat: 'views' as const, caption: 'map views' },
+        { stat: 'downloads' as const, caption: 'map downloads' },
+        { value: '9 years', caption: 'designing 3D levels (maps) for video games' },
+        { stat: 'maps' as const, caption: 'custom multiplayer maps' },
       ],
     },
     {
@@ -70,6 +68,9 @@ export const HOME = {
         { value: '25', caption: 'pairs of sneakers' },
         { value: '72', caption: 'video games played' },
         { value: '74,156', caption: 'minutes on Spotify (2025)' },
+        // Hours played, from Jay.
+        { value: '3,167', caption: 'hours played in CS:GO and CS2' },
+        { value: '1,659', caption: 'hours played in CS:S' },
       ],
     },
   ],

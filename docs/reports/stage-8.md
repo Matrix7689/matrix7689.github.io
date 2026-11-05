@@ -118,3 +118,12 @@ Jay's request: the About page shows only his text and his photo, with logos besi
 ## Checkpoint approval (Nov 4, 2026)
 
 Jay approved Stage 8: `/about/` (his own text and photo, with section logos), the 404 page (without noindex), the `/works-2.html` redirect, and the resume served at its old URL. Carried forward: an updated resume PDF (N7, from Jay later) and optional CS:GO and CS:Source logos.
+
+## Post-approval: home highlights (Nov 5, 2026)
+
+Jay's edits to the home highlights:
+- **Engineering (7):** removed ">99.99%". "3 hackathons won" and "−10 ms" swapped places. The bullets under SDE II still mention >99.99%.
+- **Gaming & community (4):** "24+ custom gaming servers built, configured, and maintained" (reworded); removed "4 subsidiaries led as CTO" (the CTO role bullet stays).
+- **Map making (4), new order:** map views, map downloads, 9 years, 41 custom multiplayer maps. The maps card now counts the whole archive, including the unreleased `awp_taj_mahal`, instead of the 40 published. The About text keeps "40 of them went up on GameBanana and Steam Workshop".
+- **Off the clock (8):** added "3,167 hours played in CS:GO and CS2" and "1,659 hours played in CS:S" (figures from Jay).
+- **Checks:** `npm run verify` exits 0; `/` is 16.1 KB initial. Lighthouse is 100 / 100 / 100 / 100 on `/`, and all 12 URLs pass. `npm run check:inputs` is 7. SPEC §4.1 and §4.7 updated.
