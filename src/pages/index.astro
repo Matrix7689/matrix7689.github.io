@@ -46,7 +46,8 @@ const HEADSHOT_SIZES = '(min-width: 48rem) 13rem, 12rem';
 // Map-making highlights computed from the level-design data (no link to the archive from home).
 const mapTotals = totals(await getMaps());
 const stat = {
-  programming: `${yearsSince(CAREER.programmingSince)} years`,
+  professional: `${yearsSince(CAREER.professionalSince)} years`,
+  learning: `${CAREER.professionalSince - CAREER.programmingSince} years`,
   maps: String(mapTotals.maps),
   downloads: fmt(mapTotals.downloads),
   views: fmt(mapTotals.views),

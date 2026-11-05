@@ -26,14 +26,15 @@ export const HOME = {
     {
       group: 'Engineering',
       items: [
-        // Computed from CAREER.programmingSince (Jay: 15 years in 2026, since 8th-grade Java in 2011).
-        { stat: 'programming' as const, caption: 'of programming experience' },
+        // Computed from CAREER (Jay: 15 years in 2026, from 8th-grade Java in 2011; professional since 2021).
+        { stat: 'professional' as const, caption: 'of professional software engineering' },
+        { stat: 'learning' as const, caption: 'of programming through school and college' },
         { value: '$1.74M', caption: 'infrastructure cost saved by refactoring cart cache storage' },
-        { value: '−15 ms', caption: 'global TM99 latency from the cart cache storage refactor' },
+        { value: '15 ms', caption: 'global TM99 latency reduction from the cart cache storage refactor' },
         { value: '3', caption: 'hackathons won at Amazon' },
         { value: '6', caption: 'peak-traffic simulations run' },
         { value: '3', caption: 'engineers mentored' },
-        { value: '−10 ms', caption: 'global TM99 latency from a cross-team service migration' },
+        { value: '10 ms', caption: 'global TM99 latency reduction from a cross-team service migration' },
       ],
     },
     {
@@ -100,9 +101,12 @@ export const ABOUT = {
   // Home "~/about" text, Jay's own words verbatim (Stage 4 checkpoint). Followed by a "more about me" button.
   summary: [
     'I’m a software engineer on Amazon’s Shopping Cart team, building the backend behind every cart for billions of customers in the US, Japan, Europe, and India. Anyone can build a cart. The hard part is keeping it fast, always available, and accurate, even through migrations, traffic spikes, and bot attacks.',
+    // (proposed) Jay's two gaming startups, taken to be Drag2Death and Mammoth Gaming; facts from their role entries.
+    'Before Amazon, I ran two gaming startups in Mumbai, Drag2Death and Mammoth Gaming, where we served 100,000+ users on our game servers and organized 32 eSports events.',
     'Away from work, you’ll find me writing tech blogs, playing badminton, or lost in a video game.',
   ],
-  // The About page: Jay's own text, verbatim (Stage 8 checkpoint), shown with his photo and nothing else.
+  // The About page: Jay's own text (Stage 8 checkpoint), shown with his photo and nothing else. **bold** marks
+  // key facts (rendered by inlineMarkdown).
   // {years} and {proYears} are filled in at build time from CAREER (Jay: programming since 2011, 8th
   // grade Java), so they stay right each year. `logos` name SVGs in src/assets/logos/ (missing ones are
   // skipped, so a file Jay adds later just appears).
@@ -112,39 +116,39 @@ export const ABOUT = {
       logos: [],
       paragraphs: [
         // (proposed) Reworded at Jay's request, opening with his own first sentence.
-        'I’m a software engineer on Amazon’s Shopping Cart team. I’ve been programming for {years} years, the last {proYears} professionally. I started with Java, C, C++ and Python, and Java is still my strongest language. Before any of that, though, there were games.',
+        'I’m a software engineer on Amazon’s Shopping Cart team. I’ve been programming for **{years} years**, the last {proYears} professionally. I started with Java, C, C++ and Python, and **Java is still my strongest language**. Before any of that, though, there were games.',
       ],
     },
     {
       heading: 'Games first',
       logos: ['counterstrike', 'csgo', 'cs-source'],
       paragraphs: [
-        'From 2011 to 2019, I designed 3D levels and ran game servers for Counter-Strike: Global Offensive and Counter-Strike: Source. It began as a side project next to school and college, and I learned to balance both. I picked up level design from YouTube series, blogs, and veteran map designers. My early maps were rough, but they got better with practice. Over time, 40 of them went up on GameBanana and Steam Workshop and collected over 1 million downloads and 1.3 million views. I built the Taj Mahal from scratch, which took a month. My Lego-themed and sci-fi maps went viral and were featured on the Steam front page. I later hosted a YouTube series of map-making workshops, with 500 to 1,000 viewers per live stream.',
-        'The technical side taught me just as much. I configured and maintained game servers on AWS and in local data centers, handled DDoS attacks, and worked with data centers to keep latency low for players. The same skills carried over to running technical operations for 32 eSports events in India, both online and LAN. Keeping a live service up while real people depend on it was my first lesson in operations, long before my first engineering job.',
+        '**From 2011 to 2019**, I designed 3D levels and ran game servers for Counter-Strike: Global Offensive and Counter-Strike: Source. It began as a side project next to school and college, and I learned to balance both. I picked up level design from YouTube series, blogs, and veteran map designers. My early maps were rough, but they got better with practice. Over time, **40 of them** went up on GameBanana and Steam Workshop and collected **over 1 million downloads** and **1.3 million views**. I built **the Taj Mahal** from scratch, which took a month. My Lego-themed and sci-fi maps went viral and were **featured on the Steam front page**. I later hosted a YouTube series of map-making workshops, with **500 to 1,000 viewers per live stream**.',
+        'The technical side taught me just as much. I configured and maintained game servers on **AWS** and in local data centers, handled **DDoS attacks**, and worked with data centers to keep latency low for players. The same skills carried over to the **two gaming startups** I ran in Mumbai, Drag2Death and Mammoth Gaming, and to running technical operations for **32 eSports events** in India, both online and LAN. Keeping a live service up while real people depend on it was my first lesson in operations, long before my first engineering job.',
       ],
     },
     {
       heading: 'Engineering',
       logos: ['amazon'],
       paragraphs: [
-        'Gaming is a hobby now. What stayed with me was the pull of complex problems. That led to an MS in Computer Science at the University of Southern California, and then to Amazon.',
-        'Working on a large service changed what I thought the job was. At first, coding felt like the whole thing. It isn’t. Software engineering is design documents, unit tests, launch dashboards, documentation, deployments, and then the code. The hard part was never typing the code. It was knowing what to type. That’s why I write down the problem and sketch a simple solution before I open an AI tool. AI makes code easy to produce, but it doesn’t make a system simple. I’d rather ship something I can still understand six months later.',
-        'What matters most comes after the code: deploying, testing, and making sure customers in prod see the correct results. Watching a change move from source through the pipeline, from beta to prod, is my favorite part of the work.',
+        'Gaming is a hobby now. What stayed with me was the pull of complex problems. That led to an **MS in Computer Science** at the **University of Southern California**, and then to Amazon.',
+        'Working on a large service changed what I thought the job was. At first, coding felt like the whole thing. It isn’t. Software engineering is design documents, unit tests, launch dashboards, documentation, deployments, and then the code. The hard part was never typing the code. It was **knowing what to type**. That’s why I write down the problem and sketch a simple solution before I open an AI tool. AI makes code easy to produce, but it doesn’t make a system simple. I’d rather ship something I can still understand six months later.',
+        'What matters most comes after the code: deploying, testing, and making sure customers in prod see the correct results. Watching a change move from source through the pipeline, **from beta to prod**, is my favorite part of the work.',
       ],
     },
     {
       heading: 'How I work',
       logos: [],
       paragraphs: [
-        'Good mentors, peers, and managers shaped how I approach it. They taught me to stay calm when things get difficult, to keep a level head on-call, and to mitigate first and find the root cause afterward. They pushed me to look past the problem as stated and ask whether the solution holds up long-term. They also taught me to ask better questions: do the research first, then bring what I tried and what I think. When I’m stuck, I talk to someone early instead of grinding alone. A fresh perspective often saves days. In short, they taught me to be solution-oriented.',
+        'Good mentors, peers, and managers shaped how I approach it. They taught me to stay calm when things get difficult, to keep a level head on-call, and to **mitigate first** and find the root cause afterward. They pushed me to look past the problem as stated and ask whether the solution holds up long-term. They also taught me to ask better questions: do the research first, then bring what I tried and what I think. When I’m stuck, I talk to someone early instead of grinding alone. A fresh perspective often saves days. In short, they taught me to be **solution-oriented**.',
       ],
     },
     {
       heading: 'Outside work',
       logos: [],
       paragraphs: [
-        'I listen to a lot of music. According to Spotify, I listen to 15 different genres. I love exploring new cuisines and traveling. I also play badminton, which is a great stress buster, and I can get competitive. Okay, I’m always competitive. After a long day of thinking, a game or a quiet evening does more for me than pushing through. I save the deep thinking for the big decisions and keep the small ones, like where to eat, easy.',
-        'Whenever there’s a chance to write, I do. Lately that means tech blogs for software engineers.',
+        'I listen to a lot of music. According to Spotify, I listen to **15 different genres**. I love exploring new cuisines and traveling. I also play **badminton**, which is a great stress buster, and I can get competitive. Okay, I’m always competitive. After a long day of thinking, a game or a quiet evening does more for me than pushing through. I save the deep thinking for the big decisions and keep the small ones, like where to eat, easy.',
+        'Whenever there’s a chance to write, I do. Lately that means **tech blogs for software engineers**.',
       ],
     },
   ] as { heading: string | null; logos: string[]; paragraphs: string[] }[],

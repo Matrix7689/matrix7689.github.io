@@ -1,12 +1,13 @@
 ---
 // About (SPEC Stage 8, §4.6; Stage 8 checkpoint): only Jay's own text and his photo. The text is
-// ABOUT.story, verbatim, with the years filled in at build time from CAREER. Each heading can carry
+// ABOUT.story (**bold** marks key facts), with the years filled in at build time from CAREER. Each heading can carry
 // monochrome logos (SectionLogos). The experience, education, elsewhere and resume blocks were removed
 // at Jay's request; the resume stays on the home page and in the footer.
 import Base from '../layouts/Base.astro';
 import Headshot from '../components/Headshot.astro';
 import SectionLogos from '../components/SectionLogos.astro';
 import { ABOUT, CAREER, yearsSince } from '../data/pages';
+import { inlineMarkdown } from '../lib/inline';
 
 const fill = (p: string) =>
   p.replace('{years}', String(yearsSince(CAREER.programmingSince))).replace('{proYears}', numberWord(yearsSince(CAREER.professionalSince)));
@@ -34,7 +35,7 @@ const HEADSHOT_SIZES = '(min-width: 64rem) 13rem, 12rem';
               </h2>
             )}
             {s.paragraphs.map((p) => (
-              <p>{p}</p>
+              <p set:html={inlineMarkdown(p)} />
             ))}
           </section>
         ))

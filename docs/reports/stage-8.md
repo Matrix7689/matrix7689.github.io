@@ -129,3 +129,12 @@ Jay's edits to the home highlights:
 - **Checks:** `npm run verify` exits 0; `/` is 16.1 KB initial. Lighthouse is 100 / 100 / 100 / 100 on `/`, and all 12 URLs pass. `npm run check:inputs` is 7. SPEC §4.1 and §4.7 updated.
 - **Follow-up (Jay):** "hours" moved into the bold value: "**3,167 hours** played in CS:GO and CS2" and "**1,659 hours** played in CS:S". Each stays on one line inside its card at 360 / 768 / 1024 / 1440 px. `npm run verify` exits 0.
 - **Follow-up (Jay):** "mins" moved into the bold value: "**74,156 mins** on Spotify (2025)". It has the same length as the playtime values, which fit on one line at every width. `npm run verify` exits 0.
+
+## Post-approval: latency wording, years cards, gaming startups, bold facts (Nov 5, 2026)
+
+- **Latency cards:** "**15 ms** global TM99 latency reduction from the cart cache storage refactor" and "**10 ms** global TM99 latency reduction from a cross-team service migration" (no minus sign).
+- **SDE I bullet:** "Refactored the cart's caching storage layer, saving **$1.74M** in infrastructure costs and making the shopping cart APIs **15 ms faster** (global TM99 latency)."
+- **Years cards:** "15 years" is now two computed cards: "**5 years** of professional software engineering" and "**10 years** of programming through school and college". Engineering has 8 cards.
+- **Gaming startups (proposed; Jay to confirm):** the home summary gains "Before Amazon, I ran two gaming startups in Mumbai, Drag2Death and Mammoth Gaming, where we served 100,000+ users on our game servers and organized 32 eSports events." The About text says "the two gaming startups I ran in Mumbai, Drag2Death and Mammoth Gaming". The names are inferred from his role history (Drag2Death; Mammoth Gaming under Bigshine), and the figures come from those entries and the confirmed 32 events.
+- **About page:** 22 key facts are bold, through `inlineMarkdown` (`**…**` in `ABOUT.story`).
+- **Checks:** `npm run verify` exits 0; `/` is 16.3 KB and `/about/` 10.2 KB initial. Lighthouse passes on all 12 URLs: 100 ×4 on `/` and `/about/` (CLS 0.007–0.008, limit 0.02). `npm run check:inputs` is 7. No horizontal scroll on `/` at 360 px.
