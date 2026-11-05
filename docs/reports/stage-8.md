@@ -128,3 +128,4 @@ Jay's edits to the home highlights:
 - **Off the clock (8):** added "3,167 hours played in CS:GO and CS2" and "1,659 hours played in CS:S" (figures from Jay).
 - **Checks:** `npm run verify` exits 0; `/` is 16.1 KB initial. Lighthouse is 100 / 100 / 100 / 100 on `/`, and all 12 URLs pass. `npm run check:inputs` is 7. SPEC §4.1 and §4.7 updated.
 - **Follow-up (Jay):** "hours" moved into the bold value: "**3,167 hours** played in CS:GO and CS2" and "**1,659 hours** played in CS:S". Each stays on one line inside its card at 360 / 768 / 1024 / 1440 px. `npm run verify` exits 0.
+- **Follow-up (Jay):** "mins" moved into the bold value: "**74,156 mins** on Spotify (2025)". It has the same length as the playtime values, which fit on one line at every width. `npm run verify` exits 0.
