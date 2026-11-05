@@ -71,7 +71,7 @@ export const HOME = {
         { value: '74,156 mins', caption: 'on Spotify (2025)' },
         // Hours played, from Jay.
         { value: '3,167 hours', caption: 'played in CS:GO and CS2' },
-        { value: '1,659 hours', caption: 'played in CS:S' },
+        { value: '1,659 hours', caption: 'played in CS:Source' },
       ],
     },
   ],

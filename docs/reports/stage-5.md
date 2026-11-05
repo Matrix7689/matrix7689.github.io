@@ -260,3 +260,12 @@ Jay asked for the 2015 – present timeline and suggested the template's "Concur
 - **Tighter headshot (follow-up, Jay):** the text column is capped at `--prose` (72ch) and the grid is `justify-content: start`, so the photo sits 48 px after the text instead of at the container's right edge. The photo is smaller (13rem beside the text, 12rem stacked on phones; was 16rem/14rem), the grey mat is 5 px (was 8 px), the corners are 7 px/4 px, and the opacity is 75 % (was 85 %). `npm run verify` exits 0.
 - **Wider about text (follow-up, Jay):** the text column is now up to 52rem (832 px at a 1280 px window, was 72ch ≈ 690 px), with `.prose`'s 72ch cap lifted for this paragraph. The photo stays 48 px after it. Photo opacity is back to 85 %.
 - **Footer (Jay):** removed the tagline "Software engineer. Writes about building things." (and `SITE.tagline`, which nothing else used) and "built with astro · 0 trackers". The bottom bar now shows only "Last updated on …". `npm run verify` exits 0.
+
+## Post-Stage 8: simpler blog list (Nov 6, 2026)
+
+- `/blog/` drops the featured "Latest post" block: the tag filter, then every post newest first (`FeaturedPost.astro` deleted).
+- `/blog/` and tag pages: no `[medium]` marker, a reading time on each row (7 / 4 / 5 min), and a small cover thumbnail on the left (grayscale, colour on hover/focus; 16:10 frame; 400 px image only; 10rem wide, 6rem on phones). The home list is unchanged and keeps `[medium]`.
+- `cover` is set on the 3 posts to their `01.jpg`. "How to Work Better With AI" has no true cover; its only image is the "4 step process" diagram.
+- **Checks:** `npm run verify` exits 0. `/blog/` is 6.6 KB initial and **37.0 KB** total (<= 60); tag pages are within budget. Lighthouse is 100 x4 on `/blog/` and `/`, and all 12 URLs pass. No horizontal scroll at 360 px on `/blog/`, `/blog/tags/ai/` or `/`.
+- **Budget note:** about 10 KB per thumbnail, so the 60 KB total fits about 5 posts. Noted in `docs/PUBLISHING.md`; a decision for when the blog grows.
+- Also: the home card now reads "1,659 hours played in CS:Source".

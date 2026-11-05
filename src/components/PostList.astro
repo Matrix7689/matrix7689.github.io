@@ -1,5 +1,7 @@
 ---
-// Post list shared by /blog/ and tag pages (SPEC §4.3): PostListItem rows with h2 titles.
+// Post list shared by /blog/ and tag pages (SPEC §4.3; simplified by Jay after Stage 8): newest first, each
+// with its cover thumbnail and reading time, no [medium] marker. PostListItem rows with h2 titles.
+import { render } from 'astro:content';
 import PostListItem from './PostListItem.astro';
 import { postSlug, type Post } from '../lib/posts';
 
@@ -8,19 +10,21 @@ interface Props {
 }
 
 const { posts } = Astro.props;
+const rows = await Promise.all(posts.map(async (p) => ({ p, minutes: (await render(p)).remarkPluginFrontmatter.readingTime as number })));
 ---
 
 <div class="list">
   {
-    posts.map((p) => (
+    rows.map(({ p, minutes }) => (
       <PostListItem
         date={p.data.date}
         tags={p.data.tags}
         title={p.data.title}
         summary={p.data.summary}
         href={`/blog/${postSlug(p)}/`}
-        medium={p.data.mediumUrl !== undefined}
         level={2}
+        readingTime={minutes}
+        thumb={p.data.cover}
       />
     ))
   }

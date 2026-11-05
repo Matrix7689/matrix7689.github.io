@@ -1,18 +1,14 @@
 ---
-// Blog index (SPEC Stage 5 task 1, §4.3): featured latest post, tag filter, the rest as a list,
-// or the empty state at 0 posts.
-import { render } from 'astro:content';
+// Blog index (SPEC Stage 5 task 1, §4.3; simplified by Jay after Stage 8): tag filter and every post, newest
+// first, or the empty state at 0 posts.
 import Base from '../../layouts/Base.astro';
-import FeaturedPost from '../../components/FeaturedPost.astro';
 import TagFilter from '../../components/TagFilter.astro';
 import PostList from '../../components/PostList.astro';
 import EmptyState from '../../components/EmptyState.astro';
 import { BLOG_INDEX } from '../../data/pages';
-import { getPosts, postSlug, tagsOf } from '../../lib/posts';
+import { getPosts, tagsOf } from '../../lib/posts';
 
 const posts = await getPosts();
-const [featured, ...rest] = posts;
-const featuredMinutes = featured ? ((await render(featured)).remarkPluginFrontmatter.readingTime as number) : 0;
 ---
 
 <Base title="Blog · Jay Parekh" description="Posts by Jay Parekh on software engineering." current="blog">
@@ -23,22 +19,10 @@ const featuredMinutes = featured ? ((await render(featured)).remarkPluginFrontma
     </header>
 
     {
-      featured ? (
+      posts.length > 0 ? (
         <>
-          <section aria-label="Latest post">
-            <FeaturedPost
-              date={featured.data.date}
-              tags={featured.data.tags}
-              title={featured.data.title}
-              summary={featured.data.summary}
-              href={`/blog/${postSlug(featured)}/`}
-              medium={featured.data.mediumUrl !== undefined}
-              readingTime={featuredMinutes}
-              level={2}
-            />
-          </section>
           <TagFilter tags={tagsOf(posts)} active={null} />
-          {rest.length > 0 && <PostList posts={rest} />}
+          <PostList posts={posts} />
         </>
       ) : (
         <EmptyState command="ls blog/" message="0 posts — first one is on the way. Subscribe:" link={{ label: 'rss.xml', href: '/rss.xml' }} />

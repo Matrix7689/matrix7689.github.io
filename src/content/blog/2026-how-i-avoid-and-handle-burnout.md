@@ -5,6 +5,7 @@ summary: "Most software engineers recognize this phase. Your code isn’t workin
 tags: [software-engineering, productivity, software-development, career-advice, work-life-balance]
 draft: false
 mediumUrl: https://medium.com/@jay.parekh7689/how-i-avoid-and-handle-burnout-c8caedd9fdf1
+cover: ../../assets/blog/how-i-avoid-and-handle-burnout/01.jpg
 ---
 ![Illustration: a frustrated engineer at a desk with an error on screen, surrounded by four scenes labelled Taking time off, Talking early, Side quests and The evening reset.](../../assets/blog/how-i-avoid-and-handle-burnout/01.jpg)
 

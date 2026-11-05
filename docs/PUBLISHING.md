@@ -76,3 +76,7 @@ The rule (SPEC D6): `canonical = canonicalUrl ?? (preferMediumCanonical && mediu
 - **Drafts:** `draft: true` posts build in `npm run dev` and `npm run build:fixtures` only. They never appear in a production build, the RSS feed or a tag page.
 - **Tag pages:** every tag used by at least one published post gets `/blog/tags/<tag>/`. Reuse existing tags where they fit (see the filter row on `/blog/`) rather than near-duplicates (`ai` vs `artificial-intelligence`).
 - **Test posts:** template-test posts live in `tests/fixtures/blog/`, start with `Fixture:`, and only build with `npm run build:fixtures`.
+
+## Cover thumbnail
+
+The blog list shows each post's cover as a small thumbnail. Set `cover` in the frontmatter to an image in `src/assets/blog/<slug>/`, e.g. `cover: ../../assets/blog/<slug>/01.jpg`. Without it, the post is listed with no thumbnail. Each thumbnail adds about 10 KB to `/blog/`, whose 60 KB total budget (`budgets.json`) fits about 5 of them, so raise that budget or paginate before going past that; `npm run verify` fails when it is exceeded.

@@ -5,6 +5,7 @@ summary: "Critical thinking is fading. Social media algorithms feed us whatever 
 tags: [software-engineering, critical-thinking, productivity, career-development, artificial-intelligence]
 draft: false
 mediumUrl: https://medium.com/@jay.parekh7689/critical-thinking-is-fading-heres-how-you-can-reclaim-it-d30881b52ccb
+cover: ../../assets/blog/critical-thinking-is-fading-heres-how-you-can-reclaim-it/01.jpg
 ---
 ![Illustration: an engineer at a laptop surrounded by six practices: be solution oriented, approach info with caution, question all assumptions, break down the problem statement, avoid logical fallacies, ask great questions.](../../assets/blog/critical-thinking-is-fading-heres-how-you-can-reclaim-it/01.jpg)
 

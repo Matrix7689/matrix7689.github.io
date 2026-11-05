@@ -1,6 +1,9 @@
 ---
-// Blog list entry (SPEC §5 PostListItem, §4.3): `YYYY-MM-DD  [tag]  Title` / TL;DR / [medium].
+// Blog list entry (SPEC §5 PostListItem, §4.3): `YYYY-MM-DD  [tag]  Title` / TL;DR, optionally with a
+// reading time, a [medium] marker and a cover thumbnail on the left (grayscale, colour on hover/focus).
 // The title link covers the whole row; hover underlines the title and tints the row.
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
 import { isoDate } from '../lib/dates';
 
 interface Props {
@@ -15,26 +18,34 @@ interface Props {
   maxTags?: number;
   /** Heading level for the title: 2 when the list sits directly under the page's h1. */
   level?: 2 | 3;
+  /** Minutes to read, shown after the tags. */
+  readingTime?: number | undefined;
+  /** Cover photo, shown as a small thumbnail on the left. */
+  thumb?: ImageMetadata | undefined;
 }
 
-const { date, tags, title, summary, href, medium = false, featured = false, maxTags = 1, level = 3 } = Astro.props;
+const { date, tags, title, summary, href, medium = false, featured = false, maxTags = 1, level = 3, readingTime, thumb } = Astro.props;
 const Heading = level === 2 ? 'h2' : 'h3';
 ---
 
-<article class:list={['post', { 'post--featured': featured }]}>
-  <p class="post__meta">
-    <time datetime={isoDate(date)}>{isoDate(date)}</time>
-    {tags.slice(0, maxTags).map((t) => <span>[{t}]</span>)}
-    {
-      medium && (
-        <span class="post__medium">
-          [medium]<span class="visually-hidden"> also published on Medium</span>
-        </span>
-      )
-    }
-  </p>
-  <Heading class="post__title"><a href={href}>{title}</a></Heading>
-  <p class="post__summary">{summary}</p>
+<article class:list={['post', { 'post--featured': featured, 'post--thumb': thumb }]}>
+  {thumb && <Img src={thumb} alt="" preset="thumb" maxWidth={400} sizes="(min-width: 48rem) 10rem, 6rem" grayscale class="post__thumb" />}
+  <div class="post__body">
+    <p class="post__meta">
+      <time datetime={isoDate(date)}>{isoDate(date)}</time>
+      {tags.slice(0, maxTags).map((t) => <span>[{t}]</span>)}
+      {readingTime !== undefined && <span>{readingTime} min read</span>}
+      {
+        medium && (
+          <span class="post__medium">
+            [medium]<span class="visually-hidden"> also published on Medium</span>
+          </span>
+        )
+      }
+    </p>
+    <Heading class="post__title"><a href={href}>{title}</a></Heading>
+    <p class="post__summary">{summary}</p>
+  </div>
 </article>
 
 <style>
@@ -44,6 +55,39 @@ const Heading = level === 2 ? 'h2' : 'h3';
     gap: var(--space-2);
     padding: var(--space-4);
     margin-inline: calc(var(--space-4) * -1);
+  }
+
+  .post--thumb {
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  @media (min-width: 48rem) {
+    .post--thumb {
+      grid-template-columns: 10rem minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+  }
+
+  .post__body {
+    display: grid;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  /* Covers vary in shape, so thumbnails share one frame. */
+  .post :global(.post__thumb) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: var(--hairline) solid var(--border);
+  }
+
+  /* Colour returns while the row is hovered or its link is focused. */
+  .post:hover :global(.img-gray),
+  .post:focus-within :global(.img-gray) {
+    filter: none;
   }
 
   .post:hover {

@@ -5,6 +5,7 @@ summary: "AI should be used to accelerate your thinking, not replace it. You are
 tags: [ai, software-development, software-engineering, workflow, architecture]
 draft: false
 mediumUrl: https://medium.com/@jay.parekh7689/how-to-work-better-with-ai-95b32713664f
+cover: ../../assets/blog/how-to-work-better-with-ai/01.jpg
 ---
 AI should be used to **accelerate your thinking**, not replace it. You are critical in the very first step — Step 0: Thinking.
 
