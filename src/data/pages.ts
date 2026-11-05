@@ -69,8 +69,8 @@ export const HOME = {
         { value: '72', caption: 'video games played' },
         { value: '74,156', caption: 'minutes on Spotify (2025)' },
         // Hours played, from Jay.
-        { value: '3,167', caption: 'hours played in CS:GO and CS2' },
-        { value: '1,659', caption: 'hours played in CS:S' },
+        { value: '3,167 hours', caption: 'played in CS:GO and CS2' },
+        { value: '1,659 hours', caption: 'played in CS:S' },
       ],
     },
   ],
