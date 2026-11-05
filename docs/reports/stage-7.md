@@ -349,3 +349,8 @@ Still open: the GameBanana Submissions URL and the Drag2Death bullet wording; th
 ## Checkpoint approval (Nov 4, 2026)
 
 Jay approved Stage 7: the level design archive (41 maps from the master data plus `awp_taj_mahal`, with the three republished maps excluded), the computed totals on the archive and home, the grid / list views, the map pages with the slideshow, and the detail AVIF quality. Carried forward: per-map descriptions (not in the data; hidden), and the Drag2Death bullet wording ("50 maps / 10 million views / 1 million downloads", left as written).
+
+## Post-approval: archive sorted by views (Nov 5, 2026)
+
+- Featured and more maps now sort by views, most first (Jay), in both grid and list views. `awp_taj_mahal` has no views, so it comes last in featured. The more-maps grid stays split by game, sorted by views within each; its list is one table sorted by views across both games. Prev/next on map pages keeps the archive order.
+- **Checks:** `npm run verify` exits 0. The built tables were checked as descending (13 and 28 rows): `awp_lego_2016` 219,188 leads featured; `aa_dima_css` 40,757 leads more maps. Lighthouse was not re-run, since only the order changed.

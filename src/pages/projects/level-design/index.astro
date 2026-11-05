@@ -5,7 +5,8 @@
 // grid by default; Jay, Stage 7 checkpoint):
 // - featured maps (the 12 old-site maps + extra maps such as the unreleased awp_taj_mahal): large
 //   cards, or the list table;
-// - the other maps, grouped by game (CS:GO, then CS:Source), newest first: small cards, or the list table.
+// - the other maps: small cards grouped by game (CS:GO, then CS:Source), or the list table.
+// Both sections sort by views, most first (Jay); unreleased maps have none, so they come last.
 // Every thumbnail is the 400 px image (ThumbGrid), so the page stays inside its 450 KB total budget.
 import Base from '../../../layouts/Base.astro';
 import Figure from '../../../components/Figure.astro';
@@ -20,14 +21,14 @@ import { getMaps, totals, fmt, type MapEntry } from '../../../lib/levels';
 const maps = await getMaps();
 const sum = totals(maps);
 const card = (m: MapEntry) => ({ title: m.data.title, year: m.data.released.getUTCFullYear(), href: `/projects/level-design/${m.id}/`, image: m.data.cover });
-const featured = maps.filter((m) => m.data.featured);
+// Most viewed first; the archive order (m.data.order) still drives prev/next on map pages.
+const byViews = (a: MapEntry, b: MapEntry) => (b.data.views ?? -1) - (a.data.views ?? -1);
+const featured = maps.filter((m) => m.data.featured).sort(byViews);
 
-// The rest by game (CS:GO, then CS:Source), newest release first.
+// The rest, split by game (CS:GO, then CS:Source) in grid view.
 const GAMES = ['Counter-Strike: Global Offensive', 'Counter-Strike: Source'];
 const SHORT: Record<string, string> = { 'Counter-Strike: Global Offensive': 'CS:GO', 'Counter-Strike: Source': 'CS:Source' };
-const byGame = (a: MapEntry, b: MapEntry) =>
-  GAMES.indexOf(a.data.game) - GAMES.indexOf(b.data.game) || b.data.released.getTime() - a.data.released.getTime();
-const rest = maps.filter((m) => !m.data.featured).sort(byGame);
+const rest = maps.filter((m) => !m.data.featured).sort(byViews);
 const perGame = GAMES.map((game) => ({ game, count: maps.filter((m) => m.data.game === game).length }));
 const groups = GAMES.map((game) => ({ game, maps: rest.filter((m) => m.data.game === game) })).filter((g) => g.maps.length > 0);
 ---
