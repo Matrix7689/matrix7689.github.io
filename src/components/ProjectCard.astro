@@ -38,7 +38,7 @@ const { title, summary, stack, year, href, thumb, links = [] } = Astro.props;
         <ul class="card__links" role="list" aria-label={`${title} links`}>
           {links.map((l) => (
             <li>
-              <a href={l.href}>
+              <a href={l.href} rel="noopener">
                 {l.label} <span aria-hidden="true">→</span>
               </a>
             </li>

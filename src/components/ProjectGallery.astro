@@ -1,0 +1,64 @@
+---
+// Project screenshots on the detail page (Antariksh project): a static stack at the detail preset, lazy, each
+// linking to its build-made 1920 px WebP like the map gallery. No slideshow, so project pages add no JS.
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+import { largeUrl } from '../lib/images';
+
+interface Props {
+  images: { src: ImageMetadata; alt: string }[];
+  title: string;
+}
+
+const { images, title } = Astro.props;
+const items = await Promise.all(images.map(async (image) => ({ ...image, large: await largeUrl(image.src) })));
+---
+
+<ul class="shots" role="list" aria-label={`${title} screenshots`}>
+  {
+    items.map((image) => (
+      <li>
+        <a class="shot" href={image.large}>
+          <Img src={image.src} alt={image.alt} preset="detail" sizes="(min-width: 64rem) 42rem, 100vw" />
+          <span class="shot__label">
+            view full size <span aria-hidden="true">→</span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .shots {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .shot {
+    display: grid;
+    gap: var(--space-2);
+    text-decoration: none;
+  }
+
+  .shot :global(img) {
+    border: var(--hairline) solid var(--border);
+  }
+
+  .shot:hover :global(img),
+  .shot:focus-visible :global(img) {
+    border-color: var(--fg);
+  }
+
+  .shot__label {
+    justify-self: end;
+    font-size: var(--fs-ui);
+    color: var(--muted);
+  }
+
+  .shot:hover .shot__label,
+  .shot:focus-visible .shot__label {
+    color: var(--fg);
+    text-decoration-line: underline;
+  }
+</style>

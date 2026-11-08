@@ -5,6 +5,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SpecTable from '../../components/SpecTable.astro';
 import Img from '../../components/Img.astro';
+import ProjectGallery from '../../components/ProjectGallery.astro';
 import Video from '../../components/Video.astro';
 import Button from '../../components/Button.astro';
 import PrevNext from '../../components/PrevNext.astro';
@@ -25,7 +26,7 @@ interface Props {
 }
 
 const { project, prev, next } = Astro.props;
-const { title, summary, year, stack, context, links, cover, video } = project.data;
+const { title, summary, year, stack, context, links, cover, gallery, video } = project.data;
 const { Content } = await render(project);
 
 // Short link text: "Matrix7689/Halma-AI" for repositories, the bare host for live demos.
@@ -59,13 +60,15 @@ const pageTitle = `${title} · Jay Parekh`;
 
         <section class="media" aria-label="Media">
           {
-            video ? (
+            gallery ? (
+              <ProjectGallery images={gallery} title={title} />
+            ) : video ? (
               <Video mp4={video.mp4} webm={video.webm} poster={video.poster} label={video.caption} name={`${title} demo`} />
             ) : (
               cover && <Img src={cover} alt={`${title}: screenshot`} preset="detail" sizes="(min-width: 64rem) 42rem, 100vw" class="media__img" />
             )
           }
-          <p class="muted media__note">{PROJECTS_PAGE.screenshotsNote}</p>
+          {!gallery && <p class="muted media__note">{PROJECTS_PAGE.screenshotsNote}</p>}
         </section>
 
         {
@@ -78,6 +81,20 @@ const pageTitle = `${title} · Jay Parekh`;
                 </Button>
               )}
             </div>
+          )
+        }
+
+        {
+          links.more && (
+            <ul class="project__more" role="list" aria-label="More links">
+              {links.more.map((l) => (
+                <li>
+                  <a href={l.url} rel="noopener">
+                    {l.label} <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           )
         }
       </div>
@@ -189,6 +206,21 @@ const pageTitle = `${title} · Jay Parekh`;
 
   .media__note {
     font-size: var(--fs-ui);
+  }
+
+  .project__more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    font-size: var(--fs-ui);
+  }
+
+  .project__more a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 1.5rem;
+    text-decoration-line: underline;
   }
 
   .project__links {

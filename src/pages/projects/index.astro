@@ -15,10 +15,10 @@ const allMaps = await getMaps();
 const maps = allMaps.slice(0, 3);
 const sum = totals(allMaps);
 
-const linksOf = (l: { github?: string | undefined; live?: string | undefined }) =>
-  [l.github && { label: 'GitHub', href: l.github }, l.live && { label: 'Live demo', href: l.live }].filter(
-    (x): x is { label: string; href: string } => Boolean(x),
-  );
+const linksOf = (l: { github?: string | undefined; live?: string | undefined; more?: { label: string; url: string }[] | undefined }) => [
+  ...[l.github && { label: 'GitHub', href: l.github }, l.live && { label: 'Live demo', href: l.live }].filter((x): x is { label: string; href: string } => Boolean(x)),
+  ...(l.more ?? []).map((m) => ({ label: m.label, href: m.url })),
+];
 
 const ARCHIVE = '/projects/level-design/';
 ---

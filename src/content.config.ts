@@ -39,8 +39,11 @@ const projects = defineCollection({
       year: z.number().int().optional(),
       stack: z.array(z.string()).min(1),
       context: z.string().optional(),
-      links: z.object({ github: z.url().optional(), live: z.url().optional() }),
+      // links.more: extra outbound text links (label, url), shown after GitHub and live.
+      links: z.object({ github: z.url().optional(), live: z.url().optional(), more: z.array(z.object({ label: z.string(), url: z.url() })).optional() }),
       cover: image().optional(),
+      // Screenshots for the detail page; alt describes only what is visible in the frame.
+      gallery: z.array(z.object({ src: image(), alt: z.string() })).optional(),
       // caption: the text description shown beside the video (SPEC §6.2), describing only what the recording shows.
       video: z.object({ mp4: z.string().startsWith('/media/'), webm: z.string().startsWith('/media/'), poster: image(), caption: z.string() }).optional(),
       featured: z.boolean().default(true),
