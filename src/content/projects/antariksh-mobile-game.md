@@ -1,8 +1,8 @@
 ---
-# Facts from Jay's brief only (docs/reports/antariksh-project.md); summary is (proposed). Date is Jay's stated May 2021.
+# Facts from Jay's brief only (docs/reports/antariksh-project.md); summary is (proposed). Date: December 2020, per Jay (some videos were uploaded later, in May 2021).
 title: Antariksh Mobile Game
 summary: "Antariksh: A Space Odyssey, a Unity game for Android with three mission types on each of four planets, built by a team of 7."
-year: 2021
+year: 2020
 stack: [Unity, C#]
 context: CSCI 526, USC · team of 7 · Android
 # NEEDS INPUT: GitHub repo for this project, if public (links.github is left out until then).
@@ -20,11 +20,11 @@ links:
       url: https://antariksh-site.netlify.app/
     - label: weekly progress
       url: https://youtube.com/playlist?list=PLLc9a_xp6wro
-featured: false
-order: 6
+# order 0: newest project, listed first (projects run newest to oldest).
+order: 0
 ---
 
-Antariksh: A Space Odyssey is a game built in Unity and C# for Android with touch controls, by a team of 7 for CSCI 526 (Advanced Mobile Devices and Game Consoles) at USC. Built May 2021. The team posted 13 weekly progress updates, with videos, on its team site.
+Antariksh: A Space Odyssey is a game built in Unity and C# for Android with touch controls, by a team of 7 for CSCI 526 (Advanced Mobile Devices and Game Consoles) at USC. Built December 2020. The team posted 13 weekly progress updates, with videos, on its team site.
 
 The game has four planets: Earth, Arrakis, Magmar and Aquilon. Each planet has three missions.
 

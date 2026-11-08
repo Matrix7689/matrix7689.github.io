@@ -6,7 +6,7 @@ Date: Nov 9, 2026 · Branch: `revamp` · Not a SPEC stage · **Waiting on Jay: s
 The project page, schema, links, frame script and docs are done and verified. **The screenshots are not done:** `C:\Jay Data\portfolio revamp\antariksh-source\` does not exist, so no frames were extracted. Nothing was downloaded. Until frames are added, the page has no images and shows "Screenshots coming soon.", like the other projects.
 
 ## Files changed
-- `src/content/projects/antariksh-mobile-game.md` (new): `year: 2021`, `featured: false`, `order: 6`, five `links.more`.
+- `src/content/projects/antariksh-mobile-game.md` (new): `year: 2020`, featured, `order: 0` (first), five `links.more`.
 - `src/content.config.ts`: optional `links.more` (`{ label, url }[]`) and `gallery` (`{ src: image(), alt }[]`).
 - `src/pages/projects/index.astro`: `links.more` on the card, after GitHub and live.
 - `src/pages/projects/[slug].astro`: `links.more` as text links with `rel="noopener"`, hidden when absent. When `gallery` is set, it replaces the video or cover and the "coming soon" note.
@@ -49,7 +49,7 @@ All come from Jay's brief.
 | Fact on the page | Source in the brief |
 |---|---|
 | Title, full name, slug | Project facts |
-| May 2021, `year: 2021` | Jay's stated date (the demo video's "Fall 2020" is deliberately not used) |
+| December 2020, `year: 2020` | Jay, after the first report: Fall 2020 project, live demo in December 2020; some videos were uploaded in May 2021 |
 | CSCI 526 (Advanced Mobile Devices and Game Consoles), USC, team of 7 | Context |
 | Unity, C#, Android, touch controls | Stack and platform |
 | Four planets; three missions each | Game (final version, per the demo video) |
@@ -70,8 +70,14 @@ None yet (no source videos). Frame list (video and timestamp) to be added here.
 
 ## Open questions
 1. **Videos:** put `demo`, `trailer` and `gameplay` (any common extension) in `C:\Jay Data\portfolio revamp\antariksh-source\`.
-2. **Date:** confirm May 2021. The demo video says Fall 2020.
+2. ~~Date~~ **Resolved:** December 2020 (Jay).
 3. **Playlist:** open https://youtube.com/playlist?list=PLLc9a_xp6wro. Its ID looks truncated.
 4. **Planet spellings:** Earth, Arrakis, Magmar, Aquilon (from auto-captions).
 5. **GitHub repo:** is there a public one?
-6. **Featured:** the brief says home shows at most 4 featured projects, but there is **no limit in the code**. Home shows all featured projects, currently 5: NewsApp React, NewsApp Android, Halma, Mars rover, Advanced text summarization. With `featured: false` Antariksh is on `/projects/` only. Should it be added, or replace one?
+6. ~~Featured~~ **Resolved:** on the home page and first in both project lists (Jay). Projects run newest to oldest: Dec 2020, 2020, 2020, 2019, 2019, 2019.
+
+## Update: December 2020, featured, listed first
+
+- Jay confirmed December 2020 and asked for the project on the home page, first in both lists. It now has `year: 2020`, is featured, and has `order: 0`. Both lists run newest to oldest.
+- **Checks:** `npm run verify` exits 0; `/` is 16.5 KB initial and 105.4 KB total (<= 120). `npm run lhci` passes on all audited URLs. `npm run check:inputs` is 10.
+- **Budget note:** once a `cover` is added, the home card gets a thumbnail (up to about 28 KB at the 600 px width the budget counts), which could exceed the home total of 120 KB. Check this when frames are added; the card can use the 400 px image only, as the archive does.
