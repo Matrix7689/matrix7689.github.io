@@ -26,7 +26,8 @@
     "media:gifs": "node scripts/convert-gifs.mjs",
     "inventory": "node scripts/inventory.mjs",
     "repo:size": "node scripts/repo-size.mjs",
-    "import:levels": "node scripts/import-levels.mjs"
+    "import:levels": "node scripts/import-levels.mjs",
+    "media:frames": "node scripts/extract-frames.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
