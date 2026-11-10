@@ -12,7 +12,8 @@ video:
   webm: /media/mars-rover-search/demo.webm
   poster: ../../assets/projects/mars-rover-search/poster.png
   caption: "Demo recording (9 s, no audio) of the rover on a terrain grid, with the start point, end point and solution path marked."
-order: 4
+order: 5
+featured: false
 ---
 
 A C++11 program that reads an input file describing a terrain map, a landing site, target sites and the limits of a Mars rover. For each target, it finds the optimal (shortest) safe path from the landing site. Built Sep 2019.

@@ -12,7 +12,7 @@ video:
   webm: /media/halma-ai/demo.webm
   poster: ../../assets/projects/halma-ai/poster.png
   caption: "Demo recording (33 s, no audio) of a game on the 16×16 board: each side starts with its 19 pieces in opposite corners."
-order: 3
+order: 4
 ---
 
 An AI agent, written in C++11, that plays Halma: an adversarial board game with some similarities to checkers. Built Nov 2019.

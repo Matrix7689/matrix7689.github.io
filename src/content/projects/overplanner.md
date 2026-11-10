@@ -25,13 +25,12 @@ gallery:
     alt: "The Workout category page: a quick-add box, three tasks with due dates, a collapsed Done list and a pinned note with a push day routine."
   - src: ../../assets/projects/overplanner/phone-capture.png
     alt: "The phone capture screen in dark mode: a text box reading Add a task, note or link, Task and Note buttons, an Add button and the message All sent to your Inbox."
-# featured: false for now. The home page lists every featured project, so Jay decides whether this one joins or replaces another (docs/reports/overplanner-project.md).
-featured: false
-# order 6: after the existing projects (Jay's brief).
-order: 6
+featured: true
+# order 0: listed first (Jay).
+order: 0
 ---
 
-Overplanner is a self-hosted task and notes app, built as an alternative to Google Keep. It runs on the user's own computer, keeps its data in plain JSON files, and takes quick captures from a phone. Started in October 2026 and still in development. Released under the MIT license.
+Started in October 2026 and still in development. Released under the MIT license.
 
 ## Features
 

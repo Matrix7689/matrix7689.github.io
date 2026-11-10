@@ -11,7 +11,7 @@ links:
   live: http://hw8react.appspot.com/
 cover: ../../assets/projects/newsapp-react/cover.png
 # Screenshots beyond the cover: Stage 6 shows "Screenshots coming soon." (N13, Jay, Stage 3 checkpoint).
-order: 1
+order: 2
 ---
 
 A responsive website built with React and Node.js that shows the latest news by category from the New York Times and Guardian APIs. Built Mar–May 2020.

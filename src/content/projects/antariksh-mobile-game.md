@@ -34,8 +34,8 @@ gallery:
     alt: "A character on a snowy slope facing a dark creature, with a crystal counter reading 7 and a health bar."
   - src: ../../assets/projects/antariksh-mobile-game/07.jpg
     alt: "A pause menu with resume, music and SFX volume sliders, abort mission and quit game, over a snowy level."
-# order 0: newest project, listed first (projects run newest to oldest).
-order: 0
+# order 1: after Overplanner (projects run newest to oldest).
+order: 1
 ---
 
 Antariksh: A Space Odyssey is a game built in Unity and C# for Android with touch controls, by a team of 7 for CSCI 526 (Advanced Mobile Devices and Game Consoles) at USC. Built December 2020. The team posted 13 weekly progress updates, with videos, on its team site.

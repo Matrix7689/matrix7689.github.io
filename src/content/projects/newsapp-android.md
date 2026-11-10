@@ -9,7 +9,7 @@ links:
   github: https://github.com/Matrix7689/NewsApp-Android
 cover: ../../assets/projects/newsapp-android/cover.png
 # Screenshots beyond the cover: Stage 6 shows "Screenshots coming soon." (N13, Jay, Stage 3 checkpoint).
-order: 2
+order: 3
 ---
 
 An Android app that shows the latest news from the Guardian API and the weather for the user's live location from the OpenWeatherMap API. Built Mar–May 2020.

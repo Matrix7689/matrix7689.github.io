@@ -6,7 +6,7 @@ year: 2019
 stack: [Python, Machine Learning, NLP]
 # NEEDS INPUT (N15): GitHub link, if public, and whether this is the work behind the "User-Based Text Summarization" publication.
 links: {}
-order: 5
+order: 6
 ---
 
 A system that summarizes documents using machine-learning models and NLP algorithms. Built Aug 2018 – May 2019.
