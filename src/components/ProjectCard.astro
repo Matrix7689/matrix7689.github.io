@@ -1,6 +1,7 @@
 ---
 // Project card (SPEC §5 ProjectCard): text first, optional tiny grayscale thumbnail.
-// Hover/focus: border → fg, thumbnail → colour. The title link covers the whole card; optional outbound
+// Hover/focus: border → fg, thumbnail → colour. Thumbs are shown at most 160 px wide, so only the 400 px image
+// ships (keeps the home page inside its 120 KB total). The title link covers the whole card; optional outbound
 //  (e.g. GitHub, live demo, on /projects/) sit above that overlay so they stay clickable.
 import type { ImageMetadata } from 'astro';
 import Img from './Img.astro';
@@ -47,7 +48,7 @@ const { title, summary, stack, year, href, thumb, links = [] } = Astro.props;
       )
     }
   </div>
-  {thumb && <Img src={thumb} alt="" preset="thumb" sizes="(min-width: 48rem) 160px, 96px" grayscale class="card__thumb" />}
+  {thumb && <Img src={thumb} alt="" preset="thumb" maxWidth={400} sizes="(min-width: 48rem) 160px, 96px" grayscale class="card__thumb" />}
 </article>
 
 <style>
