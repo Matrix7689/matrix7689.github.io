@@ -1,6 +1,6 @@
 # Antariksh Mobile Game: project addition
 
-Date: Nov 9, 2026 · Branch: `revamp` · Not a SPEC stage · **Waiting on Jay: source videos and open questions**
+Date: Nov 9, 2026 (updated Nov 10) · Branch: `revamp` · Not a SPEC stage · **Done; waiting on Jay's review** (see "Update: screenshots" at the end)
 
 ## Status
 The project page, schema, links, frame script and docs are done and verified. **The screenshots are not done:** `C:\Jay Data\portfolio revamp\antariksh-source\` does not exist, so no frames were extracted. Nothing was downloaded. Until frames are added, the page has no images and shows "Screenshots coming soon.", like the other projects.
@@ -81,3 +81,23 @@ None yet (no source videos). Frame list (video and timestamp) to be added here.
 - Jay confirmed December 2020 and asked for the project on the home page, first in both lists. It now has `year: 2020`, is featured, and has `order: 0`. Both lists run newest to oldest.
 - **Checks:** `npm run verify` exits 0; `/` is 16.5 KB initial and 105.4 KB total (<= 120). `npm run lhci` passes on all audited URLs. `npm run check:inputs` is 10.
 - **Budget note:** once a `cover` is added, the home card gets a thumbnail (up to about 28 KB at the 600 px width the budget counts), which could exceed the home total of 120 KB. Check this when frames are added; the card can use the 400 px image only, as the archive does.
+
+## Update: screenshots, cover and role (Nov 10, 2026)
+
+Jay provided stills he took from the gameplay video, confirmed the planets (Earth, Arakis, Magmar, Aquilon), the playlist link and that there is no public repo, and described his role. All open questions are now resolved; nothing was downloaded.
+
+- **Sources:** Jay's PNGs converted to JPEG sources (max 1920 px, mozjpeg q82) in `src/assets/projects/antariksh-mobile-game/`. Originals kept outside the repo in `C:\Jay Data\portfolio revamp\antariksh-source\screenshots\`. `cover_photo.png` → `cover.jpg`.
+- **Gallery (6 frames, in page order):** `02` interior room, `05` space-invaders mission, `04` desert, `06` lava, `08` ice, `07` pause menu. The text-heavy mission panel (`01`) was dropped. Alt text describes only what is visible.
+- **Role:** three bullets (level design; sourcing assets incl. SFX and music; gameplay programming in C#), plus a line that teammates built the 2D mission, website and documentation. Planet spelling now "Arakis".
+- **Card thumbnails:** `ProjectCard` now ships only the 400 px thumb (`maxWidth={400}`; shown at most 160 px). Without this the home page was 131.4 KB (> 120).
+
+### Checks
+```
+npm run verify: exit 0
+/                                 16.4 KB initial   91.2 KB total (≤120)
+/projects/                                          145.0 KB total (≤200)
+/projects/antariksh-mobile-game/   8.1 KB initial  147.2 KB total (≤600)
+npm run lhci: 100/100/100/100 on /, /projects/, /projects/antariksh-mobile-game/
+npm run check:inputs: 7 (back from 10)
+```
+- Browser: 6 lazy gallery images, "coming soon" note gone, Role bullets correct; 360 px: no horizontal scroll on `/`, `/projects/` and the new page.
