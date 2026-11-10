@@ -50,6 +50,19 @@ const pageTitle = `${title} · Jay Parekh`;
       <p class="back"><a href="/projects/">← all projects</a></p>
       <h1>{title}</h1>
       <p class="lead">{summary}</p>
+      {
+        links.more && (
+          <ul class="project__more" role="list" aria-label="More links">
+            {links.more.map((l) => (
+              <li>
+                <a href={l.url} rel="noopener">
+                  {l.label} <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </header>
 
     <div class="project__grid">
@@ -84,19 +97,6 @@ const pageTitle = `${title} · Jay Parekh`;
           )
         }
 
-        {
-          links.more && (
-            <ul class="project__more" role="list" aria-label="More links">
-              {links.more.map((l) => (
-                <li>
-                  <a href={l.url} rel="noopener">
-                    {l.label} <span aria-hidden="true">→</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )
-        }
       </div>
 
       <aside class="project__facts">
@@ -212,7 +212,7 @@ const pageTitle = `${title} · Jay Parekh`;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2) var(--space-6);
-    font-size: var(--fs-ui);
+    font-size: var(--fs-body);
   }
 
   .project__more a {
