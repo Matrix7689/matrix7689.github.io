@@ -39,6 +39,9 @@ const projects = defineCollection({
       year: z.number().int().optional(),
       stack: z.array(z.string()).min(1),
       context: z.string().optional(),
+      // license and builtWith: extra SpecTable rows on the detail page, shown only when set.
+      license: z.string().optional(),
+      builtWith: z.string().optional(),
       // links.more: extra outbound text links (label, url), shown after GitHub and live.
       links: z.object({ github: z.url().optional(), live: z.url().optional(), more: z.array(z.object({ label: z.string(), url: z.url() })).optional() }),
       cover: image().optional(),

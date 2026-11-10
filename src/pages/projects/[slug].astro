@@ -26,7 +26,7 @@ interface Props {
 }
 
 const { project, prev, next } = Astro.props;
-const { title, summary, year, stack, context, links, cover, gallery, video } = project.data;
+const { title, summary, year, stack, context, license, builtWith, links, cover, gallery, video } = project.data;
 const { Content } = await render(project);
 
 // Short link text: "Matrix7689/Halma-AI" for repositories, the bare host for live demos.
@@ -36,8 +36,10 @@ const rows = [
   year !== undefined && { label: 'Year', value: String(year) },
   { label: 'Stack', value: stack.join(', ') },
   context && { label: 'Context', value: context },
+  license && { label: 'License', value: license },
   links.github && { label: 'Repository', value: bare(links.github), href: links.github },
   links.live && { label: 'Live demo', value: bare(links.live), href: links.live },
+  builtWith && { label: 'Built with', value: builtWith },
 ].filter((r): r is { label: string; value: string; href?: string } => Boolean(r));
 
 const link = (p: CollectionEntry<'projects'> | undefined) => p && { title: p.data.title, href: `/projects/${p.id}/` };
